@@ -55,10 +55,23 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 18px; /* Aumentar o tamanho da fonte */
         }
 
         .dropdown-button:hover {
             background-color: #1c314b;
+        }
+
+        /* Estilo do título */
+        .title {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1e2a38;
+            color: #fff;
+            font-size: 36px; /* Aumentar o tamanho da fonte */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-radius: 5px; /* Cantos arredondados */
+            margin: 0;
         }
 
         /* Estilo da imagem */
@@ -72,7 +85,7 @@
 </head>
 <body>
     <header>
-        <h1>GESTÃO À VISTA</h1>
+        <h1 class="title">GESTÃO À VISTA</h1>
     </header>
 
     <nav>
@@ -113,6 +126,7 @@
         const images = [
             'https://eduardomppp.github.io/produtividademb/p.jpg',
             'https://eduardomppp.github.io/produtividademb/agil.jpg'
+            'https://eduardomppp.github.io/produtividademb/agil1.jpg'
         ];
         let currentImageIndex = 0;
 
