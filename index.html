@@ -16,12 +16,51 @@
 
         /* ... (seu estilo existente) ... */
         
-        /* Estilizar imagens */
-        img {
-            max-width: 100%; /* Impede que as imagens sejam maiores que seu contêiner */
-            height: auto; /* Mantém a proporção da imagem */
-            display: block; /* Remove margens indesejadas na parte inferior da imagem */
-            margin: 0 auto; /* Centraliza a imagem horizontalmente */
+        /* Estilizar o menu suspenso */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #233e5d;
+            min-width: 160px;
+            text-align: center;
+            z-index: 1;
+            border-radius: 5px; /* Cantos arredondados */
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1c314b;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilo do botão de menu */
+        .dropdown-button {
+            background-color: #233e5d;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-button:hover {
+            background-color: #1c314b;
         }
     </style>
 </head>
@@ -31,37 +70,28 @@
     </header>
 
     <nav>
-        <!-- ... (seu menu suspenso existente) ... -->
+        <ul>
+            <li class="dropdown">
+                <button class="dropdown-button">Serviços</button>
+                <div class="dropdown-content">
+                    <a href="https://docs.google.com/spreadsheets/d/1LWkv1oCGkhuXMh_QQZsiRD7SGFn1JzOMaEq50O81TSw/edit#gid=0" target="_blank">Atendimento</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1DjRhduhlzT9fx3ZVRhMRfKzbr3DjPbFYJEfep4JNA2Q/edit#gid=0">Suporte Lojista</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Negociação</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Crediário Popular</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Crediário Acima</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Crediário Visa</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Adesão</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Treinamento</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Auditoria</a>
+                    <a href="https://www.exemplo3.com" target="_blank">Fraude</a>
+                </div>
+            </li>
+        </ul>
     </nav>
 
     <!-- Conteúdo da página -->
     <section class="content">
-        <div class="content-image">
-            <img id="image" src="https://eduardomppp.github.io/produtividademb/p.jpg" alt="Descrição da Imagem">
-        </div>
-
-        <div class="content-text">
-            <p style="color: rgb(1, 13, 126);">Texto relacionado à imagem p.jpg.</p>
-            <p style="color: red;">Texto relacionado à imagem pppp.jpg.</p>
-        </div>
+        <!-- ... (seu conteúdo existente) ... -->
     </section>
-
-    <script>
-        // Código JavaScript para alternar entre as imagens
-        const imageElement = document.getElementById('image');
-        const images = [
-            'https://eduardomppp.github.io/produtividademb/p.jpg',
-            'https://eduardomppp.github.io/produtividademb/pppp.jpg'
-        ];
-        let currentImageIndex = 0;
-
-        function toggleImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            imageElement.src = images[currentImageIndex];
-        }
-
-        // Alterna a imagem a cada 5 segundos (5000 milissegundos)
-        setInterval(toggleImage, 5000);
-    </script>
 </body>
 </html>
