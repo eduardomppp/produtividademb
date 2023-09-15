@@ -14,8 +14,6 @@
             background-color: #f5f5f5;
         }
 
-        /* ... (seu estilo existente) ... */
-        
         /* Estilizar o menu suspenso */
         .dropdown {
             position: relative;
@@ -62,6 +60,14 @@
         .dropdown-button:hover {
             background-color: #1c314b;
         }
+
+        /* Estilo da imagem */
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -91,7 +97,32 @@
 
     <!-- Conteúdo da página -->
     <section class="content">
-        <!-- ... (seu conteúdo existente) ... -->
+        <div class="content-image">
+            <img id="image" src="https://eduardomppp.github.io/produtividademb/p.jpg" alt="Descrição da Imagem">
+        </div>
+
+        <div class="content-text">
+            <p style="color: rgb(1, 13, 126);">Texto relacionado à imagem p.jpg.</p>
+            <p style="color: red;">Texto relacionado à imagem pppp.jpg.</p>
+        </div>
     </section>
+
+    <script>
+        // Código JavaScript para alternar entre as imagens
+        const imageElement = document.getElementById('image');
+        const images = [
+            'https://eduardomppp.github.io/produtividademb/p.jpg',
+            'https://eduardomppp.github.io/produtividademb/pppp.jpg'
+        ];
+        let currentImageIndex = 0;
+
+        function toggleImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            imageElement.src = images[currentImageIndex];
+        }
+
+        // Alterna a imagem a cada 5 segundos (5000 milissegundos)
+        setInterval(toggleImage, 5000);
+    </script>
 </body>
 </html>
