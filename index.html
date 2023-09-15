@@ -167,18 +167,18 @@
 
     <script>
         // Código JavaScript para alternar entre as imagens
-        const imageElement = document.getElementById('image');
-        const images = [
-            'https://eduardomppp.github.io/produtividademb/p.jpg',
-            'https://eduardomppp.github.io/produtividademb/agil.jpg',
-            'https://eduardomppp.github.io/produtividademb/agil1.jpg'
-        ];
-        let currentImageIndex = 0;
+      const imageElement = document.getElementById('image');
+    const images = [
+    'https://eduardomppp.github.io/produtividademb/p.jpg',
+    'https://eduardomppp.github.io/produtividademb/agil.jpg',
+    'https://eduardomppp.github.io/produtividademb/agil1.jpg'
+];
+let currentImageIndex = 0;
 
-        function toggleImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            imageElement.src = images[currentImageIndex];
-        }
+function toggleImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    imageElement.src = images[currentImageIndex];
+}
 
         // Alterna a imagem a cada 5 segundos (5000 milissegundos)
         setInterval(toggleImage, 5000);
