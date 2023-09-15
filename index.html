@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produtividade MB</title>
+    <style>
+        /* Estilo do corpo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        /* Estilo do cabeçalho */
+        header {
+            background-color: #1e2a38; /* Azul escuro */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 36px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra no texto */
+        }
+
+        /* Estilizar o menu */
+        nav {
+            background-color: #233e5d; /* Azul mais claro */
+            text-align: center;
+        }
+
+        /* Estilizar a lista de opções */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            display: inline; /* Exibe as opções de menu em linha */
+            margin-right: 20px; /* Espaçamento entre as opções */
+        }
+
+        /* Estilo dos links do menu */
+        ul li a {
+            text-decoration: none; /* Remove sublinhado dos links */
+            color: #fff; /* Cor do texto do link */
+            font-size: 18px; /* Tamanho da fonte */
+            padding: 10px 20px; /* Espaçamento interno dos links */
+            border-radius: 5px; /* Cantos arredondados */
+            transition: background-color 0.3s ease; /* Efeito de transição suave para a cor de fundo */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra suave nos botões */
+        }
+
+        /* Define a cor do texto quando o mouse passa por cima do link */
+        ul li a:hover {
+            background-color: #1c314b; /* Azul mais escuro ao passar o mouse */
+        }
+
+        /* Estilizar imagens */
+        img {
+            max-width: 100%; /* Impede que as imagens sejam maiores que seu contêiner */
+            height: auto; /* Mantém a proporção da imagem */
+            display: block; /* Remove margens indesejadas na parte inferior da imagem */
+            margin: 0 auto; /* Centraliza a imagem horizontalmente */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GESTÃO À VISTA</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="https://docs.google.com/spreadsheets/d/1LWkv1oCGkhuXMh_QQZsiRD7SGFn1JzOMaEq50O81TSw/edit#gid=0" target="_blank">Atendimento</a></li>
+            <li><a href="https://docs.google.com/spreadsheets/d/1DjRhduhlzT9fx3ZVRhMRfKzbr3DjPbFYJEfep4JNA2Q/edit#gid=0">Suporte Lojista</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Negociação</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Crediário Popular</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Crediário Acima</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Crediário Visa</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Adesão</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Treinamento</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Auditoria</a></li>
+            <li><a href="https://www.exemplo3.com" target="_blank">Fraude</a></li>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo da página -->
+    <p style="color: rgb(1, 13, 126);">
+        <img src="{{ url_for('static', filename='p.jpg') }}" alt="Descrição da Imagem">
+    </p>
+
+    <p style="color: red;">
+        <img src="{{ url_for('static', filename='pppp.jpg') }}" alt="Descrição da Imagem">
+    </p>
+</body>
+</html>
