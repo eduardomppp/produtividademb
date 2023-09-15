@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta de Sorteio</title>
+    <style>
+        .roulette-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .roulette {
+            width: 300px;
+            height: 300px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            position: relative;
+            margin: 20px;
+            overflow: hidden;
+            background-color: #0074cc; /* Cor de fundo da roleta */
+        }
+        .item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            transform-origin: 50% 100%;
+            transition: transform 4s ease-in-out;
+        }
+        .item:nth-child(1) { transform: rotate(0deg); }
+        .item:nth-child(2) { transform: rotate(30deg); }
+        .item:nth-child(3) { transform: rotate(60deg); }
+        .item:nth-child(4) { transform: rotate(90deg); }
+        .item:nth-child(5) { transform: rotate(120deg); }
+        .item:nth-child(6) { transform: rotate(150deg); }
+        .item:nth-child(7) { transform: rotate(180deg); }
+        .item:nth-child(8) { transform: rotate(210deg); }
+        .item:nth-child(9) { transform: rotate(240deg); }
+        .item:nth-child(10) { transform: rotate(270deg); }
+        .item:nth-child(11) { transform: rotate(300deg); }
+        .item:nth-child(12) { transform: rotate(330deg); }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0074cc;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="roulette-container">
+        <div class="roulette">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2</div>
+            <div class="item">Item 3</div>
+            <div class="item">Item 4</div>
+            <div class="item">Item 5</div>
+            <div class="item">Item 6</div>
+            <div class="item">Item 7</div>
+            <div class="item">Item 8</div>
+            <div class="item">Item 9</div>
+            <div class="item">Item 10</div>
+            <div class="item">Item 11</div>
+            <div class="item">Item 12</div>
+        </div>
+        <div class="button-container">
+            <button onclick="spinRoulette()">Girar</button>
+        </div>
+        <div class="result">
+            Item sorteado: <span id="selectedItem">Nenhum</span>
+        </div>
+    </div>
+    <script>
+        function spinRoulette() {
+            const roulette = document.querySelector(".roulette");
+            const selectedItem = document.getElementById("selectedItem");
+            const randomDegree = Math.floor(Math.random() * 360);
+            const rotation = 3600 + randomDegree; // Rotate at least 10 times + random degree
+            roulette.style.transition = "transform 4s ease-out";
+            roulette.style.transform = `rotate(${rotation}deg)`;
+
+            // Determinar o item sorteado
+            const numItems = 12;
+            const itemAngle = 360 / numItems;
+            const selectedItemIndex = Math.floor((360 - randomDegree % 360) / itemAngle);
+            const items = document.querySelectorAll(".item");
+            selectedItem.textContent = items[selectedItemIndex].textContent;
+        }
+    </script>
+</body>
+</html>
