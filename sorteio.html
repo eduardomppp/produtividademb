@@ -25,15 +25,7 @@
             border-radius: 50%;
             position: relative;
             margin: 20px auto;
-            background: conic-gradient(
-                #0074cc 0% 15%, 
-                #0099cc 15% 30%, 
-                #0074cc 30% 45%, 
-                #0099cc 45% 60%, 
-                #0074cc 60% 75%, 
-                #0099cc 75% 90%, 
-                #0074cc 90% 100%
-            );
+            background-color: #0074cc;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
             transform: rotate(0deg);
             transition: transform 4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -97,14 +89,14 @@
     <div class="roulette-container">
         <h1>Roleta de Sorteio</h1>
         <div class="roulette">
-            <div class="item">Item 1</div>
-            <div class="item">Item 2</div>
-            <div class="item">Item 3</div>
-            <div class="item">Item 4</div>
-            <div class="item">Item 5</div>
-            <div class="item">Item 6</div>
-            <div class="item">Item 7</div>
-            <div class="item">Item 8</div>
+            <div class="item" style="transform: rotate(0deg);">Item 1</div>
+            <div class="item" style="transform: rotate(45deg);">Item 2</div>
+            <div class="item" style="transform: rotate(90deg);">Item 3</div>
+            <div class="item" style="transform: rotate(135deg);">Item 4</div>
+            <div class="item" style="transform: rotate(180deg);">Item 5</div>
+            <div class="item" style="transform: rotate(225deg);">Item 6</div>
+            <div class="item" style="transform: rotate(270deg);">Item 7</div>
+            <div class="item" style="transform: rotate(315deg);">Item 8</div>
         </div>
         <div class="button-container">
             <button onclick="spinRoulette()">Girar</button>
