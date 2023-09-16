@@ -19,6 +19,7 @@
             margin: 20px;
             overflow: hidden;
             background-color: #0074cc; /* Cor de fundo da roleta */
+            transition: transform 4s ease-out;
         }
         .item {
             position: absolute;
@@ -30,20 +31,25 @@
             font-size: 20px;
             font-weight: bold;
             transform-origin: 50% 100%;
-            transition: transform 4s ease-in-out;
         }
-        .item:nth-child(1) { transform: rotate(0deg); }
-        .item:nth-child(2) { transform: rotate(30deg); }
-        .item:nth-child(3) { transform: rotate(60deg); }
-        .item:nth-child(4) { transform: rotate(90deg); }
-        .item:nth-child(5) { transform: rotate(120deg); }
-        .item:nth-child(6) { transform: rotate(150deg); }
-        .item:nth-child(7) { transform: rotate(180deg); }
-        .item:nth-child(8) { transform: rotate(210deg); }
-        .item:nth-child(9) { transform: rotate(240deg); }
-        .item:nth-child(10) { transform: rotate(270deg); }
-        .item:nth-child(11) { transform: rotate(300deg); }
-        .item:nth-child(12) { transform: rotate(330deg); }
+        .item:nth-child(odd) {
+            background-color: #ffda44; /* Cor de fundo dos itens ímpares */
+        }
+        .item:nth-child(even) {
+            background-color: #ffbf00; /* Cor de fundo dos itens pares */
+        }
+        .roulette::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 50px;
+            background-color: #fff; /* Cor do ponteiro */
+            border-radius: 2px;
+            z-index: 2;
+        }
         .button-container {
             margin-top: 20px;
         }
@@ -91,7 +97,6 @@
             const selectedItem = document.getElementById("selectedItem");
             const randomDegree = Math.floor(Math.random() * 360);
             const rotation = 3600 + randomDegree; // Rotate at least 10 times + random degree
-            roulette.style.transition = "transform 4s ease-out";
             roulette.style.transform = `rotate(${rotation}deg)`;
 
             // Determinar o item sorteado
@@ -101,11 +106,6 @@
             const items = document.querySelectorAll(".item");
             selectedItem.textContent = items[selectedItemIndex].textContent;
         }
-     </script>
-    
-    <a href="index.html">Voltar:</a>
-    <a href="index.html">Pagina Inicial</a>
-        
-   
+    </script>
 </body>
 </html>
