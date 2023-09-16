@@ -115,6 +115,7 @@
             const selectedItem = document.getElementById("selectedItem");
             const randomDegree = Math.floor(Math.random() * 360);
             const rotation = 3600 + randomDegree;
+            roulette.style.transition = "transform 4s ease-out"; // Adicionei a transição aqui
             roulette.style.transform = `rotate(${rotation}deg`;
 
             const numItems = 12;
