@@ -105,10 +105,6 @@
             <div class="item">Item 6</div>
             <div class="item">Item 7</div>
             <div class="item">Item 8</div>
-            <div class="item">Item 9</div>
-            <div class="item">Item 10</div>
-            <div class="item">Item 11</div>
-            <div class="item">Item 12</div>
         </div>
         <div class="button-container">
             <button onclick="spinRoulette()">Girar</button>
@@ -126,7 +122,7 @@
             roulette.style.transition = "transform 4s cubic-bezier(0.68, -0.55, 0.27, 1.55)";
             roulette.style.transform = `rotate(${rotation}deg`;
 
-            const numItems = 12;
+            const numItems = 8;
             const itemAngle = 360 / numItems;
             const selectedItemIndex = Math.floor((360 - randomDegree % 360) / itemAngle);
             const items = document.querySelectorAll(".item");
