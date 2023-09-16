@@ -5,23 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roleta de Sorteio</title>
     <style>
-        .roulette-container {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
         }
+
+        .roulette-container {
+            text-align: center;
+        }
+
         .roulette {
             width: 300px;
             height: 300px;
-            border: 2px solid #000;
+            border: 2px solid #0074cc;
             border-radius: 50%;
             position: relative;
-            margin: 20px;
+            margin: 20px auto;
             overflow: hidden;
             background: radial-gradient(circle, #ffffff 20%, #0074cc 70%);
-            /* Gradiente radial como plano de fundo */
             transition: transform 4s ease-out;
         }
+
         .item {
             position: absolute;
             width: 100%;
@@ -33,12 +42,15 @@
             font-weight: bold;
             transform-origin: 50% 100%;
         }
+
         .item:nth-child(odd) {
-            background-color: #ffda44; /* Cor de fundo dos itens ímpares */
+            background-color: #ffda44;
         }
+
         .item:nth-child(even) {
-            background-color: #ffbf00; /* Cor de fundo dos itens pares */
+            background-color: #ffbf00;
         }
+
         .roulette::before {
             content: "";
             position: absolute;
@@ -47,13 +59,15 @@
             transform: translateX(-50%);
             width: 4px;
             height: 50px;
-            background-color: #fff; /* Cor do ponteiro */
+            background-color: #fff;
             border-radius: 2px;
             z-index: 2;
         }
+
         .button-container {
             margin-top: 20px;
         }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -62,15 +76,18 @@
             border: none;
             cursor: pointer;
         }
+
         .result {
             margin-top: 20px;
             font-size: 24px;
             font-weight: bold;
+            color: #0074cc;
         }
     </style>
 </head>
 <body>
     <div class="roulette-container">
+        <h1>Roleta de Sorteio</h1>
         <div class="roulette">
             <div class="item">Item 1</div>
             <div class="item">Item 2</div>
@@ -97,10 +114,9 @@
             const roulette = document.querySelector(".roulette");
             const selectedItem = document.getElementById("selectedItem");
             const randomDegree = Math.floor(Math.random() * 360);
-            const rotation = 3600 + randomDegree; // Rotate at least 10 times + random degree
-            roulette.style.transform = `rotate(${rotation}deg)`;
+            const rotation = 3600 + randomDegree;
+            roulette.style.transform = `rotate(${rotation}deg`;
 
-            // Determinar o item sorteado
             const numItems = 12;
             const itemAngle = 360 / numItems;
             const selectedItemIndex = Math.floor((360 - randomDegree % 360) / itemAngle);
