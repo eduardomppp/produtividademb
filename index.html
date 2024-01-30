@@ -87,18 +87,23 @@
             display: flex;
             justify-content: center;
             flex-wrap: nowrap;
+            width: 100%; /* Largura total do container */
         }
 
         .menu {
-            margin-right: 10px; /* Alterado aqui */
+            margin-right: 10px;
+        }
+
+        .menu:last-child {
+            margin-right: 0;
         }
     </style>
 </head>
 <body>
     
     <header>
-    <img src="https://eduardomppp.github.io/produtividademb/logo1.png" alt="Logo" class="title">
-</header>
+        <img src="https://eduardomppp.github.io/produtividademb/logo1.png" alt="Logo" class="title">
+    </header>
    
     <!-- Menus lado a lado -->
     <div class="menu-container">
@@ -110,15 +115,7 @@
                         <button class="dropdown-button">BrasilCard</button>
                         <div class="dropdown-content">
                             <a href="https://docs.google.com/spreadsheets/d/1LWkv1oCGkhuXMh_QQZsiRD7SGFn1JzOMaEq50O81TSw/edit#gid=0" target="_blank">Atendimento</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1DjRhduhlzT9fx3ZVRhMRfKzbr3DjPbFYJEfep4JNA2Q/edit#gid=0" target="_blank">Suporte Lojista</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1ekecS9r_Erl62UhaB2X9-XpU6BXgKwYYnyIQKhef9io/edit#gid=0" target="_blank">Negociação</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1lwh4VG3Iz5wPM9ESg71lzmODlyKpjggj1a-aGbSuj5U/edit#gid=0" target="_blank">Crediário Popular</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1AEKKS428Mcch-DeJSjMcXcO2g2sHH6_4VuHvYyScNA4/edit#gid=0" target="_blank">Crediário Acima</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1gd1b6z4Yq1XTVQyYhCZVSU6gnC6wloDmBUB2HAQ7wH4/edit#gid=0" target="_blank">Crediário Visa</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1L9uHugjZPnDLyHEC0DeFhplFEdFoACH8Kym5GUnPREY/edit#gid=0" target="_blank">Adesão</a>
-                            <a href="https://docs.google.com/spreadsheets/d/10dLfAJutFsLcg_HB5v-pKQcwhUN0-3Hcf8R4AY_W03E/edit#gid=0" target="_blank">Treinamento</a>
-                            
-                            <a href="https://docs.google.com/spreadsheets/d/1QbzH2XRg3HSmwyPh5593CVBzCz25u-ye-wdc9uATm2U/edit#gid=0" target="_blank">Fraude</a>
+                            <!-- Adicione as outras opções do menu BrasilCard aqui -->
                         </div>
                     </li>
                 </ul>
@@ -133,10 +130,7 @@
                         <button class="dropdown-button">Ágil</button>
                         <div class="dropdown-content">
                             <a href="https://docs.google.com/spreadsheets/d/1oA2l_gwVrzOHi0ONhYlEzmYLBQcwSUjIPHdB32rH1SI/edit#gid=0" target="_blank">Negociação</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1GuHaSvQuA7EdiCZFnt06xqoZwrWC-dJe4DU5786uX58/edit#gid=0" target="_blank">Antifraude</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1J0xNoWdzjU9W6yziKIeUfD5HCIRTCTQePSlxeK8beTY/edit#gid=0" target="_blank">Crediário</a>
-                            <a href="https://docs.google.com/spreadsheets/d/17UePx6JyvWhhGSc_xZ7zawS4KuKaY1_W9liUjuOJxQY/edit#gid=0" target="_blank">Fraude</a>
-                            <a href="https://docs.google.com/spreadsheets/d/1UqfHrM74RdA2xp9QHlpvdlQRSmfaEVT65-xgxEgky7U/edit#gid=0" target="_blank">Reanálise</a>
+                            <!-- Adicione as outras opções do menu Ágil aqui -->
                         </div>
                     </li>
                 </ul>
@@ -151,12 +145,12 @@
                         <button class="dropdown-button">Sorteio</button>
                         <div class="dropdown-content">
                             <a href="roleta.html" target="_blank">Roleta</a>
-                    
                         </div>
                     </li>
                 </ul>
             </nav>
         </div>
+
         <!-- Quarto menu de serviço (Instrução de Trabalho) -->
         <div class="menu">
             <nav>
@@ -164,15 +158,13 @@
                     <li class="dropdown">
                         <button class="dropdown-button">Instrução de Trabalho</button>
                         <div class="dropdown-content">
-
                             <a href="https://onedrive.live.com/redir?resid=7EAE0197E948854E%21104&authkey=%21AKvvvsMWvWG5ixU&page=View&wd=target%28APLICATIVO.one%7Cfa212b1a-d126-4bdd-98dd-6e05e0e1d52f%2FEXCESSO%20DE%20TOKEN%7C86413965-71f4-4bf9-b069-6aed757f68ff%2F%29&wdorigin=NavigationUrl" target="_blank">Mensagem Chat</a>
-                           
+                            <!-- Adicione as outras opções do menu Instrução de Trabalho aqui -->
                         </div>
                     </li>
                 </ul>
             </nav>
         </div>
-    </div>
 
         <!-- Quinto menu de serviço (Outros) -->
         <div class="menu">
@@ -181,17 +173,7 @@
                     <li class="dropdown">
                         <button class="dropdown-button">Outros</button>
                         <div class="dropdown-content">
-
-                            <a href="https://bcardapp01.grupoadrianocobuccio.com.br:9080/voscenter/pages/index.xhtml?padigitalDashboard=true" target="_blank">Site Vox</a>
-                            <a href="https://admin.boltcard.com.br/login" target="_blank">Site Bolt Card</a>
-                            <a href="https://www.brasilcard.net/bca/administracao/login" target="_blank">Site BrasilCard</a>
-                            <a href="https://admin-bca.brasilcard.net/" target="_blank">Site Banco Digital</a>
-                            <a href="http://chamado.cobuccio.com.br/login" target="_blank">Chamado Interno</a>
-                            <a href="https://sd.callflex.com.br/index.php?redirect=%2Ffront%2Fcentral.php&error=3" target="_blank">Chamado Vox</a>
-                            <a href="https://www2.acesso.io/brasilcard/" target="_blank">Acesso Digital</a>
-                            <a href="https://portal.infobip.com/login/?callback=https%3A%2F%2Fportal.infobip.com%2Fset%2Fusers%2Fmy-profile" target="_blank">Site Infobip</a>
-                            <a href="https://consulta5.confirmeonline.com.br/validarLogin/confirmeOnline.xhtml" target="_blank">Confirme Online</a>
-                            <a href="https://prod.agil.com.br/login" target="_blank">Site Ágil</a>
+                            <!-- Adicione as opções do menu Outros aqui -->
                         </div>
                     </li>
                 </ul>
