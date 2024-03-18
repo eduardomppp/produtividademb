@@ -14,15 +14,7 @@ const items = [
     ['Item 13', 1],
     ['Item 14', 1],
     ['Item 15', 1],
-    ['Item 16', 1],
-    ['Item 17', 1],
-    ['Item 18', 1],
-    ['Item 19', 1],
-    ['Item 20', 1],
-    ['Item 21', 1],
-    ['Item 22', 1],
-    ['Item 23', 1],
-    ['Item 24', 1],
+    
 ]
 
 $('.div-roulette').on('click', function() {rodaARoda()});
