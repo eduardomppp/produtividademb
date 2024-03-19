@@ -967,80 +967,99 @@
     </script>
 
 <style>
-        /* Estilo da caixa de diálogo */
-    /* Estilo da caixa de diálogo */
-    .dialog-box {
-        /* Posicionamento e dimensões */
-        position: relative;
-        float: right;
-        max-width: 400px;
-        bottom: 610px;
+            /* Estilo da caixa de diálogo */
+        .dialog-box {
+            position: relative;
+            float: right;
+            max-width: 400px;
+            bottom: 610px;
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #0080FF;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: dialogBoxFadeIn 0.5s;
+        }
 
-        /* Margens e espaçamentos */
-        margin-top: 20px;
-        padding: 20px;
+        @keyframes dialogBoxFadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
 
-        /* Borda e fundo */
-        border: 2px solid #0080FF;
-        border-radius: 10px;
-        background-color: #f5f5f5;
+        .dialog-box:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
+        }
 
-        /* Sombra */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        /* Estilo da entrada de texto */
+        #userInput {
+            width: 70%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
 
-    /* Estilo da entrada de texto */
-    #userInput {
-        /* Dimensões e espaçamentos */
-        width: 70%;
-        padding: 8px;
-        margin-top: 10px;
+        #userInput:focus {
+            border-color: #0080FF;
+            box-shadow: 0 0 5px rgba(0, 128, 255, 0.5);
+        }
 
-        /* Borda */
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+        /* Estilo do botão */
+        button {
+            padding: 8px 16px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0080FF;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: buttonFadeIn 0.5s;
+        }
 
-    /* Estilo do botão */
-    button {
-        /* Dimensões e espaçamentos */
-        padding: 8px 16px;
-        margin-top: 10px;
+        @keyframes buttonFadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
 
-        /* Borda e fundo */
-        border: none;
-        border-radius: 5px;
-        background-color: #0080FF;
+        button:hover {
+            background-color: #005cb2;
+            transform: scale(1.02);
+        }
 
-        /* Texto e cursor */
-        color: #fff;
-        cursor: pointer;
-    }
+        /* Estilo das mensagens do usuário e do bot */
+        .user-message, .bot-message {
+            max-width: 80%;
+            margin: 10px 0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            animation: messageFadeIn 0.5s;
+        }
 
-    /* Altera a cor de fundo do botão ao passar o mouse */
-    button:hover {
-        background-color: #005cb2;
-    }
+        @keyframes messageFadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
 
-    /* Estilo das mensagens do usuário e do bot */
-    .user-message, .bot-message {
-        /* Dimensões e espaçamentos */
-        max-width: 80%;
-        margin: 10px 0;
-        padding: 8px 12px;
+        .user-message {
+            background-color: #e6f7ff; /* Azul claro */
+            color: #000; /* Preto */
+        }
 
-        /* Borda */
-        border-radius: 5px;
-    }
+        .bot-message {
+            background-color: #f2f2f2; /* Cinza claro */
+            color: #000; /* Preto */
+        }
 
-    /* Cores de fundo das mensagens */
-    .user-message {
-        background-color: #f0f0f0;
-    }
+        .user-message:hover, .bot-message:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    .bot-message {
-        background-color: #e5f7ff;
-    }
 
 </style>
 
