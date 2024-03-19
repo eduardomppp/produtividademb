@@ -4,46 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtividade MB</title>
-    <!-- Seu CSS -->
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Adicione estilos para a caixa de diálogo aqui */
-        .chat-container {
-            max-width: 500px;
-            margin: 0 auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .chat-messages {
-            height: 300px;
-            overflow-y: scroll;
-            padding: 10px;
-        }
-
-        .chat-input {
-            width: calc(100% - 20px);
-            padding: 5px 10px;
-            border: none;
-            border-top: 1px solid #ccc;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        .chat-submit {
-            width: 100%;
-            padding: 10px;
-            background-color: #0080FF;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            outline: none;
-        }
-    </style>
-</head>
-<body>
-/* Estilo do corpo */
+        /* Estilo do corpo */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -283,37 +246,4 @@
     </p>
 </body>
 </html>
-<!-- Adicione a caixa de diálogo aqui -->
-    <div class="chat-container">
-        <div class="chat-messages" id="chat-messages"></div>
-        <input type="text" class="chat-input" id="user-input" placeholder="Digite sua mensagem...">
-        <button class="chat-submit" onclick="sendMessage()">Enviar</button>
-    </div>
 
-    <!-- Seu código JavaScript existente -->
-    <!-- ... -->
-
-    <script>
-        // Função para enviar mensagem do usuário
-        function sendMessage() {
-            var userInput = document.getElementById('user-input').value;
-            displayMessage('user', userInput); // Exibe a mensagem do usuário na área de mensagens
-            // Aqui você pode enviar a mensagem para o backend e obter a resposta
-            // Por simplicidade, vamos apenas exibir uma resposta fixa por enquanto
-            var response = "Olá! Sou a IA de instrução de trabalho. Como posso ajudar?";
-            displayMessage('bot', response); // Exibe a resposta do bot na área de mensagens
-            document.getElementById('user-input').value = ''; // Limpa o campo de entrada do usuário
-        }
-
-        // Função para exibir mensagens na área de mensagens
-        function displayMessage(sender, message) {
-            var chatMessages = document.getElementById('chat-messages');
-            var messageElement = document.createElement('div');
-            messageElement.classList.add('message', sender);
-            messageElement.innerText = message;
-            chatMessages.appendChild(messageElement);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Rolagem automática para a última mensagem
-        }
-    </script>
-</body>
-</html>
