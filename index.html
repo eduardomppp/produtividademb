@@ -59,7 +59,7 @@
         }
 
         .dropdown-button:hover {
-            background: linear-gradient(to bottom, #3498db9 0%, #3498db 100%);
+            background: linear-gradient(to bottom, #3498db 0%, #3498db 100%);
         }
 
         /* Estilo do título */
@@ -98,6 +98,7 @@
             margin-right: 0;
         }
     </style>
+
 </head>
 <body>
     
@@ -205,12 +206,736 @@
         </div>
     </div>
 
+    <script>
+        function sendMessage() {
+        var userInput = document.getElementById('userInput').value;
+        var dialog = document.getElementById('dialog');
+
+        // Exibe a mensagem do usuário na caixa de diálogo
+        dialog.innerHTML += '<p class="user-message">Você: ' + userInput + '</p>';
+
+        // Aqui você pode processar a entrada do usuário e gerar uma resposta
+        var botResponse;
+        if (userInput == 'bom dia','Bom dia', 'Boa tarde', 'boa tarde', 'Boa noite', 'boa noite', 'ola', 'olá','oi','opa') {
+            botResponse = `
+        <p><b style="color: #003366;">Olá! Como posso ajudar você hoje? Digite o número da opção desejada:</b></p>
+        <table>
+            <tr><td><span style="color: #003366; font-weight: bold;">1</span></td><td><span style="color: #003366; font-weight: bold;">- Aplicativo</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">2</span></td><td><span style="color: #003366; font-weight: bold;">- Atendimento ao lojista</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">3</span></td><td><span style="color: #003366; font-weight: bold;">– Atendimento Geral</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">4</span></td><td><span style="color: #003366; font-weight: bold;">- Aumento de Limite</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">5</span></td><td><span style="color: #003366; font-weight: bold;">– Autorização de Venda</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">6</span></td><td><span style="color: #003366; font-weight: bold;">– Tipos de Bloqueio</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">7</span></td><td><span style="color: #003366; font-weight: bold;">– Cancelamento de Cartão</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">8</span></td><td><span style="color: #003366; font-weight: bold;">– Crediário Acima</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">9</span></td><td><span style="color: #003366; font-weight: bold;">- Crediário Popular</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">10</span></td><td><span style="color: #003366; font-weight: bold;">– Desbloqueio</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">11</span></td><td><span style="color: #003366; font-weight: bold;">- Encargos</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">12</span></td><td><span style="color: #003366; font-weight: bold;">- Estorno</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">13</span></td><td><span style="color: #003366; font-weight: bold;">- Lembretes</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">14</span></td><td><span style="color: #003366; font-weight: bold;">– Negociação</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">15</span></td><td><span style="color: #003366; font-weight: bold;">– Recarga</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">16</span></td><td><span style="color: #003366; font-weight: bold;">– Regras de Restrição</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">17</span></td><td><span style="color: #003366; font-weight: bold;">– 2ª Via de Cartão</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">18</span></td><td><span style="color: #003366; font-weight: bold;">– 2ª Via de Fatura</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">19</span></td><td><span style="color: #003366; font-weight: bold;">- Senha</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">20</span></td><td><span style="color: #003366; font-weight: bold;">- Serviço de SMS</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">21</span></td><td><span style="color: #003366; font-weight: bold;">- Transferências</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">22</span></td><td><span style="color: #003366; font-weight: bold;">– Validação de Dados</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">23</span></td><td><span style="color: #003366; font-weight: bold;">- Saldo</span></td></tr>
+            <tr><td><span style="color: #003366; font-weight: bold;">24</span></td><td><span style="color: #003366; font-weight: bold;">- Alteração de Cadastro</span></td></tr>
+            </table>
+`;
+                if (userInput == 1) {
+                    botResponse =  `<br> 
+                    <br> 
+                1° Em todos os atendimentos devem ser ofertados o App BrasilCard Cliente<br>
+                <br>
+                2° Através do aplicativo consegue:<br>
+                <br>
+                <b>Desbloqueio -></b> apenas precisa preencher o Número do cartão, data de nascimento, validade e
+                o CVV do cartão.<br>
+                <br>
+                <b>Saldo do cartão -></b> é possível visualizar somente o limite sem extra, limite com extra apenas no
+                Teleatendimento.<br>
+                <br>
+                <b>Recarga -></b> (ATUALMENTE O SERVIÇO ESTÁ INDISPONÍVEL, PORTANTO, DEVE SER REALIZADO
+                PELA CENTRAL OU IR ATÉ A LOJA MAIS PRÓXIMA)<br>
+                <b>Saque -></b> Através da opção Solicitar Saque, caso cliente não conseguir deverá transferir para a
+                Ágil<br>
+                <br>
+                <b>Locais de compras -></b> Preencher Estado e cidade e clicar em Buscar<br>
+                <br>
+                <b>Faturas -></b> é possível visualizar o valor da fatura em aberto, porém só ficará disponível para
+                pagamento quando fechar, onde também terá acesso ao histórico de faturas, sendo elas pagas
+                ou a pagar.<br>
+                <br>
+                <b>Alterar Senha do cartão -></b> Na aba Cartões é possível alterar a Senha, porém o cliente precisa
+                saber a senha anƟga, se não souber, deverá solicitar através do Teleatendimento.<br>
+                <b>Opção Perfil -></b> pode verificar o Número do cartão, Nome completo, Telefone cadastrado e E-
+                mail cadastrado<br>
+                <br>
+                <b>Aba Serviços -></b> Alterar a forma de recebimento das suas faturas para E-mail ou SMS, poderá
+                também Assinar o Serviço de SMS<br>  
+                    `
+                }
+                if (userInput == 2) {
+                    botResponse =  `<br> 
+                    <br> 
+                - Informar sobre as funções do site na área do lojista<br> 
+                <br>
+                <b>- Lojista se responsabiliza?</b> Solicitar: PDV, NOME DA LOJA, NOME COMPLETO DO CLIENTE,
+                <b>PRIMEIRO NOME DO LOJISTA.</b> Adicionar essas informações no lembrete. (Sempre questionando
+                sobre a responsabilidade).<br>  
+                <br>
+                <b>- Lojista não se responsabiliza?</b> Realizar a confirmação de dados com o Titular<br>  
+                <br> 
+                2. Todos os serviços realizados com lojista deverão ser adicionados no lembrete juntamente com
+                os dados solicitados.<br>  
+                <br>
+                <b>- Cancelamento de cartão:</b> Se o lojista se responsabilizar, pode ser realizado<br>  
+                <br>
+                <b>- Casos que o lojista não pode se responsabilizar:</b><br>  
+                <br>
+                <b>ADERIR AO PLANO DA GUARDIAN, CANCELAR O SERVIÇO DE SMS, ADERIR AO PACOTE DE
+                RECARGAS, ALTERAR A FORMA DE RECEBIMENTO DE FATURAS; SOLICITAR AUMENTO DE LIMITE.</b><br> 
+                <br>
+                Caso cliente apresente dificuldade ou tenha caracterísƟcas especiais, o lojista pode realizar os
+                procedimentos citados acima (Sempre quesƟonando sobre a responsabilidade).<br>  
+                <br>
+                <b>3. É estritamente proibido</b>  informar qualquer dado cadastral do cliente para o lojista (sempre
+                solicitar os dados do lojista e acrescentar ao lembrete).<br>  
+                <br>
+                <b>- Desbloqueio em loja:</b> Apenas se o cartão houver chegado, caso contrário será desbloqueado para
+                passar a venda e em seguida será bloqueado novamente.<br>  
+                    
+                    `
+                }
+
+                if (userInput == 3) {
+                    botResponse =  `<br>  
+                    <br>  
+                <b>1° Saudação inicial Padrão:</b> Atendimento Brasilcard, me chamo ______, bom dia (tarde ou noite), com quem eu falo?<br>  
+                <br>  
+                2° Cartão ativo não é necessário questionar se o cliente recebeu</b><br>  
+                <br>  
+                <b>13° Cliente possui 2 cartões:</b> perguntar para qual cartão o cliente deseja atendimento e confirmar  
+                os 4 úlƟmos dígitos ou local que fez.<br>  
+                <br>  
+                <b>14° Alteração do nome e data de nascimento:</b> A alteração deve ser realizada com base consulta
+                na receita federal<br>  
+                <br>  
+                <b>15° Atendimento ao lojista:</b> preencher o lembrete com o PDV, nome do lojista, protocolo e a
+                solicitação do lojista.<br>  
+                <br>  
+                <b>16° Fatura de Negociação é considerado histórico de pagamento</b><br>  
+                <br>  
+                7° Cliente em loja, não é necessário passar informações.<br>  
+                <br>  
+                8° Caso não for o Ɵtular não passar informações, somente confirmar 3 dados (nome, endereço
+                e data de nascimento).<br>  
+                <br>  
+                <b>9° Cliente se ausentou da ligação:</b> aguardar até 3 minutos, após isso chamar o cliente por 3 vezes
+                com o intervalo de 10 segundos, se não houver resposta, finalizar por falta de comunicação.<br>  
+                <br>  
+                <b>10° Pagou a fatura e seu limite não retornou:</b> O prazo de baixa bancária é de 24h úteis. Caso já
+                tenha ultrapassado, enviar o comprovante (comprovantes@brasilcard.net / (35) 99800-1346).<br> 
+                <br> 
+                <b>11° Não possui locais de compra na TelaWeb:</b> Informar os locais online.<br>  
+                <br>  
+                <b>12° Se o cliente possuir Negociação ou Parcelamento Automático:</b> não será aprovado outro
+                cartão, sendo fidelidade ou Padrão.<br>  
+                <br>  
+                13° Cartão adicional: somente no lojista<br>  
+                <br>  
+                <b>14° Cliente entra em contato de um número restrito:</b> não informar ao cliente que o telefone não
+                aparece no sistema, apenas prosseguir normalmente com a validação de dados mais completa.<br>  
+                <br>  
+                <b>15° Cliente entra em contato questionando o motivo de terem ligado para ele:</b> Questionar se fez
+                alguma solicitação de emprésƟmo ou cartão, caso necessário solicitar o CPF           
+                    
+                    `
+                }
+                if (userInput == 4) {
+                    botResponse =  `
+                1. <b>CREDIÁRIO POPULAR</b><br>  
+                <br>  
+                - Solicitar o CPF, se o cliente esƟver apto, pode ser transferido para o Cred Popular sem validar
+                os dados. (Em caso de o cliente possuir Negociação, Parcelamento ou não possuir histórico de
+                fatura, deverá realizar a validação de dados e informar que não será possível.)<br>  
+                <br>  
+                - Limite de cartão Zerado, transferir ao crediário popular.<br>  
+                <br>  
+                - Em casos de cliente restrito, o aumento de limite automáƟco não ocorre. - Não é necessário
+                verificar restrições.<br>  
+                <br>  
+                - Aumento de limite só é realizado com o cliente, ou seja, lojista não pode realizar a solicitação
+                sem o Ɵtular presente.   
+                    
+                    ` 
+                }
+                if (userInput == 5) {
+                    botResponse =  `<br> 
+                    <br> 
+                1° Questionar o motivo do lojista está passando a venda. De acordo com a resposta do lojista,
+                deverá tratar o problema antes de realizar a venda.<br> 
+                <br> 
+                2° Dados para solicitar ao lojista: PDV, Pergunta de responsabilidade, Nome completo do cliente,
+                Nome da loja, Endereço da loja, Primeiro nome do lojista. Lembrando que sempre devemos
+                informar que qualquer divergência será descontada do PDV da loja.<br> 
+                <br> 
+                3° Validação correta para autorizar a venda com o cliente, caso o lojista não fique responsável
+                Nome, Data de nascimento, Idade, Endereço Completo (Rua, Número, Bairro e Cidade), Telefone
+                com o DDD, E-mail e Nome da mãe.<br> 
+                <br> 
+                4° Verificar o histórico de pagamento, se possuir pagamento recente até 3 meses, a venda poderá
+                ser realizada. Lembrando que o pagamento parcial também é considerado.<br> 
+                <br> 
+                5° Verificar o SCPC e SPC Brasil somente na opção Cliente/Usuário, pois apresenta as informações
+                mais atualizadas. Consulta de restrições:<br> 
+                <br>
+                SPC - 15 DIAS<br>
+                SCPC - 5 DIAS<br> 
+                <br> 
+                6° Cliente com MAIS de 3 restrições em locais diferentes a venda não poderá ser realizada.<br> 
+                <br> 
+                7° Se o cliente não esƟver dentro da nova regra, o procedimento de Autorização não poderá ser
+                realizado.<br> 
+                <br> 
+                8° Se houver redução de limite deve ser realizada antes de autorizar a venda. Se o limite do
+                cliente for inferior ao valor da venda, não poderá ser realizada.<br> 
+                <br> 
+                9° Se o cliente possuir 3 restrições independente do período, devemos realizar a redução do
+                limite antes da autorização de venda. Norte e Nordeste - 100. Demais regiões - 150.<br> 
+                <br> 
+                10° Após todo o procedimento ser realizado, verificar na fatura do cliente se a venda foi realizada
+                corretamente (Valor e QuanƟdade de parcelas).<br> 
+                <br> 
+                11° Nunca informar ao cliente que os juros da venda é uma políƟca interna da loja e sim um
+                acordo entre Brasilcard e Estabelecimento.<br> 
+                <br> 
+                12° Nunca devemos garanƟr para o cliente que ele pode realizar autorização de venda, pois nem
+                todas as lojas realizam essa prática. Informar ao cliente que ele pode verificar a possibilidade
+                com o lojista
+                                    
+                    `
+                }
+                if (userInput == 6) {
+                    botResponse =  `</b>
+                </b>
+                <b>- Cancelamento do cartão -</b> "Sem interesse no cartão - Compra à vista" não gera taxa para o
+                cliente<br> 
+                <br> 
+                <b>- Pagamento em atraso e solicitação de bloqueio -</b> é gerada uma fatura de juros<br> 
+                <br> 
+                <b>- Bloqueio por quitação de débito –</b> É realizado quando cliente possui faturas em aberto e quer
+                cancelar o cartão<br> 
+                <br> 
+                <b>- Bloqueio por Perda –</b> Perda do cartão.<br> 
+                <br> 
+                <b>- Bloqueio Protesto -</b> Após o acúmulo de 2 faturas vencidas.<br> 
+                <br> 
+                <b>- Bloqueio por inadimplência -</b> Ocorre no 8º dia de atraso da primeira fatura.<br> 
+                <br> 
+                <b>- Cliente solicita apenas o Bloqueio do cartão é necessário passar informações.</b><br> 
+                <br> 
+                <b>- Mesmo com o cartão bloqueado o Plano Guardian virá normalmente nas fatura </b> 
+                    
+                    `
+                }
+                if (userInput == 7) {
+                    botResponse =  `<br> 
+                    <br> 
+                    
+                - Só poderá ser realizado se não houver débito pendente<br> 
+                <br> 
+                - Se o cliente entrar em contato solicitando cancelamento por possuir outro cartão Brasilcard,
+                oferecer a transferência de limite de um cartão para outro (Cred. Popular)<br> 
+                <br> 
+                - Faturas Abertas: oferecer Bloqueio por Quitação de débitos<br> 
+                <br> 
+                - Nunca devemos solicitar o cancelamento total do cartão, apenas bloquear com o moƟvo de
+                "Sem interesse no Cartão - Compra à vista".<br> 
+                <br> 
+                - Cancelamento só é realizado após tentaƟva de argumentação.<br> 
+                <br> 
+                - DICA DE ARGUMENTAÇÃO: “O cartão BrasilCard não possui nenhuma taxa de anuidade, só será
+                cobrado algo se for uƟlizado. O bom de você deixar ele aƟva, é que se por acaso vier uma
+                necessidade em uƟlizar, você pode comprar normalmente, além disso, você pode fazer saques
+                emergenciais e pode ajudar você no momento preciso. Lembrando que não será cobrado nada
+                se não for uƟlizado.”<br> 
+                <br> 
+                - Cliente deseja o cancelamento pois não possui locais de compra na sua região, deve oferecer o
+                Saque e os sites de compras online (Vimini, Eletrozema e Pop Calçados)<br> 
+                <br> 
+                - Sempre que o cliente solicitar o cancelamento, porém possui a úlƟma fatura vencida, Atendente
+                deve informar que o cliente receberá outra fatura referente aos juros.<br> 
+                <br> 
+                - Cancelamento de cartão em casos de Reprocesso Abaixo deverá ser transferido para o setor de
+                Negociação!
+                    ` 
+                }
+                if (userInput == 8) {
+                    botResponse =  `
+                1° Novas propostas acima de 350,00 devemos transferir para o crediário acima.<br> 
+                <br> 
+                2° Nunca transferir para o crediário acima o cancelamento do seguro Prestamista.<br> 
+                       
+                    
+                    `
+                }
+                if (userInput == 9) {
+                    botResponse =  `<br> 
+                    <br> 
+                1º Motivo do Cadastro negado<br> 
+                <br> 
+                2° Aumento de limite independentemente do valor<br> 
+                <br> 
+                3° Se o cliente entra em contato informando sobre o seu cartão Brasilcard, porém não foi possível
+                encontrar o cadastro do cliente, podemos transferir<br> 
+                <br> 
+                4° Para aumento de limite é necessário ter pelo menos 2 (duas) faturas pagas. Se ele Ɵver menos
+                que isso a transferência não pode ser realizada<br> 
+                <br> 
+                5° Se o lojista fala que realizou a proposta do cartão do cliente, porém ela consta em análise ou
+                pendente devemos quesƟonar o valor da proposta e se for menor ou igual a 350 devemos
+                transferir para o crediário popular<br> 
+                <br> 
+                6° Drogaria total não realiza transferências de limite. Sendo assim não necessita a transferência
+                para o setor de crediário, apenas informe ao cliente.
+                    
+                    `
+                }
+                if (userInput == 10) {
+                    botResponse =  `<br> 
+                    <br> 
+                1° Desbloqueio de cartão só poderá ser realizado somente se o cliente já possuir o cartão em
+                mãos.<br> 
+                Se o cartão não Ɵver chegado, informar ao cliente que poderá entrar em contato novamente
+                assim que o cartão chegar e sempre verificar o Listar Ocorrências para ver se está dentro do
+                prazo de entrega. Se o prazo estiver acima de 30 dias, tratar o caso.<br> 
+                <br> 
+                - Validação para Desbloqueio de cartão: Nome completo, Data de nascimento, Idade, Endereço
+                completo (Rua, Número, Bairro e Cidade), Telefone com o DDD, E-mail, Nome da mãe, 4 úlƟmos
+                dígitos do cartão e Validade do cartão.<br> 
+                <br> 
+                - Primeiro passo: Verificar o Histórico de fatura do cliente, se o cliente possuir faturas pagas total
+                ou parcial no período de 3 meses, o desbloqueio poderá ser realizado com o valor total. Se não
+                possui, verificar no próximo passo!<br> 
+                <br> 
+                - Se o cliente possui até 3 restrições independente do período, podemos realizar o desbloqueio
+                desde que o cliente não seja do Rio de janeiro e possuir de 25 a 70 anos.<br> 
+                <br> 
+                - Se o cliente possuir 3 restrições em locais diferentes o desbloqueio NÃO poderá ser realizado;<br> 
+                <br> 
+                - Verificar o SCPC e SPC Brasil somente na opção Cliente/Usuário, pois apresenta as informações
+                mais atualizadas.<br> 
+
+                - Não devemos realizar Desbloqueio de cartão se o cliente não souber informar o CPF<br> 
+                <br> 
+                - Nunca devemos solicitar o número do cartão para acessar o cadastro!<br> 
+                <br> 
+                - Referente a consulta de restrições, quando o cliente não possuir histórico de pagamento de
+                fatura, o prazo será:<br
+                SPC BRASIL- 15 DIAS | SCPC - 5 DIAS<br> 
+                <br> 
+                -Se for necessário a redução de limite, devemos verificar se o cliente já uƟlizou, se sim, a redução
+                deverá ser de acordo com o valor já utilizado pelo cliente.<br> 
+                <br> 
+                - Exemplo: Cliente com restrição, do Nordeste, devemos reduzir o limite para 100,00 reais, porém
+                o cliente já uƟlizou 550,00 reais de limite antes de desbloquear, sendo assim a redução deverá
+                ser para 550,00 e não 100,00.<br> 
+                <br> 
+                - Se Ɵver qualquer Ɵpo de dúvidas sobre a nova regra de Desbloqueio, verificar na aba de Regra
+                de Restrição.          
+                    
+                    `
+                }
+                if (userInput == 11) {
+                    botResponse =  `<br> 
+                    <br> 
+                1° Sempre que o cliente paga suas faturas em atraso, os juros serão cobrados na fatura do mês
+                seguinte<br> 
+                <br> 
+                - A data limite para pagamento é uma data em que o cliente pode pagar sua fatura antes do valor
+                ser reprocessado para a próxima fatura.<br> 
+                <br> 
+                - Ex: Se o vencimento do cliente é todo dia 10, ele tem a data limite para pagamento até dia 24,
+                porém ele pagou dia 20, neste cenário será cobrado juros referentes a 10 dias de atraso.<br> 
+                <br> 
+                - Porcentagem de juros cobrados da fatura paga em atraso<br> 
+                <br> 
+                - 2% de multa após o vencimento<br> 
+                <br> 
+                - 0,63% ao dia aproximadamente<br> 
+                <br> 
+                - No 8º dia de atraso é cobrado R$ 15,00 e o cartão é bloqueado por inadimplência.<br> 
+                <br> 
+                - Taxa de 18,99% de reprocesso de fatura.<br> 
+                <br> 
+                - Não podemos calcular os juros para o cliente, pois como são juros capitalizados, o valor não irá
+                sair exato na calculadora.<br> 
+                <br> 
+                - Lembrando que todas as informações de juros e encargos estão descritas na fatura do cliente             
+                                    
+                    ` 
+                }
+                if (userInput == 12) {
+                    botResponse =  `<br> 
+                    <br> 
+                1. Estorno de Venda<br> 
+                <br> 
+                - Lojista passou a venda errada ou cliente desisƟu?<br> 
+                <br> 
+                - Somente o lojista quem faz a solicitação.<br> 
+                <br> 
+                - Confirmação de dados:<br> 
+                <br> 
+                CPF;<br> 
+                NOME COMPLETO DO CLIENTE;<br> 
+                VALOR DA COMPRA;<br> 
+                DATA DA COMPRA;<br> 
+                NÚIMERO DA AUTORIZAÇÃO;<br> 
+                MOTIVO DO ESTORNO;<br> 
+                PDV;<br> 
+                NOME DO LOJISTA RESPONSÁVEL;<br> 
+                TELEFONE DA LOJA.<br> 
+                <br> 
+                - Envio dos dados: estorno@brasilcard.net<br> 
+                <br> 
+                - Prazo para resposta no e-mail: 48h úteis.<br> 
+                <br> 
+                2. Estorno Caixa Web (Pagamento de Fatura)<br> 
+
+                - É solicitado quando o lojista passa o valor da fatura incorreto e quer corrigi-la.<br> 
+                <br> 
+                - Somente o lojista quem faz a solicitação.<br> 
+                <br> 
+                - Confirmação de dados:<br> 
+                <br> 
+                CPF;<br> 
+                <br> 
+                NOME COMPLETO DO CLIENTE;<br> 
+                <br> 
+                VALOR DA FATURA;<br> 
+                <br> 
+                DATA DA BAIXA DA FATURA;<br> 
+                <br> 
+                NÚMERO DA AUTORIZAÇÃO;<br> 
+                <br> 
+                MOTIVO DO ESTORNO;<br> 
+                <br> 
+                PDV;<br> 
+                <br> 
+                NOME DO LOJISTA RESPONSÁVEL (nome do lojista que enviou o e-mail).<br>
+                <br> 
+                - Envio dos dados: estorno@brasilcard.net;<br> 
+                <br> 
+                - Estorno deverá ser realizado no mesmo dia que foi dada a baixa da fatura.       
+                    `
+                }
+                if (userInput == 13) {
+                    botResponse =  `<br>
+                    <br>
+                    
+                1° Atendimento que precisam de lembrete<br>
+                <br>
+                - Em todos os atendimentos que houver voz divergente ou divergência na confirmação de dados
+                deve ser sinalizado em lembrete.<br>
+                <br>
+                - Quando houver movimentação no cadastro com o cliente deverá ser adicionado ao lembrete
+                (desbloqueio, alteração de cadastro, 2ª via de cartão, reenvio, recarga, cancelamento de cartão,
+                SMS, seguro prestamista e antecipação de fatura)<br>
+                <br>
+                - Todo atendimento com o lojista em que ele solicite alguma movimentação, deverá ser
+                adicionado ao lembrete (senha, venda, desbloqueio, alteração de cadastro, 2ª via de cartão,
+                recarga, cancelamento e antecipação de fatura)<br>
+                <br>
+                - Quando a ligação cai e não é possível realizar o retorno, deve ser adicionado ao lembrete.<br>
+                <br>
+                2° Atendimento que NÃO precisam de lembrete<br>
+                <br>
+                - Se o cliente entra em contato para saber informações básicas como saldo, valor de fatura,
+                vencimentos, locais de compras e demais informações que sejam consideradas básicas<br>
+                <br>
+                - Quando é orientado pela supervisão que não estão passando informações<br>
+                <br>
+                - Se o cliente deseja realizar alguma movimentação no cadastro, porém não foi possível realizar.   
+                    `
+                }
+                if (userInput == 14) {
+                    botResponse =  `<br>
+                    <br>
+                - Cartão protestado - Negociação.<br>
+                <br>
+                - Se o cliente discordar de como a Negociação foi realizada, podemos realizar a transferência
+                para o setor de negociação<br>
+                <br>
+                - Não devemos nunca transferir um cliente com faturas em conferência para o setor de
+                Negociação<br>
+                <br>
+                - Se o cliente deseja renegociar podemos orientar a realizar esse procedimento no App ou no
+                Site, porém a transferência para o setor de negociação é devida<br>
+                <br>
+                - Não podemos realizar a transferência para o setor de Negociação quando o cliente solicitar
+                saber o valor de juros atualizados, apenas devemos informar que não é possível chegar em um
+                valor exato e que o cliente precisa aguardar a fatura fechar.<br>
+                <br>
+                - Negociação não dá desconto em nenhum caso.<br>
+                <br>
+                - Se o cliente quiser saber informações sobre como a negociação foi realizar não é necessário
+                transferir, pois no lembrete tem todas as informações sobre a Negociação
+                    
+                    `
+                }
+                if (userInput == 15) {
+                botResponse =  `<br>
+                <br>
+                1° A primeira recarga no número, não conseguirá pelo App Brasilcard, apenas pela Central de
+                Atendimento.<br>
+                <br>
+                2° Valor mínimo para recarga independentemente da Operadora será de 20,00 reais.<br>
+                <br>
+                3° É liberado 20% do limite do cliente para recarga.<br>
+                <br>
+                4° Toda recarga tem uma taxa de R$ 2,99 que deve ser informado ao cliente.<br>
+                <br>
+                5° Atendente deve ter bastante atenção na hora de realizar a recarga, pois se for realizado de
+                forma incorreta, o Atendente terá que se responsabilizar.<br>
+                <br>
+                6° Proibido realizar recargas em números de DDD's diferentes do que está no cadastro, exceto
+                se o número já esƟver cadastrado no sistema, caso contrário deverá ir ao lojista.<br>
+                <br>
+                9° Só podemos parcelar o valor da recarga com o valor mínimo de 50,00 em no máximo 2 vezes.
+                Recargas de 100,00, podem ser parcelados em 3 vezes. 
+                
+                `
+                }
+                if (userInput == 16) {
+                    botResponse =  `<br>
+                    <br>
+                    
+                1° Até 3 Restrições, poderá realizar procedimento normal com redução de limite<br>
+                <br>
+                - Se o cadastro vier com 50,00, não podemos aumentar para 150 ou 100, apenas reduzir se vier
+                maior que isso.<br>
+                <br>
+                - Se o cliente vier com o limite de 100 ou 150, devemos verificar se o cliente já está na nova
+                regra.<br>
+                <br>
+                2° Se o cliente possuir restrições independente do período, devemos realizar a redução do limite.
+                Norte e Nordeste - 100. Demais regiões - 150.<br>
+                <br>
+                - Estados do Norte - RO, TO, PA, AM, AP, RR, AC.<br>
+                <br>
+                - Estados do Nordeste - MA, PI, CE, RN, PB, PE, AL, SE, BA.<br>
+                <br>
+                - Somente o Estado do RIO DE JANEIRO não entra na nova regra.<br>
+                <br>
+                - Todos os ramos de aƟvidade entram na regra de restrição<br>
+                <br>
+                3° Se o cliente no ato da aprovação do cartão, não possuir restrições, porém no ato do
+                desbloqueio verificarmos que ele adquiriu uma restrição, devemos realizar a redução do limite.<br>
+                <br>
+                - Se o cliente possuir menos de 25 anos e mais de 83 anos, sem histórico de pagamento e com
+                restrições, não podemos realizar os procedimentos (Desbloqueio e Autorização de vendas)
+                Podemos orientar o cliente a regularizar o débito, para não precisar reduzir o limite.<br>
+                <br>
+                Não podemos orientar o cliente a realizar compras para gerar histórico. Porém se o cliente
+                possuir faturas geradas, podemos orientar a realizar o pagamento. 
+                                    
+                    `
+                }
+                if (userInput == 17) {
+                    botResponse =  `<br>
+                    <br>
+                    
+                2ª via do cartão em casos de:<br>
+                <br>
+                Roubo, perda, cartão danificado é cobrado a taxa de 9,90<br>
+                <br>
+                Extravio, nunca chegou ou se chegou em endereço desconhecido, solicitar sem taxa<br>
+                <br>
+                - Lembrete Obrigatório: MOTIVO, INFORMADO DA TAXA (SIM OU NÃO), POSSUI HISTÓRICO DE
+                PAGAMENTO E/OU SE O SPC ESTÁ OK, PROTOCOLO, CÓDIGO DE RASTREIO SE TIVER.<br>
+                <br>
+                - Dados da entrega é apenas para o Ɵtular (Se chegou, quem recebeu e endereço de entrega)<br>
+                <br>
+                - Adicionar todas as solicitações no forms;<br>
+                <br>
+                - Validar dados antes de realizar a solicitação (Rua, Número da residência, Bairro, Cidade e CEP).<br>
+                <br>
+                - Endereço correto e já faz mais de 20 dias da data da entrega o atraso poderá ser lançado na
+                TelaWeb.<br>
+                <br>
+                - Troca de endereço no período da entrega (será entregue no endereço antigo)<br>
+                <br>
+                - Se o cartão não for entregue, retornará para a transportadora e se constar endereço alterado,
+                a própria transportadora realiza o reenvio.         
+                    
+                    ` 
+                }
+                if (userInput == 18) {
+                    botResponse =  `<br>
+                    <br>
+                - A prioridade dos envios de faturas é pelo e-mail, os envios de fatura no WhatsApp é exceção<br>
+                <br>
+                - Antes de finalizar o atendimento deve verificar se o cliente recebeu a fatura   
+                    
+                    `
+                }
+                if (userInput == 19) {
+                    botResponse =  `<br>
+                    <br>
+                1° Antes de finalizar o atendimento deve verificar se o cliente recebeu a senha<br>
+                <br>
+                2° Deve ser feita a validação dos dados<br>
+                <br>
+                3° O envio de senha é somente pelo SMS<br>
+                <br>
+                4° A troca da senha pode ser feita pela central de atendimento ou através do App Brasilcard<br>
+                <br>
+                5° Se no Sistema Tela Web apresentar a mensagem que o cartão do cliente não suporta senha,
+                deverá explicar ao cliente que o seu cartão realiza compras mediante apresentação de
+                Documentos de IdenƟficação (RG) e Assinatura do titular.<br>
+                <br>
+                6° Não enviamos senha para cliente com o Status de Inadimplente ou Protesto.<br>
+                <br>
+                7° Todo cartão com senha tem o início 6087.<br>
+                <br>
+                8° Não é necessário pedir os dados do cartão (4 úlƟmos dígitos e Validade) no envio de senha.<br>
+                Porém se o cliente errar dados ou possui mais de 1 cartão, nesse cenário devemos solicitar.<br>
+                <br>
+                9° A senha poderá ser enviada tanto para o cliente quanto para o lojista se o cartão estiver com
+                o status de Ativo.
+                    ` 
+                }
+                if (userInput == 20) {
+                    botResponse =  `<br>
+                    <br>
+                Recebe Sms's de promoções, movimentações no cartão de forma imediata, data de vencimento,
+                melhor dia de compras etc.<br>
+                <br>
+                - Valor: 6,99 (acrescentado no fechamento da fatura). - Em faturas fechadas o valor de 6,99 não
+                será reƟrado, apenas nas próximas.<br>
+                <br>
+                - Em casos de cancelamento, deve ser realizada a argumentação mostrando os beneİcios do
+                serviço. Vale lembrar que o valor é cobrado uma vez ao mês quando houver faturas geradas.<br>
+                <br>
+                - Cancelamento realizado apenas pelo Ɵtular; em casos de dificuldade para confirmar dados, o
+                lojista poderá se responsabilizar.<br>
+                <br>
+                - Após o cancelamento, receberá as mensagens do serviço durante 2 meses período de carência    
+                    
+                    `
+                }
+                if (userInput == 21) {
+                    botResponse =  `<br>
+                    <br>
+                - Apenas para filas RCP e não ATV<br>
+                <br>
+                - Cred Acima RCP: Dúvidas sobre compras online e cancelamento de contrato<br>
+                <br>
+                - Cred Popular: Novas propostas de até 350,00<br>
+                <br>
+                - Suporte ao Lojista: Antecipação de recebíveis, dúvidas sobre caixa web, dúvidas sobre
+                pagamentos, treinamento, dúvidas sobre a máquina Bolt<br>
+                <br>
+                - Atendimento Ágil RCP: Dúvidas sobre emprésƟmo ou saque<br>
+                <br>
+                - Guardian RCP: Adesão do plano, Ɵrar dúvidas ou cancelar Guardian<br>
+                <br>
+                - EmprésƟmo Ágil RCP: Solicitação de EmprésƟmo ou Saque<br>
+                <br>
+                - Atendimento Ágil RCP: Dúvidas sobre emprésƟmo ou saque<br>
+                <br>
+                - Adesão: Credenciamento e novas parcerias<br>
+                <br>
+                - Negociação Ágil RCP: Antecipação ou negociação de fatura de emprésƟmo<br>
+                <br>
+                - Não transferir nenhum atendimento para as filas Empres Ágil N1, N2, N3, N4 e Reg Ágil<br>
+                <br>
+                - Não precisa realizar a confirmação de dados para realizar a transferência para outro setor.
+                Lembrando que será somente em casos que o cliente já pede atendimento para outros setores.          
+                    
+                    
+                    ` 
+                }
+                if (userInput == 22) {
+                    botResponse =  `<br>
+                    <br>
+                1° Dados a serem solicitados ao cliente: NOME COMPLETO, DATA DE NASCIMENTO, IDADE,
+                ENDEREÇO (RUA, NÚMERO, BAIRRO E CIDADE), TELEFONE COM O DDD, E-MAIL E NOME DA
+                MÃE.<br>
+                <br>
+                2° Em caso de erro na confirmação: solicitar dados adicionais (RG, ONDE FEZ O CARTÃO, ÚLTIMA
+                COMPRA (LOCAL E DATA), DATA DE VENCIMENTO, NOME DO PAI, SITUAÇÃO DE TRABALHO
+                (REGISTRADO OU AUTÔNOMO), RENDA MENSAL, PROFISSÃO<br>
+                <br>
+                3° Só devemos repassar os locais de compras após a validação de dados.<br>
+                <br>
+                4° Endereço cadastrado no da loja: não precisa perguntar o endereço para o cliente, apenas
+                perguntar o nome da loja e verificar se está correto. Se não Ɵver, deve ser solicitado dado
+                adicional
+                    
+                    `
+                }
+                if (userInput == 23) {
+                    botResponse =  `<br>
+                    <br>
+                - Limite sem extra e limite com extra no mesmo valor: tem uma Negociação, Parcelamento ativo
+                ou ainda não possui histórico de pagamento.<br>
+                <br>
+                - Quando utilizado o limite extra é cobrado a taxa de 10% do valor utilizado na primeira parcela
+                e estará descrito como limite de multa ultrapassado<br>
+                <br>
+                - Cálculo do limite extra:<br>
+                <br>
+                - Limite sem extra – valor da venda = resultado<br>
+                <br>
+                - Resultado x 10% = Valor uƟlizado
+                    
+                    
+                    ` 
+                }
+                if (userInput == 24) {
+                    botResponse =  `<br>
+                    <br>
+                  ...  
+                    
+                    
+                    
+                   ` 
+}
+    
+        } else if (userInput == 'sair') {
+            botResponse = 'Tchau! Tenha um ótimo dia!';
+        } else {
+            botResponse = 'Desculpe, eu não entendi. Você pode repetir, por favor?';
+        }
+
+        // Exibe a resposta do bot na caixa de diálogo
+        dialog.innerHTML += '<p class="bot-message">Bia: ' + botResponse + '</p>';
+
+        // Limpa o campo de entrada após o envio da mensagem
+        document.getElementById('userInput').value = '';
+    }
+
+    </script>
     <!-- Conteúdo da página -->
     <section class="content">
         <div class="content-image">
             <img id="image" src="https://eduardomppp.github.io/produtividademb/produtividade.gif" alt="Descrição da Imagem">
         </div>
+        
+        <!-- Adicione a caixa de diálogo após o conteúdo existente -->
+        <div class="dialog-box">
+            <div id="dialog"></div>
+            <input type="text" id="userInput" placeholder="Digite algo...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
 
+    
         <div class="content-text">
             <!-- Conteúdo de texto aqui -->
         </div>
@@ -241,8 +966,87 @@
         setInterval(toggleImage, 7000);
     </script>
 
+<style>
+        /* Estilo da caixa de diálogo */
+    /* Estilo da caixa de diálogo */
+    .dialog-box {
+        /* Posicionamento e dimensões */
+        position: relative;
+        float: right;
+        max-width: 400px;
+        bottom: 150px;
+
+        /* Margens e espaçamentos */
+        margin-top: 20px;
+        padding: 20px;
+
+        /* Borda e fundo */
+        border: 2px solid #0080FF;
+        border-radius: 10px;
+        background-color: #f5f5f5;
+
+        /* Sombra */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo da entrada de texto */
+    #userInput {
+        /* Dimensões e espaçamentos */
+        width: 70%;
+        padding: 8px;
+        margin-top: 10px;
+
+        /* Borda */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Estilo do botão */
+    button {
+        /* Dimensões e espaçamentos */
+        padding: 8px 16px;
+        margin-top: 10px;
+
+        /* Borda e fundo */
+        border: none;
+        border-radius: 5px;
+        background-color: #0080FF;
+
+        /* Texto e cursor */
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Altera a cor de fundo do botão ao passar o mouse */
+    button:hover {
+        background-color: #005cb2;
+    }
+
+    /* Estilo das mensagens do usuário e do bot */
+    .user-message, .bot-message {
+        /* Dimensões e espaçamentos */
+        max-width: 80%;
+        margin: 10px 0;
+        padding: 8px 12px;
+
+        /* Borda */
+        border-radius: 5px;
+    }
+
+    /* Cores de fundo das mensagens */
+    .user-message {
+        background-color: #f0f0f0;
+    }
+
+    .bot-message {
+        background-color: #e5f7ff;
+    }
+
+</style>
+
+
     <p style="color: red; text-align: center;">
-        <img src="https://eduardomppp.github.io/produtividademb/pppp.jpg" alt="Frase de Motivação">
+        <img src="" alt="">
     </p>
 </body>
 </html>
