@@ -15,7 +15,7 @@
             line-height: 1.6;
         }
         header {
-            background-color: #333;
+            background-color: #004074;
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -26,7 +26,7 @@
             font-size: 28px;
         }
         nav {
-            background-color: #444;
+            background-color: #004074;
             padding: 10px 0;
             text-align: center;
             margin-bottom: 20px;
@@ -62,7 +62,7 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: #444;
+            background-color: #004074;
             border-radius: 0 0 5px 5px;
             z-index: 1;
             width: 200px;
@@ -78,7 +78,7 @@
             text-decoration: none;
         }
         nav ul.menu li ul.submenu li a:hover {
-            background-color: #666;
+            background-color: #0027a6;
         }
         .content {
             display: none;
@@ -90,13 +90,13 @@
         }
         h2 {
             color: #444;
-            border-bottom: 2px solid #444;
+            border-bottom: 2px solid #004074;
             padding-bottom: 10px;
             margin-top: 30px;
             font-size: 24px;
         }
         p {
-            color: #666;
+            color: #ffffff;
             font-size: 16px;
         }
         .image-container {
@@ -124,17 +124,18 @@
             opacity: 1;
         }
         footer {
-            background-color: #333;
+            background-color: #004074;
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            position: absolute;
+            position: relative;
             bottom: 0;
             width: 100%;
             font-size: 14px;
+            margin-top: 50px; /* Ajuste de margem para posicionar o rodapé mais para baixo */
         }
         .nav-button {
-            background-color: #444;
+            background-color: #004074;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -144,20 +145,20 @@
             transition: background-color 0.3s ease;
         }
         .nav-button:hover {
-            background-color: #666;
+            background-color: #0027a6;
         }
         .header-image {
-            max-width: 100%; /* Ajuste a largura máxima conforme necessário */
-            max-height: 60px; /* Altura máxima ajustável conforme necessário */
+            max-width: 100%;
+            max-height: 60px;
             display: block;
             margin: 0 auto;
         }
+        
     </style>
 </head>
 <body>
 <header>
-     <!-- Adicione a imagem aqui -->
-     <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/Prod.png" alt="Descrição da imagem" class="header-image">
+     <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/log.gif" alt="Descrição da imagem" class="header-image">
 </header>
 <nav>
     <ul class="menu">
@@ -210,7 +211,6 @@
             </ul>
         </li>
     </ul>
-</li>  
 </nav>
 <button id="prevSection" class="nav-button">Anterior</button>
 <button id="nextSection" class="nav-button">Próximo</button>
@@ -239,9 +239,7 @@
 <div class="content">
     <h2 id="section2">INFORMAÇÃO APP</h2>
     <p> Sabia que através do seu aplicativo <strong>Brasilcard cliente</strong> você tem mais praticidade e segurança para fazer movimentações e atualizações ? 💙 Baixe nosso App <strong>BrasilCard Cliente</strong>. 📲😃 <br>
-    <strong>ANDROID:</strong> <a href="https://play.google.com/store/apps/details?id=net.brasilcard.cliente&hl=pt">https://play.google.com/store/apps/details?id=net.brasilcard.cliente&hl=pt</a> <br>
-    <strong>IPHONE:</strong> <a href="https://apps.apple.com/br/app/brasilcard-cliente/id1209142148">https://apps.apple.com/br/app/brasilcard-cliente/id1209142148</a></p>
-
+    
     <div class="image-container" id="image-container-2">
         <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/recado.png" alt="Imagem 1" class="active">
         <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/pix.jpeg" alt="Imagem 1" class="active">
@@ -311,26 +309,31 @@
         });
 
         // Ajusta a visibilidade dos botões de navegação
-        prevSectionButton.disabled = currentSectionIndex === 0;
-        nextSectionButton.disabled = currentSectionIndex === contents.length - 1;
+        if (currentSectionIndex === 0) {
+            prevSectionButton.style.visibility = 'hidden';
+        } else {
+            prevSectionButton.style.visibility = 'visible';
+        }
+
+        if (currentSectionIndex === contents.length - 1) {
+            nextSectionButton.style.visibility = 'hidden';
+        } else {
+            nextSectionButton.style.visibility = 'visible';
+        }
     }
-    // Função para alternar as imagens automaticamente
-    function autoChangeImages() {
+    //Código para alternar automaticamente as imagens
+    const imageContainers = document.querySelectorAll('.image-container');
+
+    imageContainers.forEach(container => {
+        let images = container.querySelectorAll('img');
+        let currentIndex = 0;
+
         setInterval(() => {
-            const currentImages = document.querySelectorAll('.content.active .image-container img');
-            const activeIndex = Array.from(currentImages).findIndex(img => img.classList.contains('active'));
-            const nextIndex = (activeIndex + 1) % currentImages.length;
-
-            currentImages[activeIndex].classList.remove('active');
-            currentImages[nextIndex].classList.add('active');
-        }, 5000); // 5000 milissegundos = 5 segundos
-    }
-
-    // Chama a função para alternar as imagens automaticamente
-    autoChangeImages();
-
-    // Atualiza a visibilidade da seção inicial
-    updateSectionVisibility();
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }, 5000); // Altera a imagem a cada 5 segundos
+    });
 </script>
 </body>
 </html>
