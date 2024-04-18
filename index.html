@@ -233,7 +233,7 @@
         <img src="https://eduardomppp.github.io/produtividademb/11.jpeg" alt="Imagem 13">
         <img src="https://eduardomppp.github.io/produtividademb/10.jpeg" alt="Imagem 14">
         <img src="https://eduardomppp.github.io/produtividademb/9.jpeg" alt="Imagem 15">
-        <img src="https://eduardomppp.github.io/produtividademb/2.jpeg" alt="Imagem 15">
+        <img src="https://eduardomppp.github.io/produtividademb/2.jpeg" alt="Imagem 16">
 
     </div>
 </div>
@@ -244,7 +244,6 @@
     <div class="image-container" id="image-container-2">
         <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/recado.png" alt="Imagem 1" class="active">
         <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/pix.jpeg" alt="Imagem 2" class="active">
-        <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/agill.jpeg" alt="Imagem 3" class="active">
        
     </div>
 </div>
@@ -337,25 +336,27 @@
         }, 5000); // Altera a imagem a cada 5 segundos
     });
     
-  // Primeiro, selecione todas as imagens 
-
+ // Primeiro, selecione todas as imagens 
 var images = document.querySelectorAll('.image-container img'); 
 
- 
+// Array para armazenar os links das imagens
+var imageLinks = [];
+
+// Preenche o array com os links das imagens
+images.forEach(image => {
+    imageLinks.push(image.src);
+});
 
 // Em seguida, adicione um evento de clique a cada imagem 
-
 for (var i = 0; i < images.length; i++) { 
-
-    images[i].addEventListener('click', function(e) { 
-
-        // Quando a imagem é clicada, abra a imagem em uma nova janela 
-
-        window.open(e.target.src); 
-
+    images[i].addEventListener('click', function() { 
+        // Encontra o índice da imagem clicada
+        var index = imageLinks.indexOf(this.src);
+        // Abre a imagem correspondente ao índice em uma nova janela
+        window.open(imageLinks[index]); 
     }); 
+}
 
-} 
 
 </script>
 </body>
