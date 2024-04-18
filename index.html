@@ -337,15 +337,24 @@
         }, 5000); // Altera a imagem a cada 5 segundos
     });
     
-    var images = document.querySelectorAll('.image-container img');
+   // Seleciona todas as divs com a classe image-container
+const imageContainers = document.querySelectorAll('.image-container');
 
-// Em seguida, adicione um evento de clique a cada imagem
-for (let i = 0; i < images.length; i++) {
-    images[i].addEventListener('click', function(e) {
-        // Quando a imagem é clicada, abra a imagem em uma nova janela
-        window.open(e.target.src);
+// Itera sobre cada div image-container
+imageContainers.forEach(container => {
+    // Seleciona todas as imagens dentro da div image-container atual
+    let images = container.querySelectorAll('img');
+
+    // Itera sobre cada imagem na div image-container atual
+    images.forEach(image => {
+        // Adiciona um evento de clique a cada imagem
+        image.addEventListener('click', function(e) {
+            // Quando a imagem é clicada, abre a imagem em uma nova janela
+            window.open(e.target.src);
+        });
     });
-}
+});
+
 </script>
 </body>
 </html>
