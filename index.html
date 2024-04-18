@@ -340,7 +340,7 @@
     var images = document.querySelectorAll('.image-container img');
 
 // Em seguida, adicione um evento de clique a cada imagem
-for (var i = 0; i < images.length; i++) {
+for (let i = 0; i < images.length; i++) {
     images[i].addEventListener('click', function(e) {
         // Quando a imagem é clicada, abra a imagem em uma nova janela
         window.open(e.target.src);
