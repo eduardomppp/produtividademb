@@ -158,7 +158,7 @@
 </head>
 <body>
 <header>
-     <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/log.gif" alt="Descrição da imagem" class="header-image">
+     <img src="https://eduardomppp.github.io/fotosprasitesdegest-o/Gestão à vista.png" alt="Descrição da imagem" class="header-image">
 </header>
 <nav>
     <ul class="menu">
@@ -335,28 +335,6 @@
             images[currentIndex].classList.add('active');
         }, 5000); // Altera a imagem a cada 5 segundos
     });
-    
- // Primeiro, selecione todas as imagens 
-var images = document.querySelectorAll('.image-container img'); 
-
-// Array para armazenar os links das imagens
-var imageLinks = [];
-
-// Preenche o array com os links das imagens
-images.forEach(image => {
-    imageLinks.push(image.src);
-});
-
-// Em seguida, adicione um evento de clique a cada imagem 
-for (var i = 0; i < images.length; i++) { 
-    images[i].addEventListener('click', function() { 
-        // Encontra o índice da imagem clicada
-        var index = imageLinks.indexOf(this.src);
-        // Abre a imagem correspondente ao índice em uma nova janela
-        window.open(imageLinks[index]); 
-    }); 
-}
-
 
 </script>
 </body>
