@@ -320,7 +320,7 @@
             nextSectionButton.style.visibility = 'visible';
         }
     }
-      // Função para alternar imagens automaticamente
+        // Função para alternar imagens automaticamente
     function autoSwitchImages() {
         const imageContainers = document.querySelectorAll('.image-container');
     
@@ -335,14 +335,16 @@
                 images[currentIndex].classList.add('active');
             }
     
-            // Altera a imagem a cada 3 segundos
+            // Chama a função switchImage uma vez para iniciar a alternância
+            switchImage();
+    
+            // Continua a alternar a imagem a cada 3 segundos
             setInterval(switchImage, 3000);
         });
     }
-
-// Chama a função para iniciar a alternância de imagens
-autoSwitchImages();
-
+    
+    // Chama a função para iniciar a alternância de imagens
+    autoSwitchImages();
 
 </script>
 </body>
