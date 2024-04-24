@@ -320,19 +320,29 @@
             nextSectionButton.style.visibility = 'visible';
         }
     }
-    //Código para alternar automaticamente as imagens
-    const imageContainers = document.querySelectorAll('.image-container');
+      // Função para alternar imagens automaticamente
+    function autoSwitchImages() {
+        const imageContainers = document.querySelectorAll('.image-container');
+    
+        imageContainers.forEach(container => {
+            const images = Array.from(container.querySelectorAll('img'));
+            let currentIndex = 0;
+    
+            // Remove a classe 'active' da imagem atual e adiciona à próxima
+            function switchImage() {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add('active');
+            }
+    
+            // Altera a imagem a cada 3 segundos
+            setInterval(switchImage, 3000);
+        });
+    }
 
-    imageContainers.forEach(container => {
-        let images = container.querySelectorAll('img');
-        let currentIndex = 0;
+// Chama a função para iniciar a alternância de imagens
+autoSwitchImages();
 
-        setInterval(() => {
-            images[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.add('active');
-        }, 5000); // Altera a imagem a cada 5 segundos
-    });
 
 </script>
 </body>
