@@ -162,8 +162,8 @@
             const nomesInput = document.getElementById('nomes').value;
             const nomes = nomesInput.split(',').map(nome => nome.trim()).filter(nome => nome.length > 0);
 
-            if (nomes.length < 5 || nomes.length > 20) {
-                alert('Por favor, insira entre 5 e 20 nomes.');
+            if (nomes.length < 2 || nomes.length > 100) {
+                alert('Por favor, insira entre 2 e 100 nomes.');
                 return;
             }
 
