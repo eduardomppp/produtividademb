@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio - BrasilCard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #00388b;
+            font-size: 2.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #00388b;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            resize: none;
+        }
+
+        button {
+            background-color: #00388b;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00388b;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ff4500;
+            display: none;
+        }
+
+        .caixa {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            position: relative;
+            display: none;
+            animation: balancar 2s infinite;
+            perspective: 800px;
+        }
+
+        .caixa .tampa {
+            width: 100%;
+            height: 40px;
+            background: #00388b;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px 10px 0 0;
+            transform-origin: top;
+            transition: transform 1s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(145deg, #00388b, #00388b);
+        }
+
+        .caixa .corpo {
+            width: 100%;
+            height: 100%;
+            background: #00388b;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(145deg, #00388b, #00388b);
+        }
+
+        .caixa.abrindo .tampa {
+            transform: rotateX(-90deg);
+        }
+
+        .nome-sorteado {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .nome-sorteado.mostrar {
+            opacity: 1;
+        }
+
+        .confete {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4500;
+            opacity: 0;
+            animation: confete 1s forwards;
+        }
+
+        @keyframes balancar {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        @keyframes confete {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(300px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sorteio - BrasilCard</h1>
+        <form id="sorteio-form">
+            <label for="nomes">Insira os nomes (separados por vírgula):</label>
+            <textarea id="nomes" rows="5" placeholder="Nome1, Nome2, Nome3, ..."></textarea>
+            <button type="button" onclick="realizarSorteio()">Sortear</button>
+        </form>
+        <div class="caixa" id="caixa">
+            <div class="tampa"></div>
+            <div class="corpo"></div>
+            <div id="nome-sorteado" class="nome-sorteado"></div>
+        </div>
+        <div id="resultado" class="resultado"></div>
+    </div>
+    <script>
+        function realizarSorteio() {
+            const nomesInput = document.getElementById('nomes').value;
+            const nomes = nomesInput.split(',').map(nome => nome.trim()).filter(nome => nome.length > 0);
+
+            if (nomes.length < 5 || nomes.length > 20) {
+                alert('Por favor, insira entre 5 e 20 nomes.');
+                return;
+            }
+
+            const resultadoDiv = document.getElementById('resultado');
+            const caixaDiv = document.getElementById('caixa');
+            const nomeSorteadoDiv = document.getElementById('nome-sorteado');
+            resultadoDiv.style.display = 'none';
+            caixaDiv.style.display = 'block';
+            caixaDiv.classList.remove('abrindo');
+            nomeSorteadoDiv.classList.remove('mostrar');
+            caixaDiv.style.animation = 'balancar 2s infinite';
+
+            setTimeout(() => {
+                caixaDiv.classList.add('abrindo');
+                caixaDiv.style.animation = 'none';
+
+                setTimeout(() => {
+                    const sorteado = nomes[Math.floor(Math.random() * nomes.length)];
+                    nomeSorteadoDiv.textContent = sorteado;
+                    nomeSorteadoDiv.classList.add('mostrar');
+                    resultadoDiv.innerHTML = `🎉 O nome sorteado é: <strong>${sorteado}</strong> 🎉`;
+                    resultadoDiv.style.display = 'block';
+                    soltarConfete();
+                }, 1000);
+            }, 2000);
+        }
+
+        function soltarConfete() {
+            for (let i = 0; i < 100; i++) {
+                const confete = document.createElement('div');
+                confete.className = 'confete';
+                confete.style.left = Math.random() * window.innerWidth + 'px';
+                confete.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                document.body.appendChild(confete);
+                confete.style.animationDelay = Math.random() + 's';
+                confete.addEventListener('animationend', () => confete.remove());
+            }
+        }
+    </script>
+</body>
+</html>
