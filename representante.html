@@ -98,7 +98,7 @@
 </head>
 <body>
 
-    <h1>Acompanhamento e Validação das Prospecções</h1>
+    <h1>Gestão e Análise de Prospecções Comerciais</h1>
 
     <label for="representantes">Selecione o Representante:</label>
     <select id="representantes" onchange="atualizarCalendario()">
@@ -138,16 +138,26 @@
     <script>
         const dadosRepresentantes = {
             'farley': [
-                { dia: '01/10/2024', visitas: 8, nota: '' },
-                { dia: '02/10/2024', visitas: 0, nota: 'Desconsiderado: dias, pois subiu fotos erradas' },
-                { dia: '03/10/2024', visitas: 11, nota: '' },
-                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+
+
             ],
             'marcus': [
-                { dia: '01/10/2024', visitas: 5, nota: '' },
+                { dia: '01/10/2024', visitas: 8, nota: '' },
                 { dia: '02/10/2024', visitas: 3, nota: '' },
-                { dia: '03/10/2024', visitas: 7, nota: 'Desconsiderado: dias, pois faltou relatório' },
-                { dia: '04/10/2024', visitas: 10, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: 'Aguardando Validação' },
             ],
             // Adicione dados para outros representantes aqui...
         };
