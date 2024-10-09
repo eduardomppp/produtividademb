@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhamento e Validação das Prospecções</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            background-color: #2980b9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            margin-bottom: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .botao {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-bottom: 20px;
+        }
+        .botao:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .calendario {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .dia {
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .dia:hover {
+            background-color: #e7f3fe;
+            transform: translateY(-2px);
+        }
+        .verde {
+            background-color: #a8e6cf;
+        }
+        .vermelho {
+            background-color: #ff8b8b;
+        }
+        .nota {
+            font-size: 14px;
+            color: #c0392b;
+            font-style: italic;
+        }
+        @media (max-width: 600px) {
+            .calendario {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Acompanhamento e Validação das Prospecções</h1>
+
+    <label for="representantes">Selecione o Representante:</label>
+    <select id="representantes" onchange="atualizarCalendario()">
+        <option value="">-- Selecione --</option>
+        <option value="farley">IND - FARLEY SALES</option>
+        <option value="marcus">IND - MARCUS GAMBOGI</option>
+        <option value="alex_chrystian">GER - ALEX - CHRYSTIAN ANTONIO ALVES MARTINS</option>
+        <option value="alex_eduardo">GER - ALEX - EDUARDO DALLA CORTE</option>
+        <option value="alex_lisiane">GER - ALEX - LISIANE FLORES RODRIGUES</option>
+        <option value="alex_luiz">GER - ALEX - LUIZ C GAUTO</option>
+        <option value="alex_marcelo">GER - ALEX - MARCELO TERRAS BUENO</option>
+        <option value="alex_pamela">GER - ALEX - PAMELA SCHMIDT</option>
+        <option value="alex_tiberio">GER - ALEX - TIBERIO FALCONI</option>
+        <option value="beto_adriano">GER - BETO - ADRIANO MARINO NARCIZO</option>
+        <option value="beto_edson">GER - BETO - EDSON ROBERTO MELLO</option>
+        <option value="beto_elis">GER - BETO - ELISANGELA COBUCCIO</option>
+        <option value="beto_francisco">GER - BETO - FRANCISCO EUGENIO DOS SANTOS</option>
+        <option value="beto_gino">GER - BETO - GINO SALVADORE COBUCCIO</option>
+        <option value="beto_katia">GER - BETO - KATIA APARECIDA A RODRIGUES</option>
+        <option value="beto_marcello">GER - BETO - MARCELLO OCTAVIO</option>
+        <option value="diego_eliane">GER - DIEGO - ELIANE GAMA FERREIRA</option>
+        <option value="diego_fabio">GER - DIEGO - FABIO REZENDE SOUZA</option>
+        <option value="diego_francisco">GER - DIEGO - FRANCISCO RODRIGUES DE OLIVEIRA</option>
+        <option value="diego_glausley">GER - DIEGO - GLAUSLEY DE FREITAS</option>
+        <option value="diego_gustavo">GER - DIEGO - GUSTAVO GONCALVES FERREIRA</option>
+        <option value="diego_helton">GER - DIEGO - HELTON RODRIGO</option>
+        <option value="diego_luciano">GER - DIEGO - LUCIANO FRANCISCO DOS SANTOS</option>
+        <option value="diego_marcus">GER - DIEGO - MARCUS VINICIUS DIAS</option>
+    </select>
+
+    <button class="botao" onclick="resetarSelecao()">Resetar Seleção</button>
+
+    <div class="calendario" id="calendario">
+        <!-- Os dias do calendário serão gerados aqui -->
+    </div>
+
+    <script>
+        const dadosRepresentantes = {
+            'farley': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: 'Desconsiderado: dias, pois subiu fotos erradas' },
+                { dia: '03/10/2024', visitas: 11, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+            ],
+            'marcus': [
+                { dia: '01/10/2024', visitas: 5, nota: '' },
+                { dia: '02/10/2024', visitas: 3, nota: '' },
+                { dia: '03/10/2024', visitas: 7, nota: 'Desconsiderado: dias, pois faltou relatório' },
+                { dia: '04/10/2024', visitas: 10, nota: '' },
+            ],
+            // Adicione dados para outros representantes aqui...
+        };
+
+        function atualizarCalendario() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+            const calendarioDiv = document.getElementById('calendario');
+            calendarioDiv.innerHTML = '';
+
+            const dados = dadosRepresentantes[representanteSelecionado] || [];
+
+            dados.forEach(dia => {
+                const diaDiv = document.createElement('div');
+                diaDiv.className = 'dia ' + (dia.visitas >= 8 ? 'verde' : (dia.nota ? 'vermelho' : ''));
+                diaDiv.innerHTML = `${dia.dia}<br>${dia.visitas}`;
+                if (dia.nota) {
+                    diaDiv.innerHTML += `<br><span class="nota">${dia.nota}</span>`;
+                }
+                calendarioDiv.appendChild(diaDiv);
+            });
+        }
+
+        function resetarSelecao() {
+            const selectRepresentantes = document.getElementById('representantes');
+            selectRepresentantes.selectedIndex = 0;
+            selectRepresentantes.dispatchEvent(new Event('change'));
+        }
+
+        // Inicializa o calendário vazio
+        atualizarCalendario();
+    </script>
+
+</body>
+</html>
