@@ -16,7 +16,7 @@
         h1 {
             text-align: center;
             color: #fff;
-            background-color: #2980b9;
+            background-color: #002842;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -29,35 +29,35 @@
             margin-bottom: 10px;
             display: block;
         }
+        .select-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-left: 10px;
+        }
         select {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border-radius: 5px;
             border: 1px solid #bdc3c7;
-            margin-bottom: 20px;
             font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        select:focus {
-            border-color: #3498db;
-            outline: none;
+            background: #ffffff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232a2a2a"><path d="M7 10l5 5 5-5H7z"/></svg>') no-repeat right 10px center;
+            background-size: 12px;
         }
         .botao {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
+            background: none;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            margin-bottom: 20px;
+            font-size: 24px;
+            color: #3498db;
+            margin-right: 10px;
         }
         .botao:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
+            color: #2980b9;
         }
         .calendario {
             display: grid;
@@ -72,11 +72,6 @@
             text-align: center;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .dia:hover {
-            background-color: #e7f3fe;
-            transform: translateY(-2px);
         }
         .verde {
             background-color: #a8e6cf;
@@ -84,111 +79,285 @@
         .vermelho {
             background-color: #ff8b8b;
         }
-        .nota {
-            font-size: 14px;
-            color: #c0392b;
-            font-style: italic;
+        .cinza {
+            background-color: #d3d3d3;
         }
-        @media (max-width: 600px) {
-            .calendario {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #002842;
+            color: white;
+        }
+        .dashboards {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .dashboard {
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+            font-size: 0.9em;
+        }
+        .valor {
+            font-size: 1.5em;
+            color: #27ae60;
+            margin-top: 5px;
+            font-weight: bold;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+    <h1>Acompanhamento e Validação das Prospecções</h1>
 
-    <h1>Gestão e Análise de Prospecções Comerciais</h1>
+    <div class="select-container">
+        <label for="visao">Escolha a visão:</label>
+        <select id="visao" onchange="atualizarCalendario()">
+            <option value="mes">Mês Todo</option>
+            <option value="quinzena1">Primeira Quinzena</option>
+            <option value="quinzena2">Segunda Quinzena</option>
+        </select>
+    </div>
 
-    <label for="representantes">Selecione o Representante:</label>
-    <select id="representantes" onchange="atualizarCalendario()">
-        <option value="">-- Selecione --</option>
-        <option value="farley">IND - FARLEY SALES</option>
-        <option value="marcus">IND - MARCUS GAMBOGI</option>
-        <option value="alex_chrystian">GER - ALEX - CHRYSTIAN ANTONIO ALVES MARTINS</option>
-        <option value="alex_eduardo">GER - ALEX - EDUARDO DALLA CORTE</option>
-        <option value="alex_lisiane">GER - ALEX - LISIANE FLORES RODRIGUES</option>
-        <option value="alex_luiz">GER - ALEX - LUIZ C GAUTO</option>
-        <option value="alex_marcelo">GER - ALEX - MARCELO TERRAS BUENO</option>
-        <option value="alex_pamela">GER - ALEX - PAMELA SCHMIDT</option>
-        <option value="alex_tiberio">GER - ALEX - TIBERIO FALCONI</option>
-        <option value="beto_adriano">GER - BETO - ADRIANO MARINO NARCIZO</option>
-        <option value="beto_edson">GER - BETO - EDSON ROBERTO MELLO</option>
-        <option value="beto_elis">GER - BETO - ELISANGELA COBUCCIO</option>
-        <option value="beto_francisco">GER - BETO - FRANCISCO EUGENIO DOS SANTOS</option>
-        <option value="beto_gino">GER - BETO - GINO SALVADORE COBUCCIO</option>
-        <option value="beto_katia">GER - BETO - KATIA APARECIDA A RODRIGUES</option>
-        <option value="beto_marcello">GER - BETO - MARCELLO OCTAVIO</option>
-        <option value="diego_eliane">GER - DIEGO - ELIANE GAMA FERREIRA</option>
-        <option value="diego_fabio">GER - DIEGO - FABIO REZENDE SOUZA</option>
-        <option value="diego_francisco">GER - DIEGO - FRANCISCO RODRIGUES DE OLIVEIRA</option>
-        <option value="diego_glausley">GER - DIEGO - GLAUSLEY DE FREITAS</option>
-        <option value="diego_gustavo">GER - DIEGO - GUSTAVO GONCALVES FERREIRA</option>
-        <option value="diego_helton">GER - DIEGO - HELTON RODRIGO</option>
-        <option value="diego_luciano">GER - DIEGO - LUCIANO FRANCISCO DOS SANTOS</option>
-        <option value="diego_marcus">GER - DIEGO - MARCUS VINICIUS DIAS</option>
-    </select>
-
-    <button class="botao" onclick="resetarSelecao()">Resetar Seleção</button>
+    <div class="select-container">
+        <button class="botao" onclick="gerarPrimeiraQuinzena()">🗓️  Gerar (Primeira Quinzena)</button>
+        <button class="botao" onclick="gerarSegundaQuinzena()">🗓️  Gerar (Segunda Quinzena)</button>
+        <button class="botao" onclick="resetarSelecao()">🔄</button>
+        <label for="representantes">Selecione o Representante:</label>
+        <div class="select-wrapper">
+            <select id="representantes" onchange="atualizarCalendario()">
+                <option value="">-- Selecione --</option>
+                <option value="IND - FARLEY SALES">IND - FARLEY SALES</option>
+                <option value="IND - MARCUS GAMBOGI">IND - MARCUS GAMBOGI</option>
+                <!-- Adicione outras opções de representantes conforme necessário -->
+            </select>
+        </div>
+    </div>
 
     <div class="calendario" id="calendario">
         <!-- Os dias do calendário serão gerados aqui -->
     </div>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Motivo</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-motivos">
+            <!-- Os motivos de desconsideração serão gerados aqui -->
+        </tbody>
+    </table>
+
+    <div class="dashboards">
+        <div class="dashboard" id="dashboard-validos">
+            <h3>Dias Válidos</h3>
+            <div class="valor" id="valor-validos">0</div>
+        </div>
+        <div class="dashboard" id="dashboard-receber">
+            <h3>Total a Receber</h3>
+            <div class="valor" id="valor-receber">R$ 0,00</div>
+        </div>
+    </div>
+
     <script>
         const dadosRepresentantes = {
-            'farley': [
-                { dia: '01/10/2024', visitas: 0, nota: '' },
-                { dia: '02/10/2024', visitas: 0, nota: '' },
-                { dia: '03/10/2024', visitas: 0, nota: '' },
-                { dia: '04/10/2024', visitas: 0, nota: '' },
-                { dia: '05/10/2024', visitas: 0, nota: '' },
-                { dia: '06/10/2024', visitas: 0, nota: '' },
-                { dia: '07/10/2024', visitas: 0, nota: '' },
-                { dia: '08/10/2024', visitas: 0, nota: '' },
-
-
-            ],
-            'marcus': [
+            'IND - FARLEY SALES': [
+                // Primeira quinzena (1 a 15)
                 { dia: '01/10/2024', visitas: 8, nota: '' },
-                { dia: '02/10/2024', visitas: 3, nota: '' },
-                { dia: '03/10/2024', visitas: 8, nota: '' },
-                { dia: '04/10/2024', visitas: 0, nota: '' },
-                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
+                { dia: '06/10/2024', visitas: 6, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 4, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 10, nota: '' },
+                { dia: '12/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '13/10/2024', visitas: 9, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 10, nota: '' },
+                // Segunda quinzena (16 a 31)
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 6, nota: '' },
+                { dia: '18/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 10, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 10, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 9, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 10, nota: '' },
+                { dia: '30/10/2024', visitas: 7, nota: '' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+            ],
+            'IND - MARCUS GAMBOGI': [
+                // Primeira quinzena (1 a 15)
+                { dia: '01/10/2024', visitas: 5, nota: '' },
+                { dia: '02/10/2024', visitas: 3, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '03/10/2024', visitas: 7, nota: '' },
+                { dia: '04/10/2024', visitas: 10, nota: '' },
+                { dia: '05/10/2024', visitas: 8, nota: '' },
                 { dia: '06/10/2024', visitas: 0, nota: '' },
-                { dia: '07/10/2024', visitas: 0, nota: '' },
-                { dia: '08/10/2024', visitas: 8, nota: 'Aguardando Validação' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 4, nota: '' },
+                { dia: '09/10/2024', visitas: 7, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 10, nota: '' },
+                { dia: '13/10/2024', visitas: 2, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '14/10/2024', visitas: 10, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                // Segunda quinzena (16 a 31)
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 10, nota: '' },
+                { dia: '20/10/2024', visitas: 6, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
+                { dia: '22/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '23/10/2024', visitas: 10, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 10, nota: '' },
+                { dia: '27/10/2024', visitas: 8, nota: '' },
+                { dia: '28/10/2024', visitas: 9, nota: '' },
+                { dia: '29/10/2024', visitas: 10, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 7, nota: '' },
             ],
             // Adicione dados para outros representantes aqui...
         };
 
         function atualizarCalendario() {
             const representanteSelecionado = document.getElementById('representantes').value;
+            const visaoSelecionada = document.getElementById('visao').value;
             const calendarioDiv = document.getElementById('calendario');
+            const tabelaMotivos = document.getElementById('tabela-motivos');
+            const valorValidos = document.getElementById('valor-validos');
+            const valorReceber = document.getElementById('valor-receber');
+
+            // Limpa o calendário e a tabela de motivos
             calendarioDiv.innerHTML = '';
+            tabelaMotivos.innerHTML = '';
+            valorValidos.textContent = '0';
+            valorReceber.textContent = 'R$ 0,00';
 
-            const dados = dadosRepresentantes[representanteSelecionado] || [];
+            if (representanteSelecionado) {
+                const dados = dadosRepresentantes[representanteSelecionado];
+                let dadosVisao;
 
-            dados.forEach(dia => {
-                const diaDiv = document.createElement('div');
-                diaDiv.className = 'dia ' + (dia.visitas >= 8 ? 'verde' : (dia.nota ? 'vermelho' : ''));
-                diaDiv.innerHTML = `${dia.dia}<br>${dia.visitas}`;
-                if (dia.nota) {
-                    diaDiv.innerHTML += `<br><span class="nota">${dia.nota}</span>`;
+                switch (visaoSelecionada) {
+                    case 'quinzena1':
+                        dadosVisao = dados.slice(0, 15);
+                        break;
+                    case 'quinzena2':
+                        dadosVisao = dados.slice(15);
+                        break;
+                    default:
+                        dadosVisao = dados;
                 }
-                calendarioDiv.appendChild(diaDiv);
-            });
+
+                dadosVisao.forEach(dia => {
+                    const diaDiv = document.createElement('div');
+                    diaDiv.className = 'dia';
+                    diaDiv.textContent = dia.dia;
+
+                    if (dia.visitas >= 8) {
+                        diaDiv.classList.add('verde');
+                    } else if (dia.visitas < 8 && dia.visitas > 0) {
+                        diaDiv.classList.add('vermelho');
+                    } else {
+                        diaDiv.classList.add('cinza');
+                    }
+
+                    calendarioDiv.appendChild(diaDiv);
+
+                    if (dia.nota) {
+                        const motivoTr = document.createElement('tr');
+                        motivoTr.innerHTML = `<td>${dia.dia}</td><td>${dia.nota}</td>`;
+                        tabelaMotivos.appendChild(motivoTr);
+                    }
+                });
+
+                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 8).length;
+                valorValidos.textContent = diasValidos;
+
+                const valorReceberCalculado = diasValidos * 50; // R$ 50 por dia válido
+                valorReceber.textContent = `R$ ${valorReceberCalculado.toFixed(2)}`;
+            }
+        }
+
+        function gerarPrimeiraQuinzena() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+            const diasValidos = dadosRepresentantes[representanteSelecionado].slice(0, 15).filter(dia => dia.visitas >= 8).length;
+            const valorReceber = diasValidos * 50; // R$ 50 por dia válido
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            // Configurações de página
+            doc.setFontSize(22);
+            doc.setFont("bold");
+            doc.text("PAGAMENTO DE BÔNUS PERFORMANCE", 20, 30);
+            doc.setFontSize(11);
+            doc.setFont("normal");
+            doc.text(`Primeira quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`, 20, 50);
+            doc.text(`Valor: R$ ${valorReceber.toFixed(2)}`, 20, 70);
+            doc.text(`Dias úteis: 13`, 20, 90);
+            doc.text(`Dias de visita: ${diasValidos} dias`, 20, 110);
+            
+            doc.save('termo_pagamento_bonus_primeira_quinzena.pdf');
+        }
+
+        function gerarSegundaQuinzena() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+            const diasValidos = dadosRepresentantes[representanteSelecionado].slice(15).filter(dia => dia.visitas >= 8).length;
+            const valorReceber = diasValidos * 50; // R$ 50 por dia válido
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            // Configurações de página
+            doc.setFontSize(22);
+            doc.setFont("bold");
+            doc.text("PAGAMENTO DE BÔNUS PERFORMANCE", 20, 30);
+            doc.setFontSize(11);
+            doc.setFont("normal");
+            doc.text(`Segunda quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`, 20, 50);
+            doc.text(`Valor: R$ ${valorReceber.toFixed(2)}`, 20, 70);
+            doc.text(`Dias úteis: 14`, 20, 90);
+            doc.text(`Dias de visita: ${diasValidos} dias`, 20, 110);
+            
+            doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
         }
 
         function resetarSelecao() {
-            const selectRepresentantes = document.getElementById('representantes');
-            selectRepresentantes.selectedIndex = 0;
-            selectRepresentantes.dispatchEvent(new Event('change'));
+            document.getElementById('representantes').selectedIndex = 0;
+            document.getElementById('visao').selectedIndex = 0;
+            atualizarCalendario();
         }
-
-        // Inicializa o calendário vazio
-        atualizarCalendario();
     </script>
-
 </body>
 </html>
