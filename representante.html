@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acompanhamento e Validação das Prospecções</title>
+    <title>GESTÃO E ANÁLISE DE PROSPECÇÕES COMERCIAIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -74,13 +74,13 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .verde {
-            background-color: #a8e6cf;
+            background-color: #a8e6cf; /* Verde claro */
         }
         .vermelho {
-            background-color: #ff8b8b;
+            background-color: #ff8b8b; /* Vermelho claro */
         }
         .cinza {
-            background-color: #d3d3d3;
+            background-color: #d3d3d3; /* Cinza claro */
         }
         table {
             width: 100%;
@@ -118,11 +118,32 @@
             margin-top: 5px;
             font-weight: bold;
         }
+        .observacao {
+            color: red; /* Vermelho para observações */
+        }
+        .indicadores {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .indicador {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .cor {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <h1>Acompanhamento e Validação das Prospecções</h1>
+    <h1>GESTÃO E ANÁLISE DE PROSPECÇÕES COMERCIAIS</h1>
 
     <div class="select-container">
         <label for="visao">Escolha a visão:</label>
@@ -175,10 +196,25 @@
         </div>
     </div>
 
+    <div class="indicadores">
+        <h3>Indicador de Cores</h3>
+        <div class="indicador">
+            <div class="cor verde"></div>
+            <span>Validado</span>
+        </div>
+        <div class="indicador">
+            <div class="cor vermelho"></div>
+            <span>Desconsiderado</span>
+        </div>
+        <div class="indicador">
+            <div class="cor cinza"></div>
+            <span>Não atingiu quantidade de prospecção</span>
+        </div>
+    </div>
+
     <script>
         const dadosRepresentantes = {
             'IND - FARLEY SALES': [
-                // Primeira quinzena (1 a 15)
                 { dia: '01/10/2024', visitas: 8, nota: '' },
                 { dia: '02/10/2024', visitas: 0, nota: '' },
                 { dia: '03/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
@@ -187,20 +223,19 @@
                 { dia: '06/10/2024', visitas: 6, nota: '' },
                 { dia: '07/10/2024', visitas: 8, nota: '' },
                 { dia: '08/10/2024', visitas: 4, nota: '' },
-                { dia: '09/10/2024', visitas: 0, nota: '' },
-                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 9, nota: '' },
                 { dia: '11/10/2024', visitas: 10, nota: '' },
-                { dia: '12/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
-                { dia: '13/10/2024', visitas: 9, nota: '' },
-                { dia: '14/10/2024', visitas: 8, nota: '' },
-                { dia: '15/10/2024', visitas: 10, nota: '' },
-                // Segunda quinzena (16 a 31)
-                { dia: '16/10/2024', visitas: 9, nota: '' },
-                { dia: '17/10/2024', visitas: 6, nota: '' },
-                { dia: '18/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
-                { dia: '19/10/2024', visitas: 8, nota: '' },
-                { dia: '20/10/2024', visitas: 10, nota: '' },
-                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 2, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '13/10/2024', visitas: 10, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 7, nota: '' },
+                { dia: '17/10/2024', visitas: 6, nota: 'Desconsiderado: faltou relatório' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 10, nota: '' },
+                { dia: '20/10/2024', visitas: 6, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
                 { dia: '22/10/2024', visitas: 8, nota: '' },
                 { dia: '23/10/2024', visitas: 10, nota: '' },
                 { dia: '24/10/2024', visitas: 9, nota: '' },
@@ -213,7 +248,6 @@
                 { dia: '31/10/2024', visitas: 8, nota: '' },
             ],
             'IND - MARCUS GAMBOGI': [
-                // Primeira quinzena (1 a 15)
                 { dia: '01/10/2024', visitas: 5, nota: '' },
                 { dia: '02/10/2024', visitas: 3, nota: 'Desconsiderado: faltou relatório' },
                 { dia: '03/10/2024', visitas: 7, nota: '' },
@@ -229,7 +263,6 @@
                 { dia: '13/10/2024', visitas: 2, nota: 'Desconsiderado: faltou relatório' },
                 { dia: '14/10/2024', visitas: 10, nota: '' },
                 { dia: '15/10/2024', visitas: 9, nota: '' },
-                // Segunda quinzena (16 a 31)
                 { dia: '16/10/2024', visitas: 8, nota: '' },
                 { dia: '17/10/2024', visitas: 7, nota: 'Desconsiderado: faltou relatório' },
                 { dia: '18/10/2024', visitas: 8, nota: '' },
@@ -247,7 +280,6 @@
                 { dia: '30/10/2024', visitas: 8, nota: '' },
                 { dia: '31/10/2024', visitas: 7, nota: '' },
             ],
-            // Adicione dados para outros representantes aqui...
         };
 
         function atualizarCalendario() {
@@ -258,13 +290,12 @@
             const valorValidos = document.getElementById('valor-validos');
             const valorReceber = document.getElementById('valor-receber');
 
-            // Limpa o calendário e a tabela de motivos
             calendarioDiv.innerHTML = '';
             tabelaMotivos.innerHTML = '';
             valorValidos.textContent = '0';
             valorReceber.textContent = 'R$ 0,00';
 
-            if (representanteSelecionado) {
+            if (representanteSelecionado && dadosRepresentantes[representanteSelecionado]) {
                 const dados = dadosRepresentantes[representanteSelecionado];
                 let dadosVisao;
 
@@ -273,10 +304,10 @@
                         dadosVisao = dados.slice(0, 15);
                         break;
                     case 'quinzena2':
-                        dadosVisao = dados.slice(15);
+                        dadosVisao = dados.slice(15, dados.length);
                         break;
                     default:
-                        dadosVisao = dados;
+                        dadosVisao = dados; // Para "mês todo"
                 }
 
                 dadosVisao.forEach(dia => {
@@ -284,75 +315,278 @@
                     diaDiv.className = 'dia';
                     diaDiv.textContent = dia.dia;
 
-                    if (dia.visitas >= 8) {
+                    if (dia.nota) {
+                        diaDiv.classList.add('vermelho'); // Dia com observação fica vermelho
+                    } else if (dia.visitas >= 8) {
                         diaDiv.classList.add('verde');
-                    } else if (dia.visitas < 8 && dia.visitas > 0) {
-                        diaDiv.classList.add('vermelho');
                     } else {
                         diaDiv.classList.add('cinza');
                     }
+
+                    const visitasDiv = document.createElement('div');
+                    visitasDiv.textContent = `${dia.visitas} visita${dia.visitas !== 1 ? 's' : ''}`;
+                    diaDiv.appendChild(visitasDiv); // Adiciona o número de visitas abaixo da data
 
                     calendarioDiv.appendChild(diaDiv);
 
                     if (dia.nota) {
                         const motivoTr = document.createElement('tr');
-                        motivoTr.innerHTML = `<td>${dia.dia}</td><td>${dia.nota}</td>`;
+                        motivoTr.innerHTML = `<td>${dia.dia}</td><td class="observacao">${dia.nota}</td>`;
                         tabelaMotivos.appendChild(motivoTr);
                     }
                 });
 
-                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 8).length;
+                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 8 && !dia.nota).length;
                 valorValidos.textContent = diasValidos;
 
-                const valorReceberCalculado = diasValidos * 50; // R$ 50 por dia válido
+                const VALOR_POR_DIA = 50; // R$ 50 por dia válido
+                const valorReceberCalculado = diasValidos * VALOR_POR_DIA; 
                 valorReceber.textContent = `R$ ${valorReceberCalculado.toFixed(2)}`;
             }
         }
 
+         // Botão gerar termo primeira quinzena 
         function gerarPrimeiraQuinzena() {
             const representanteSelecionado = document.getElementById('representantes').value;
-            const diasValidos = dadosRepresentantes[representanteSelecionado].slice(0, 15).filter(dia => dia.visitas >= 8).length;
+
+            // Filtra os dados do dia 1 ao 15
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(0, 15) // Filtra do dia 1 ao 15
+                .filter(dia => dia.visitas >= 8).length;
+
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'pt', 'a4');
 
-            // Configurações de página
-            doc.setFontSize(22);
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
             doc.setFont("bold");
-            doc.text("PAGAMENTO DE BÔNUS PERFORMANCE", 20, 30);
-            doc.setFontSize(11);
+            const titulo = "TERMO PARA PAGAMENTO DE BÔNUS";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "PERFORMANCE";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
             doc.setFont("normal");
-            doc.text(`Primeira quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`, 20, 50);
-            doc.text(`Valor: R$ ${valorReceber.toFixed(2)}`, 20, 70);
-            doc.text(`Dias úteis: 13`, 20, 90);
-            doc.text(`Dias de visita: ${diasValidos} dias`, 20, 110);
-            
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de ajuda de Incentivo inicial da Primeira quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                y += 70; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 13`, 20, y); // Ajustado para 13 dias na primeira quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 210; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                '___________________________________',
+                '         JOSÉ JUNIOR',
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
             doc.save('termo_pagamento_bonus_primeira_quinzena.pdf');
         }
 
+        // Botão gerar termo segunda quinzena    
         function gerarSegundaQuinzena() {
             const representanteSelecionado = document.getElementById('representantes').value;
-            const diasValidos = dadosRepresentantes[representanteSelecionado].slice(15).filter(dia => dia.visitas >= 8).length;
+
+            // Filtra os dados do dia 16 ao 31
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(15, 31) // Filtra do dia 16 ao 31
+                .filter(dia => dia.visitas >= 8).length;
+
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'pt', 'a4');
 
-            // Configurações de página
-            doc.setFontSize(22);
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
             doc.setFont("bold");
-            doc.text("PAGAMENTO DE BÔNUS PERFORMANCE", 20, 30);
-            doc.setFontSize(11);
+            const titulo = "TERMO PARA PAGAMENTO DE BÔNUS";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "PERFORMANCE";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
             doc.setFont("normal");
-            doc.text(`Segunda quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`, 20, 50);
-            doc.text(`Valor: R$ ${valorReceber.toFixed(2)}`, 20, 70);
-            doc.text(`Dias úteis: 14`, 20, 90);
-            doc.text(`Dias de visita: ${diasValidos} dias`, 20, 110);
-            
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de ajuda de Incentivo inicial da Segunda quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                y += 70; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 14`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 210; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                '___________________________________',
+                '         JOSÉ JUNIOR',
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
             doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
+}
+
+        
+
+
+        // Nova função - converter números em letras
+        function converterParaTexto(valor) {
+            const parteInteira = Math.floor(valor);
+            const centavos = Math.round((valor - parteInteira) * 100);
+
+            const extensoReais = converterNumeroParaExtenso(parteInteira) + " reais";
+
+            if (centavos > 0) {
+                const extensoCentavos = converterNumeroParaExtenso(centavos) + " centavos";
+                return `${extensoReais} e ${extensoCentavos}`;
+            } else {
+                return extensoReais;
+            }
         }
 
+        function converterNumeroParaExtenso(numero) {
+            const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+            const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+            
+            if (numero < 20) {
+                return unidades[numero];
+            } else if (numero < 100) {
+                const unidade = numero % 10;
+                const dezena = Math.floor(numero / 10);
+                return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
+            } else if (numero === 100) {
+                return "cem";
+            } else if (numero < 200) {
+                return "cento e " + converterNumeroParaExtenso(numero - 100);
+            } else if (numero < 1000) {
+                const centena = Math.floor(numero / 100);
+                const resto = numero % 100;
+                return converterNumeroParaExtenso(centena) + "centos" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+            }
+            // Adicione lógica para números maiores, se necessário
+            return "";
+        }
+
+        // Aqui você define o valorReceber automaticamente
+        const valorReceber = 650.20; // Exemplo de valor
+
+        // Converte o valorReceber para texto
+        const resultado = converterParaTexto(valorReceber);
+
+
+
+// Botão reset
         function resetarSelecao() {
             document.getElementById('representantes').selectedIndex = 0;
             document.getElementById('visao').selectedIndex = 0;
