@@ -259,7 +259,7 @@
     <script>
         const dadosRepresentantes = {
             'IND - MARCUS GAMBOGI': [
-                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '01/10/2024', visitas: 8, nota: 'O Mesmo subiu visitas duplicadas' },
                 { dia: '02/10/2024', visitas: 3, nota: '' },
                 { dia: '03/10/2024', visitas: 8, nota: '' },
                 { dia: '04/10/2024', visitas: 0, nota: '' },
@@ -1191,19 +1191,19 @@
             const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
             const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
             
+            // Adicionando as centenas corretas
+            const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+            
             if (numero < 20) {
                 return unidades[numero];
             } else if (numero < 100) {
                 const unidade = numero % 10;
                 const dezena = Math.floor(numero / 10);
                 return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
-            } else if (numero === 100) {
-                return "cem";
             } else if (numero < 1000) {
                 const centena = Math.floor(numero / 100);
                 const resto = numero % 100;
-                const centenaExtenso = centena === 1 ? "cento" : unidades[centena] + "centos";
-                return (centena === 5 ? "quinhentos" : centenaExtenso) + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+                return (centenas[centena] + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "")).trim();
             } else if (numero === 1000) {
                 return "mil";
             } else if (numero < 2000) {
@@ -1216,12 +1216,11 @@
         }
 
         // Aqui você define o valorReceber automaticamente
-        const valorReceber = 500.00; // Exemplo de valor
+        const valorReceber = 200.00; // Exemplo de valor
 
         // Converte o valorReceber para texto
         const resultado = converterParaTexto(valorReceber);
-        console.log(resultado); // Saída esperada: "quinhentos reais"
-
+        console.log(resultado); // Saída esperada: "duzentos reais"
 
 // Botão reset
         function resetarSelecao() {
