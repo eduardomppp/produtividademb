@@ -155,8 +155,9 @@
     </div>
 
     <div class="select-container">
-        <button class="botao" onclick="gerarPrimeiraQuinzena()">🗓️  Gerar (Primeira Quinzena)</button>
-        <button class="botao" onclick="gerarSegundaQuinzena()">🗓️  Gerar (Segunda Quinzena)</button>
+        <button class="botao" onclick="gerarPrimeiraQuinzena()">🖨️ (Primeira Quinzena)</button>
+        <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>
+        <button class="botao" onclick="gerarMinimoMensal()">🖨️ (Minimo Mensal)</button>
         <button class="botao" onclick="resetarSelecao()">🔄</button>
         <label for="representantes">Selecione o Representante:</label>
         <div class="select-wrapper">
@@ -537,8 +538,109 @@
             doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
 }
 
-        
+         // Botão gerar termo Minimo mensal  
+         function gerarMinimoMensal() {
+            const representanteSelecionado = document.getElementById('representantes').value;
 
+            // Filtra os dados do dia 16 ao 31
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(0, 31) // Filtra do dia 16 ao 31
+                .filter(dia => dia.visitas >= 8).length;
+
+            const valorReceber = diasValidos * 74.07; // R$ 50 por dia válido
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const titulo = "TERMO PARA PAGAMENTO DA AJUDA DE";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "INCENTIVO MÍNIMO MENSAL";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
+            doc.setFont("normal");
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal ao representante ${representanteSelecionado.replace(/_/g, '').toUpperCase()}, por até 6 meses. Pois o representante não obteve comissionamento de produção de carteira no mês em questão.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                
+                
+                y += 50; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor do incentivo por dia de visita é R$ 74,07`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Total de visitas realizadas: ${diasValidos}`, 20, y); // Ajustado para 14 dias na segunda quinzena
+
+
+                y += 50; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 27`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 190; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
+            doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
+}
 
         // Nova função - converter números em letras
         function converterParaTexto(valor) {
@@ -567,23 +669,28 @@
                 return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
             } else if (numero === 100) {
                 return "cem";
-            } else if (numero < 200) {
-                return "cento e " + converterNumeroParaExtenso(numero - 100);
             } else if (numero < 1000) {
                 const centena = Math.floor(numero / 100);
                 const resto = numero % 100;
-                return converterNumeroParaExtenso(centena) + "centos" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+                const centenaExtenso = centena === 1 ? "cento" : unidades[centena] + "centos";
+                return (centena === 5 ? "quinhentos" : centenaExtenso) + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+            } else if (numero === 1000) {
+                return "mil";
+            } else if (numero < 2000) {
+                return "mil e " + converterNumeroParaExtenso(numero - 1000);
+            } else {
+                const milhar = Math.floor(numero / 1000);
+                const resto = numero % 1000;
+                return converterNumeroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
             }
-            // Adicione lógica para números maiores, se necessário
-            return "";
         }
 
         // Aqui você define o valorReceber automaticamente
-        const valorReceber = 650.20; // Exemplo de valor
+        const valorReceber = 500.00; // Exemplo de valor
 
         // Converte o valorReceber para texto
         const resultado = converterParaTexto(valorReceber);
-
+        console.log(resultado); // Saída esperada: "quinhentos reais"
 
 
 // Botão reset
