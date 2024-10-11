@@ -883,7 +883,7 @@
             // Filtra os dados do dia 1 ao 15
             const diasValidos = dadosRepresentantes[representanteSelecionado]
                 .slice(0, 15) // Filtra do dia 1 ao 15
-                .filter(dia => dia.visitas >= 8).length;
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
 
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
@@ -979,7 +979,7 @@
             // Filtra os dados do dia 16 ao 31
             const diasValidos = dadosRepresentantes[representanteSelecionado]
                 .slice(15, 31) // Filtra do dia 16 ao 31
-                .filter(dia => dia.visitas >= 8).length;
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
 
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
@@ -1075,7 +1075,7 @@
             // Filtra os dados do dia 16 ao 31
             const diasValidos = dadosRepresentantes[representanteSelecionado]
                 .slice(0, 31) // Filtra do dia 16 ao 31
-                .filter(dia => dia.visitas >= 8).length;
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
 
             const valorReceber = diasValidos * 74.07; // R$ 50 por dia válido
 
