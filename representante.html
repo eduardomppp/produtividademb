@@ -159,6 +159,7 @@
         <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>
         <button class="botao" onclick="gerarMinimoMensal()">🖨️ (Minimo Mensal)</button>
         <button class="botao" onclick="resetarSelecao()">🔄</button>
+        <button class="botao" onclick="bancoValidacao()">🔒</button>
         <label for="representantes">Selecione o Representante:</label>
         <div class="select-wrapper">
             <select id="representantes" onchange="atualizarCalendario()">
@@ -259,7 +260,7 @@
     <script>
         const dadosRepresentantes = {
             'IND - MARCUS GAMBOGI': [
-                { dia: '01/10/2024', visitas: 8, nota: 'O Mesmo subiu visitas duplicadas (TESTE)' },
+                { dia: '01/10/2024', visitas: 8, nota: '' },
                 { dia: '02/10/2024', visitas: 3, nota: '' },
                 { dia: '03/10/2024', visitas: 8, nota: '' },
                 { dia: '04/10/2024', visitas: 0, nota: '' },
@@ -1174,59 +1175,67 @@
 
         // Nova função - converter números em letras
         function converterParaTexto(valor) {
-            const parteInteira = Math.floor(valor);
-            const centavos = Math.round((valor - parteInteira) * 100);
+    const parteInteira = Math.floor(valor);
+    const centavos = Math.round((valor - parteInteira) * 100);
 
-            const extensoReais = converterNumeroParaExtenso(parteInteira) + " reais";
+    let extensoReais = converterNumeroParaExtenso(parteInteira);
+    
+    // Corrige "cento" para "cem" no caso de 100
+    if (parteInteira === 100) {
+        extensoReais = "cem";
+    }
+    
+    extensoReais += (parteInteira === 1 ? " real" : " reais");
 
-            if (centavos > 0) {
-                const extensoCentavos = converterNumeroParaExtenso(centavos) + " centavos";
-                return `${extensoReais} e ${extensoCentavos}`;
-            } else {
-                return extensoReais;
-            }
-        }
+    if (centavos > 0) {
+        const extensoCentavos = converterNumeroParaExtenso(centavos) + (centavos === 1 ? " centavo" : " centavos");
+        return `${extensoReais} e ${extensoCentavos}`;
+    } else {
+        return extensoReais;
+    }
+}
 
-        function converterNumeroParaExtenso(numero) {
-            const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
-            const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
-            
-            // Adicionando as centenas corretas
-            const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
-            
-            if (numero < 20) {
-                return unidades[numero];
-            } else if (numero < 100) {
-                const unidade = numero % 10;
-                const dezena = Math.floor(numero / 10);
-                return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
-            } else if (numero < 1000) {
-                const centena = Math.floor(numero / 100);
-                const resto = numero % 100;
-                return (centenas[centena] + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "")).trim();
-            } else if (numero === 1000) {
-                return "mil";
-            } else if (numero < 2000) {
-                return "mil e " + converterNumeroParaExtenso(numero - 1000);
-            } else {
-                const milhar = Math.floor(numero / 1000);
-                const resto = numero % 1000;
-                return converterNumeroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
-            }
-        }
+function converterNumeroParaExtenso(numero) {
+    const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+    const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+    const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
 
-        // Aqui você define o valorReceber automaticamente
-        const valorReceber = 200.00; // Exemplo de valor
+    if (numero === 0) return "zero";
+    if (numero < 20) return unidades[numero];
+    if (numero < 100) {
+        const dezena = Math.floor(numero / 10);
+        const unidade = numero % 10;
+        return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
+    }
+    if (numero < 1000) {
+        const centena = Math.floor(numero / 100);
+        const resto = numero % 100;
+        return (centenas[centena] + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "")).trim();
+    }
+    if (numero === 1000) return "mil";
+    const milhar = Math.floor(numero / 1000);
+    const resto = numero % 1000;
+    return converterNumeroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+}
 
-        // Converte o valorReceber para texto
-        const resultado = converterParaTexto(valorReceber);
-        console.log(resultado); // Saída esperada: "duzentos reais"
+// Exemplo de uso
+const valorReceber = 100.00; // Exemplo de valor
+const resultado = converterParaTexto(valorReceber);
+console.log(resultado); // Saída esperada: "cem reais"
+
 
 // Botão reset
         function resetarSelecao() {
             document.getElementById('representantes').selectedIndex = 0;
             document.getElementById('visao').selectedIndex = 0;
             atualizarCalendario();
+        }
+
+        // Acessar Auditoria de Qualidade
+        function bancoValidacao() {
+            // Substitua o URL abaixo pelo link desejado
+            const url = 'https://docs.google.com/spreadsheets/d/1WR-qd_Gv0jjSWrZBIKq2BInfyww7lbZyDfo1a83HkPk/edit?gid=1829143938#gid=1829143938';
+            window.location.href = url; // Redireciona para o URL especificado
         }
         
     </script>
