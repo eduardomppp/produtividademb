@@ -893,7 +893,7 @@
                 { dia: '11/10/2024', visitas: 0, nota: '' },
                 { dia: '12/10/2024', visitas: 8, nota: '' },
                 { dia: '13/10/2024', visitas: 0, nota: '' },
-                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO EXISTE A PESSOA QUE FOI INSERIDA NO CONTATO .' },
                 
                 
             ],
@@ -911,7 +911,7 @@
                 { dia: '11/10/2024', visitas: 0, nota: '' },
                 { dia: '12/10/2024', visitas: 8, nota: '' },
                 { dia: '13/10/2024', visitas: 0, nota: '' },
-                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO EXISTE A PESSOA QUE FOI INSERIDA NO CONTATO / LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
                 
                 
             ],
@@ -1206,7 +1206,7 @@
                 doc.setFont("bold");
                 doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias Úteis: 13`, 20, y); // Ajustado para 13 dias na primeira quinzena
+                doc.text(`Dias Úteis: 12`, 20, y); // Ajustado para 13 dias na primeira quinzena
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
                 doc.setFont("normal");
