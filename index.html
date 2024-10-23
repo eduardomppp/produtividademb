@@ -334,6 +334,18 @@
     }
 }
 
+            // Desabilitar o menu de contexto do botão direito do mouse.
+            document.addEventListener('contextmenu', function(e) {
+                 e.preventDefault();
+});
+            // Desabilitar alguns atalhos de teclado, como F12 (para abrir o inspetor) e Ctrl+Shift+I.
+            document.onkeydown = function(e) {
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                 e.preventDefault();
+    }
+};
+    
+
 new Navigation();
 </script>
 </body>
