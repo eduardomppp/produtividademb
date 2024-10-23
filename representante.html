@@ -2192,6 +2192,18 @@ console.log(resultado); // Saída esperada: "cem reais"
             const url = 'https://docs.google.com/spreadsheets/d/1WR-qd_Gv0jjSWrZBIKq2BInfyww7lbZyDfo1a83HkPk/edit?gid=1829143938#gid=1829143938';
             window.location.href = url; // Redireciona para o URL especificado
         }
+
+        // Desabilitar o menu de contexto do botão direito do mouse.
+        document.addEventListener('contextmenu', function(e) {
+             e.preventDefault();
+});
+        // Desabilitar alguns atalhos de teclado, como F12 (para abrir o inspetor) e Ctrl+Shift+I.
+      document.onkeydown = function(e) {
+         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+             e.preventDefault();
+    }
+};
+
         
     </script>
 </body>
