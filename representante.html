@@ -1029,7 +1029,7 @@
                 { dia: '28/10/2024', visitas: 11, nota: '' },
                 { dia: '29/10/2024', visitas: 11, nota: '' },
                 { dia: '30/10/2024', visitas: 9, nota: '' },
-                { dia: '31/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 
                 
             ],
@@ -1935,12 +1935,12 @@
                 { dia: '01/10/2024', visitas: 15, nota: '' },
                 { dia: '02/10/2024', visitas: 11, nota: '' },
                 { dia: '03/10/2024', visitas: 9, nota: '' },
-                { dia: '04/10/2024', visitas: 0, nota: '' },
-                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
                 { dia: '06/10/2024', visitas: 0, nota: '' },
-                { dia: '07/10/2024', visitas: 0, nota: '' },
-                { dia: '08/10/2024', visitas: 0, nota: '' },
-                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 10, nota: '' },
+                { dia: '09/10/2024', visitas: 11, nota: '' },
                 { dia: '10/10/2024', visitas: 12, nota: '' },
                 { dia: '11/10/2024', visitas: 10, nota: '' },
                 { dia: '12/10/2024', visitas: 0, nota: '' },
@@ -2787,7 +2787,7 @@
 
             // Verifica se as variáveis têm valores válidos
             if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
-                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de (INSER_DAT), por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
+                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de (DATA), por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
                 const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
                 doc.text(linhas, 20, y); // Adiciona as linhas quebradas
                 y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
