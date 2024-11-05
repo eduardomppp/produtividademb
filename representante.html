@@ -261,7 +261,7 @@
                              
             ],
             'GER - FABRICIO - LUIZ CARLOS REDMERSKI': [
-                { dia: '01/11/2024', visitas: 8, nota: '' },
+                { dia: '01/11/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU FOTO DUPLICADA' },
                 { dia: '02/11/2024', visitas: 0, nota: '' },
                 { dia: '03/11/2024', visitas: 0, nota: '' },
                 { dia: '04/11/2024', visitas: 8, nota: '' },
@@ -763,7 +763,7 @@
 
             // Verifica se as variáveis têm valores válidos
             if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
-                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de 09/09/2024, por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
+                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de (00/00/0000), por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
                 const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
                 doc.text(linhas, 20, y); // Adiciona as linhas quebradas
                 y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
