@@ -141,6 +141,7 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 </head>
 <body>
     <h1>GESTÃO E ANÁLISE DE PROSPECÇÕES COMERCIAIS</h1>
@@ -159,6 +160,7 @@
         <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>
         <button class="botao" onclick="gerarMinimoMensal()">🖨️ (Minimo Mensal)</button>
         <button class="botao" onclick="bancoValidacao()">🔒</button>
+        <button class="botao" onclick="gerarRelatorio()">📝</button>
         <button class="botao" onclick="resetarSelecao()">🔄</button>
         <label for="representantes">Selecione o Representante:</label>
         <div class="select-wrapper">
@@ -274,7 +276,7 @@
                              
             ],
             'GER - FABRICIO - LUIZ CARLOS REDMERSKI': [
-                { dia: '01/11/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU FOTO DUPLICADA' },
+                { dia: '01/11/2024', visitas: '-', nota: 'REPRESENTANTE SUBIU FOTO DUPLICADA' },
                 { dia: '02/11/2024', visitas: 0, nota: '' },
                 { dia: '03/11/2024', visitas: 0, nota: '' },
                 { dia: '04/11/2024', visitas: 8, nota: '' },
@@ -430,7 +432,7 @@
                 { dia: '03/11/2024', visitas: 0, nota: '' },
                 { dia: '04/11/2024', visitas: 0, nota: '' },
                 { dia: '05/11/2024', visitas: 0, nota: '' },
-                { dia: '06/11/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '06/11/2024', visitas: '-', nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '07/11/2024', visitas: 8, nota: '' },
 
             ],
@@ -501,7 +503,7 @@
                 { dia: '01/11/2024', visitas: 8, nota: '' },
                 { dia: '02/11/2024', visitas: 0, nota: '' },
                 { dia: '03/11/2024', visitas: 0, nota: '' },
-                { dia: '04/11/2024', visitas: 8, nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
+                { dia: '04/11/2024', visitas: '-', nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
                 { dia: '05/11/2024', visitas: 9, nota: '' },
                 { dia: '06/11/2024', visitas: 9, nota: '' },
                 { dia: '07/11/2024', visitas: 9, nota: '' },
@@ -572,9 +574,9 @@
                 { dia: '01/11/2024', visitas: 0, nota: '' },
                 { dia: '02/11/2024', visitas: 0, nota: '' },
                 { dia: '03/11/2024', visitas: 0, nota: '' },
-                { dia: '04/11/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '04/11/2024', visitas: '-', nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '05/11/2024', visitas: 2, nota: '' },
-                { dia: '06/11/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '06/11/2024', visitas: '-', nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '07/11/2024', visitas: 8, nota: '' },            
             ],
             'IND - LIVIO DE SOUZA NEIVA': [
@@ -1070,7 +1072,59 @@ console.log(resultado); // Saída esperada: "cem reais"
              e.preventDefault();
     }
 };
-        
+        // Função para gerar o relatório em Excel
+        function gerarRelatorio() {
+            console.log("Função chamada!"); // Verifica se a função é chamada
+
+            // Gerando o cabeçalho com base nos dados dos representantes
+            const dias = [];
+            Object.keys(dadosRepresentantes).forEach(representante => {
+                dadosRepresentantes[representante].forEach(visita => {
+                    if (!dias.includes(visita.dia)) {
+                        dias.push(visita.dia);
+                    }
+                });
+            });
+
+            // Ordena os dias para garantir que fiquem em ordem
+            dias.sort((a, b) => new Date(a) - new Date(b));
+
+            let dadosExcel = [];
+            
+            // Cabeçalho
+            dadosExcel.push(['Representante', ...dias, 'Dias Válidos', 'Valor à Receber']);
+
+            // Preenchendo os dados para cada representante
+            Object.keys(dadosRepresentantes).forEach(representante => {
+                const visitas = dadosRepresentantes[representante];
+
+                // Extraindo as visitas dos dias
+                const visitasPorDia = dias.map(dia => {
+                    const visitaDia = visitas.find(v => v.dia === dia);
+                    return visitaDia ? visitaDia.visitas : '-';  // Se não encontrar, coloca '-'
+                });
+
+                // Calculando os dias válidos (>=8)
+                const diasValidos = visitas.filter(v => v.visitas >= 8).length;
+
+                // Calculando o valor a ser recebido
+                const valorReceber = diasValidos * 86.95; // Lembrar de alterar o valor (2000 / dias uteis)
+
+                // Adiciona a linha do representante, suas visitas, dias válidos e valor a receber
+                dadosExcel.push([representante, ...visitasPorDia, diasValidos, valorReceber]);
+            });
+
+            // Criando a planilha com os dados
+            const ws = XLSX.utils.aoa_to_sheet(dadosExcel);
+
+            // Criando o arquivo Excel
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Relatório de Visitas');
+
+            // Gerando o arquivo e realizando o download
+            XLSX.writeFile(wb, 'relatorio_representantes_novembro.xlsx');
+        }
+    </script>
     </script>
 </body>
 </html>
