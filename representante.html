@@ -203,6 +203,7 @@
                 <option value="IND - LEANDRO REIS">IND - LEANDRO REIS</option>
                 <option value="GER - JULIEL - ROBSON DUARTE DA SILVA">GER - JULIEL - ROBSON DUARTE DA SILVA</option>
                 <option value="IND - ADEILDO CORREIA">IND - ADEILDO CORREIA</option>
+                <option value="IND - WASHINGTON LUIZ">IND - WASHINGTON LUIZ</option>
                 <option value="IND - LUIS WANDERLEY">IND - LUIS WANDERLEY</option>
                 <option value="IND - LIVIO DE SOUZA NEIVA">IND - LIVIO DE SOUZA NEIVA</option>
                 <option value="GER - FABRICIO - ROBSON LEANDRO DE BRITO">GER - FABRICIO - ROBSON LEANDRO DE BRITO</option>
@@ -831,7 +832,7 @@
                 { dia: '11/11/2024', visitas: 0, nota: '' },
                 { dia: '12/11/2024', visitas: 8, nota: '' },
                 { dia: '13/11/2024', visitas: 8, nota: '' },
-                { dia: '14/11/2024', visitas: '-', nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA / A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
+                { dia: '14/11/2024', visitas: 9, nota: '' },
                 { dia: '15/11/2024', visitas: 0, nota: '' },
                              
                              
@@ -947,6 +948,25 @@
                 { dia: '12/11/2024', visitas: 8, nota: '' },
                 { dia: '13/11/2024', visitas: 7, nota: '' },
                 { dia: '14/11/2024', visitas: 5, nota: '' },
+                { dia: '15/11/2024', visitas: 0, nota: '' },
+                             
+                             
+            ],
+            'IND - WASHINGTON LUIZ': [
+                { dia: '01/11/2024', visitas: 0, nota: '' },
+                { dia: '02/11/2024', visitas: 0, nota: '' },
+                { dia: '03/11/2024', visitas: 0, nota: '' },
+                { dia: '04/11/2024', visitas: 9, nota: '' },
+                { dia: '05/11/2024', visitas: 10, nota: '' },
+                { dia: '06/11/2024', visitas: 10, nota: '' },
+                { dia: '07/11/2024', visitas: 0, nota: '' },
+                { dia: '08/11/2024', visitas: 9, nota: '' },
+                { dia: '09/11/2024', visitas: 0, nota: '' },
+                { dia: '10/11/2024', visitas: 0, nota: '' },
+                { dia: '11/11/2024', visitas: 11, nota: '' },
+                { dia: '12/11/2024', visitas: 10, nota: '' },
+                { dia: '13/11/2024', visitas: 8, nota: '' },
+                { dia: '14/11/2024', visitas: 8, nota: '' },
                 { dia: '15/11/2024', visitas: 0, nota: '' },
                              
                              
@@ -1253,7 +1273,7 @@
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 11`, 20, y); // Ajustado para 11 dias na primeira quinzena
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.text(`Dias de Visita: ${diasValidos} diaS`, 20, y);
                 doc.setFont("normal");
 
             } else {
