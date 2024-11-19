@@ -173,8 +173,7 @@
                 <option value="IND - ALEXANDRA SANTOS">IND - ALEXANDRA SANTOS</option>
                 <option value="IND - DENILSON APARECIDO HONORIO">IND - DENILSON APARECIDO HONORIO</option>
                 <option value="IND - EVILOMAR O. DOS S.">IND - EVILOMAR O. DOS S.</option>
-                <option value="GER - LUCAS - JOSIANE CAMPOS CORDEIRO">GER - LUCAS - JOSIANE CAMPOS CORDEIRO</option>
-                <option value="GER - LUCAS - JOSIANE CAMPOS CORDEIRO">GER - LUCAS - JOSIANE CAMPOS CORDEIRO</option>
+                <option value="GER - LUCAS - JESSICA CAMPOS GUIMARAES ( JOSIANE)">GER - LUCAS - JESSICA CAMPOS GUIMARAES ( JOSIANE)</option>
                 <option value="GER - MARCOS - SILVANA RICOY">GER - MARCOS - SILVANA RICOY</option>
                 <option value="IND - MARIA MADALENA">IND - MARIA MADALENA</option>
                 <option value="GER - JULIEL - JAINE K S PEIXINHO">GER - JULIEL - JAINE K S PEIXINHO</option>
@@ -280,6 +279,7 @@
                 { dia: '13/11/2024', visitas: 0, nota: '' },
                 { dia: '14/11/2024', visitas: 0, nota: '' },
                 { dia: '15/11/2024', visitas: 0, nota: '' },
+                
                              
             ],
             'GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA': [
@@ -298,6 +298,7 @@
                 { dia: '13/11/2024', visitas: 9, nota: '' },
                 { dia: '14/11/2024', visitas: 8, nota: '' },
                 { dia: '15/11/2024', visitas: 0, nota: '' },
+                
                              
                              
             ],
@@ -396,7 +397,7 @@
                              
                              
             ],
-            'GER - LUCAS - JOSIANE CAMPOS CORDEIRO': [
+            'GER - LUCAS - JESSICA CAMPOS GUIMARAES ( JOSIANE)': [
                 { dia: '01/11/2024', visitas: 9, nota: '' },
                 { dia: '02/11/2024', visitas: 0, nota: '' },
                 { dia: '03/11/2024', visitas: 0, nota: '' },
@@ -1273,9 +1274,12 @@
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 11`, 20, y); // Ajustado para 11 dias na primeira quinzena
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias de Visita: ${diasValidos} diaS`, 20, y);
-                doc.setFont("normal");
 
+                // Ajuste a pluralização do texto com base no valor de diasValidos
+                const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
+                doc.text(`Dias de Visita: ${diasValidos} ${diasTexto}`, 20, y);
+
+                doc.setFont("normal");
             } else {
                 doc.text("Não há dados válidos para gerar o termo.", 20, y);
             }
@@ -1370,12 +1374,14 @@
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 12`, 20, y); // Ajustado para 14 dias na segunda quinzena
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                // Ajuste a pluralização do texto com base no valor de diasValidos
+                const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
+                doc.text(`Dias de Visita: ${diasValidos} ${diasTexto}`, 20, y);
+
                 doc.setFont("normal");
             } else {
                 doc.text("Não há dados válidos para gerar o termo.", 20, y);
             }
-
             y += 210; // Pula para a próxima linha
             doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
 
@@ -1475,7 +1481,11 @@
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 23`, 20, y); // Ajustado para 14 dias na segunda quinzena
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                
+                 // Ajuste a pluralização do texto com base no valor de diasValidos
+                 const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
+                doc.text(`Dias de Visita: ${diasValidos} ${diasTexto}`, 20, y);
+
                 doc.setFont("normal");
             } else {
                 doc.text("Não há dados válidos para gerar o termo.", 20, y);
