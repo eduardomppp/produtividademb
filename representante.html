@@ -153,15 +153,32 @@
             <option value="quinzena1">Primeira Quinzena</option>
             <option value="quinzena2">Segunda Quinzena</option>
         </select>
+        
+        
+        
     </div>
 
     <div class="select-container">
         <button class="botao" onclick="gerarPrimeiraQuinzena()">🖨️ (Primeira Quinzena)</button>
-        <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>
-        <button class="botao" onclick="gerarMinimoMensal()">🖨️ (Minimo Mensal)</button>
+        <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>-->
+        
+      <!-- Botão para gerar termo -->
+        <button class="botao" onclick="mostrarCampoData()">🖨️ (Minimo Mensal)</button>
+
+        <!-- Campo de data que será exibido quando o botão for clicado -->
+        <input type="date" id="dataInput" style="display: none;">
+
+        <!-- Botão para confirmar a data e gerar o termo -->
+        <button class="botao" id="confirmarData" style="display: none;" onclick="gerarTermoComData()">✅</button>
+
+        <!-- Mensagem de erro -->
+        <p id="mensagemErro" style="color: red; display: none;">⚠️ A data não pode ser superior a 6 meses.</p>
+
+    
         <button class="botao" onclick="bancoValidacao()">🔒</button>
-        <button class="botao" onclick="gerarRelatorio()">📝</button>
+        <button class="botao" onclick="gerarRelatorio()">📊</button>
         <button class="botao" onclick="resetarSelecao()">🔄</button>
+    
         <label for="representantes">Selecione o Representante:</label>
         <div class="select-wrapper">
             <select id="representantes" onchange="atualizarCalendario()">
@@ -171,6 +188,7 @@
                 <option value="GER - FABRICIO - LUIZ CARLOS REDMERSKI">GER - FABRICIO - LUIZ CARLOS REDMERSKI</option>
                 <option value="GER - MARCOS - SALOMÃO GONÇALVES DA SILVA">GER - MARCOS - SALOMÃO GONÇALVES DA SILVA</option>
                 <option value="IND - ALEXANDRA SANTOS">IND - ALEXANDRA SANTOS</option>
+                <option value="IND - CARLOS GLADSTON DE LIMA">IND - CARLOS GLADSTON DE LIMA</option>
                 <option value="IND - DENILSON APARECIDO HONORIO">IND - DENILSON APARECIDO HONORIO</option>
                 <option value="IND - EVILOMAR O. DOS S.">IND - EVILOMAR O. DOS S.</option>
                 <option value="GER - LUCAS - JESSICA CAMPOS GUIMARAES ( JOSIANE)">GER - LUCAS - JESSICA CAMPOS GUIMARAES ( JOSIANE)</option>
@@ -291,6 +309,7 @@
                 { dia: '18/11/2024', visitas: 9, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
 
                 
                              
@@ -316,6 +335,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                 
                              
                              
@@ -341,6 +361,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -365,6 +386,7 @@
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 1, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -389,6 +411,32 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
+                             
+                             
+            ],
+            'IND - CARLOS GLADSTON DE LIMA': [
+                { dia: '01/11/2024', visitas: 0, nota: '' },
+                { dia: '02/11/2024', visitas: 0, nota: '' },
+                { dia: '03/11/2024', visitas: 0, nota: '' },
+                { dia: '04/11/2024', visitas: 0, nota: '' },
+                { dia: '05/11/2024', visitas: 0, nota: '' },
+                { dia: '06/11/2024', visitas: 0, nota: '' },
+                { dia: '07/11/2024', visitas: 0, nota: '' },
+                { dia: '08/11/2024', visitas: 0, nota: '' },
+                { dia: '09/11/2024', visitas: 0, nota: '' },
+                { dia: '10/11/2024', visitas: 0, nota: '' },
+                { dia: '11/11/2024', visitas: 0, nota: '' },
+                { dia: '12/11/2024', visitas: 0, nota: '' },
+                { dia: '13/11/2024', visitas: 0, nota: '' },
+                { dia: '14/11/2024', visitas: 0, nota: '' },
+                { dia: '15/11/2024', visitas: 0, nota: '' },
+                { dia: '16/11/2024', visitas: 0, nota: '' },
+                { dia: '17/11/2024', visitas: 0, nota: '' },
+                { dia: '18/11/2024', visitas: 0, nota: '' },
+                { dia: '19/11/2024', visitas: 0, nota: '' },
+                { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -413,6 +461,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -437,6 +486,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -461,6 +511,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -484,7 +535,8 @@
                 { dia: '17/11/2024', visitas: 0, nota: '' },
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 11, nota: '' },
-                { dia: '20/11/2024', visitas: 9, nota: '' },
+                { dia: '20/11/2024', visitas: '-', nota: 'REPRESENTANTE REALIZOU PROPECÇÃO, ENTRETANTO NÃO SERIA DIA UTIL. ' },
+                { dia: '21/11/2024', visitas: 10, nota: '' },
                              
                              
             ],
@@ -509,6 +561,7 @@
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 10, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -533,6 +586,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -557,6 +611,7 @@
                 { dia: '18/11/2024', visitas: 9, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -581,6 +636,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -605,6 +661,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -629,6 +686,7 @@
                 { dia: '18/11/2024', visitas: 12, nota: '' },
                 { dia: '19/11/2024', visitas: 11, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: '-', nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
                              
                              
             ],
@@ -653,6 +711,7 @@
                 { dia: '18/11/2024', visitas: 9, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -677,6 +736,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -702,6 +762,7 @@
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 10, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 10, nota: '' },
                              
                              
             ],
@@ -726,6 +787,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
 
             ],
@@ -751,6 +813,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -775,6 +838,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -799,6 +863,7 @@
                 { dia: '18/11/2024', visitas: '-', nota: 'REPRESENANTE SUBIU RAMO NÃO PRIORITARIO / TREINAMENTO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -824,6 +889,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -848,6 +914,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 1, nota: '' },
                              
                              
             ],
@@ -873,6 +940,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -897,6 +965,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 5, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -921,6 +990,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 10, nota: '' },
                              
                              
             ],
@@ -945,6 +1015,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -969,6 +1040,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -993,6 +1065,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -1017,6 +1090,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -1041,6 +1115,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1065,6 +1140,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1089,6 +1165,7 @@
                 { dia: '18/11/2024', visitas: 1, nota: '' },
                 { dia: '19/11/2024', visitas: 2, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -1114,6 +1191,7 @@
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 11, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1136,8 +1214,9 @@
                 { dia: '16/11/2024', visitas: 0, nota: '' },
                 { dia: '17/11/2024', visitas: 0, nota: '' },
                 { dia: '18/11/2024', visitas: 8, nota: '' },
-                { dia: '19/11/2024', visitas: 8, nota: '' },
+                { dia: '19/11/2024', visitas: '-', nota: 'REPRESENANTE SUBIU RAMO NÃO PRIORITARIO / TREINAMENTO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1162,6 +1241,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1186,6 +1266,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                                         
             ],
             'IND - LIVIO DE SOUZA NEIVA': [
@@ -1209,6 +1290,7 @@
                 { dia: '18/11/2024', visitas: 9, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -1233,6 +1315,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 12, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 11, nota: '' },
                              
                              
             ],
@@ -1257,6 +1340,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -1280,7 +1364,8 @@
                 { dia: '17/11/2024', visitas: 0, nota: '' },
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
-                { dia: '20/11/2024', visitas: 0, nota: '' },          
+                { dia: '20/11/2024', visitas: 0, nota: '' }, 
+                { dia: '21/11/2024', visitas: 9, nota: '' },         
                              
             ],
             'IND - HUGO LEONARDO P SAMPAIO': [
@@ -1304,6 +1389,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -1327,7 +1413,8 @@
                 { dia: '17/11/2024', visitas: 0, nota: '' },
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
-                { dia: '20/11/2024', visitas: 8, nota: '' },
+                { dia: '20/11/2024', visitas: '-', nota: 'REPRESENTANTE REALIZOU PROPECÇÃO, ENTRETANTO NÃO SERIA DIA UTIL.' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1351,7 +1438,8 @@
                 { dia: '17/11/2024', visitas: 0, nota: '' },
                 { dia: '18/11/2024', visitas: 2, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
-                { dia: '20/11/2024', visitas: 8, nota: '' },
+                { dia: '20/11/2024', visitas: '-', nota: 'REPRESENTANTE REALIZOU PROPECÇÃO, ENTRETANTO NÃO SERIA DIA UTIL.' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1376,6 +1464,7 @@
                 { dia: '18/11/2024', visitas: 9, nota: '' },
                 { dia: '19/11/2024', visitas: 1, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1400,6 +1489,7 @@
                 { dia: '18/11/2024', visitas: 10, nota: '' },
                 { dia: '19/11/2024', visitas: 9, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -1424,6 +1514,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: '-', nota: 'REPRESENANTE SUBIU RAMO NÃO PRIORITARIO / TREINAMENTO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
                              
                              
             ],
@@ -1448,6 +1539,7 @@
                 { dia: '18/11/2024', visitas: 8, nota: '' },
                 { dia: '19/11/2024', visitas: 0, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 9, nota: '' },
                              
                              
             ],
@@ -1472,6 +1564,7 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: 8, nota: '' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 0, nota: '' },
                              
                              
             ],
@@ -1496,9 +1589,36 @@
                 { dia: '18/11/2024', visitas: 0, nota: '' },
                 { dia: '19/11/2024', visitas: '-', nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
                 { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: '-', nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
                              
                              
             ],
+            'IND - DENNER LIMA': [
+                { dia: '01/11/2024', visitas: 0, nota: '' },
+                { dia: '02/11/2024', visitas: 0, nota: '' },
+                { dia: '03/11/2024', visitas: 0, nota: '' },
+                { dia: '04/11/2024', visitas: 0, nota: '' },
+                { dia: '05/11/2024', visitas: 0, nota: '' },
+                { dia: '06/11/2024', visitas: 0, nota: '' },
+                { dia: '07/11/2024', visitas: 0, nota: '' },
+                { dia: '08/11/2024', visitas: 0, nota: '' },
+                { dia: '09/11/2024', visitas: 0, nota: '' },
+                { dia: '10/11/2024', visitas: 0, nota: '' },
+                { dia: '11/11/2024', visitas: 0, nota: '' },
+                { dia: '12/11/2024', visitas: 0, nota: '' },
+                { dia: '13/11/2024', visitas: 0, nota: '' },
+                { dia: '14/11/2024', visitas: 0, nota: '' },
+                { dia: '15/11/2024', visitas: 0, nota: '' },
+                { dia: '16/11/2024', visitas: 0, nota: '' },
+                { dia: '17/11/2024', visitas: 0, nota: '' },
+                { dia: '18/11/2024', visitas: 0, nota: '' },
+                { dia: '19/11/2024', visitas: 0, nota: '' },
+                { dia: '20/11/2024', visitas: 0, nota: '' },
+                { dia: '21/11/2024', visitas: 8, nota: '' },
+                             
+                             
+            ],
+           
            
            
            
@@ -1631,7 +1751,7 @@
 
                 y += 70; // Pula para a próxima linha
                 doc.setFont("bold");
-                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterNumeroParaExtenso(valorReceber)})`, 20, y);
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 11`, 20, y); // Ajustado para 11 dias na primeira quinzena
                 y += 20; // Pula para a próxima linha
@@ -1731,7 +1851,7 @@
 
                 y += 70; // Pula para a próxima linha
                 doc.setFont("bold");
-                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterNumeroParaExtenso(valorReceber)})`, 20, y);
                 y += 20; // Pula para a próxima linha
                 doc.text(`Dias Úteis: 12`, 20, y); // Ajustado para 14 dias na segunda quinzena
                 y += 20; // Pula para a próxima linha
@@ -1772,162 +1892,210 @@
             doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
 }
 
-         // Botão gerar termo Minimo mensal  
-         function gerarMinimoMensal() {
-            const representanteSelecionado = document.getElementById('representantes').value;
+// GERAR TERMO MINIMO MENSAL
 
-            // Filtra os dados do dia 16 ao 31
-            const diasValidos = dadosRepresentantes[representanteSelecionado]
-                .slice(0, 31) // Filtra do dia 16 ao 31
-                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
-
-            const valorReceber = diasValidos * 86.95; // Calc = 2000 / Dias uteis (Mês)
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'pt', 'a4');
-
-            let y = 40; // Inicializa a posição vertical
-
-            // Título em destaque
-            y += 20; // Pula para a próxima linha
-            doc.setFontSize(25);
-            doc.setFont("bold");
-            const titulo = "TERMO PARA PAGAMENTO DA AJUDA DE";
-            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
-            doc.text(titulo, tituloX, y);
-            y += 10; // Pula para a próxima linha
-
-            // Linha abaixo do título
-            doc.setLineWidth(1);
-            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
-            y += 20; // Pula para a próxima linha
-
-            // Subtítulo
-            doc.setFontSize(25);
-            doc.setFont("bold");
-            const subtitulo = "INCENTIVO MÍNIMO MENSAL";
-            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
-            doc.text(subtitulo, subtituloX, y);
-            y += 10; // Pula para a próxima linha
-
-            // Linha abaixo do subtítulo
-            doc.setLineWidth(1);
-            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
-            y += 20; // Pula para a próxima linha
-
-            // Informações
-            doc.setFontSize(15.5);
-            doc.setFont("normal");
-            y += 50; // Pula para a próxima linha
-
-            // Verifica se as variáveis têm valores válidos
-            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
-                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de (00/00/0000), por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
-                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
-                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
-                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
-
-                
-                
-                y += 50; // Pula para a próxima linha
-                doc.setFont("bold");
-                doc.text(`Valor do incentivo por dia de visita é R$ 86,95`, 20, y); 
-                y += 20; // Pula para a próxima linha
-                doc.text(`Total de visitas realizadas: ${diasValidos}`, 20, y); 
-
-
-                y += 50; // Pula para a próxima linha
-                doc.setFont("bold");
-                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
-                y += 20; // Pula para a próxima linha
-                doc.text(`Dias Úteis: 23`, 20, y); // Ajustado para 14 dias na segunda quinzena
-                y += 20; // Pula para a próxima linha
-                
-                 // Ajuste a pluralização do texto com base no valor de diasValidos
-                 const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
-                doc.text(`Dias de Visita: ${diasValidos} ${diasTexto}`, 20, y);
-
-                doc.setFont("normal");
-            } else {
-                doc.text("Não há dados válidos para gerar o termo.", 20, y);
-            }
-
-            y += 190; // Pula para a próxima linha
-            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
-
-            // Pula para a assinatura (6 linhas)
-            y += 50; // Ajuste conforme necessário para pular mais linhas
-
-            // Centraliza a assinatura
-            const assinaturaY = y; // Posição inicial para as assinaturas
-            const espacoAssinatura = 40; // Espaço entre as assinaturas
-
-            const assinaturas = [
-                
-                '___________________________________',
-                '          EDUARDO PRADO',
-                '___________________________________',
-                '          DIEGO TEXEIRA',
-            ];
-
-            assinaturas.forEach((assinatura, index) => {
-                const textWidth = doc.getTextWidth(assinatura);
-                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
-                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
-            });
-
-            // Salva o documento
-            doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
+// Função que exibe o campo de data e o botão "Confirmar Data"
+function mostrarCampoData() {
+    document.getElementById('dataInput').style.display = 'inline'; // Torna o campo de data visível
+    document.getElementById('confirmarData').style.display = 'inline'; // Torna o botão de confirmação visível
+    document.getElementById('mensagemErro').style.display = 'none'; // Esconde a mensagem de erro, se ela estava visível
 }
 
-        // Nova função - converter números em letras
-        function converterParaTexto(valor) {
-            const parteInteira = Math.floor(valor);
-            const centavos = Math.round((valor - parteInteira) * 100);
-
-            let extensoReais = converterNumeroParaExtenso(parteInteira);
-            
-            // Corrige "cento" para "cem" no caso de 100
-            if (parteInteira === 100) {
-                extensoReais = "cem";
-            }
-            
-            extensoReais += (parteInteira === 1 ? " real" : " reais");
-
-            if (centavos > 0) {
-                const extensoCentavos = converterNumeroParaExtenso(centavos) + (centavos === 1 ? " centavo" : " centavos");
-                return `${extensoReais} e ${extensoCentavos}`;
-            } else {
-                return extensoReais;
-            }
+// Função para formatar a data no formato dd/mm/aaaa
+function formatarData(data) {
+    const [ano, mes, dia] = data.split('-');
+    return `${dia}/${mes}/${ano}`;
 }
+
+// Função que gera o termo com a data selecionada
+function gerarTermoComData() {
+    const dataInput = document.getElementById('dataInput').value;
+
+    if (!dataInput) {
+        alert("Por favor, selecione uma data antes de gerar o termo.");
+        return;
+    }
+
+   // Verifica se a data selecionada não ultrapassa 6 meses para trás a partir da data atual
+    const dataSelecionada = new Date(dataInput); // Converte a data em objeto Date
+    const dataAtual = new Date(); // Data atual
+
+    // Zerando as horas para evitar problemas com comparações de horário
+    dataAtual.setHours(0, 0, 0, 0); // Zera a hora da data atual
+    dataSelecionada.setHours(0, 0, 0, 0); // Zera a hora da data selecionada
+
+    const dataLimite = new Date(dataAtual); // Cria uma nova instância de dataLimite
+    dataLimite.setMonth(dataAtual.getMonth() - 6); // Subtrai 6 meses da data atual
+
+    // Verifica se a data selecionada é menor que o limite de 6 meses atrás
+    if (dataSelecionada < dataLimite) {
+        document.getElementById('mensagemErro').style.display = 'inline'; // Exibe a mensagem de erro
+        return; // Interrompe a execução se a data for inválida
+    } else {
+        document.getElementById('mensagemErro').style.display = 'none'; // Esconde a mensagem de erro se a data for válida
+    }
+
+    const dataFormatada = formatarData(dataInput);  // Formata a data
+
+    const representanteSelecionado = document.getElementById('representantes').value;
+
+
+    // Verifica se o representante está selecionado
+    if (!representanteSelecionado) {
+        alert("Por favor, selecione um representante.");
+        return;
+    }
+
+    // Filtra os dados do dia 1 ao 31
+    const diasValidos = dadosRepresentantes[representanteSelecionado]
+        .slice(0, 31) // Filtra do dia 16 ao 31 (index 15 a 30)
+        .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+
+    const valorReceber = diasValidos * 86.95;
+
+    if (diasValidos === 0) {
+        alert("Nenhuma visita válida foi registrada.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'pt', 'a4');
+    let y = 40;
+
+    // Título em destaque
+    y += 20;
+    doc.setFontSize(25);
+    doc.setFont("bold");
+    const titulo = "TERMO PARA PAGAMENTO DA AJUDA DE";
+    const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2;
+    doc.text(titulo, tituloX, y);
+    y += 10;
+
+    // Linha abaixo do título
+    doc.setLineWidth(1);
+    doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y);
+    y += 20;
+
+    // Subtítulo
+    doc.setFontSize(25);
+    doc.setFont("bold");
+    const subtitulo = "INCENTIVO MÍNIMO MENSAL";
+    const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2;
+    doc.text(subtitulo, subtituloX, y);
+    y += 10;
+
+    // Linha abaixo do subtítulo
+    doc.setLineWidth(1);
+    doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y);
+    y += 20;
+
+    // Texto do incentivo
+    doc.setFontSize(15.5);
+    doc.setFont("normal");
+    y += 50;
+
+    const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de ${dataFormatada}, por até 6 meses, para o representante ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
+    const linhas = doc.splitTextToSize(texto, 500);
+    doc.text(linhas, 20, y);
+    y += linhas.length * 10;
+
+    y += 50;
+    doc.setFont("bold");
+    doc.text(`Valor do incentivo por dia de visita é R$ 86,95`, 20, y);
+    y += 20;
+    doc.text(`Total de visitas realizadas: ${diasValidos}`, 20, y);
+
+    y += 50;
+    doc.setFont("bold");
+    doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterNumeroParaExtenso(valorReceber)})`, 20, y);
+    y += 20;
+    doc.text(`Dias Úteis: 23`, 20, y);
+    y += 20;
+
+    const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
+    doc.text(`Dias de Visita: ${diasValidos} ${diasTexto}`, 20, y);
+
+    doc.setFont("normal");
+
+    // Adiciona a data de emissão
+    y += 190;
+    doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+    y += 50;
+
+    const assinaturaY = y;
+    const espacoAssinatura = 40;
+    const assinaturas = [
+        '___________________________________',
+        '          EDUARDO PRADO',
+        '___________________________________',
+        '          DIEGO TEXEIRA',
+    ];
+
+    assinaturas.forEach((assinatura, index) => {
+        const textWidth = doc.getTextWidth(assinatura);
+        const x = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+        doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+    });
+
+    doc.save('termo_pagamento_minimo_mensal.pdf');
+}
+
 
 function converterNumeroParaExtenso(numero) {
     const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
     const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
     const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
 
-    if (numero === 0) return "zero";
-    if (numero < 20) return unidades[numero];
-    if (numero < 100) {
-        const dezena = Math.floor(numero / 10);
-        const unidade = numero % 10;
-        return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
+    // Função para converter números inteiros em por extenso
+    function converterInteiroParaExtenso(n) {
+        if (n === 0) return "";  // Zero não é necessário aqui, pois "reais" será tratado separadamente
+        if (n < 20) return unidades[n];
+        if (n < 100) {
+            const dezena = Math.floor(n / 10);
+            const unidade = n % 10;
+            return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
+        }
+        if (n < 1000) {
+            const centena = Math.floor(n / 100);
+            const resto = n % 100;
+            return (centenas[centena] + (resto > 0 ? " e " + converterInteiroParaExtenso(resto) : "")).trim();
+        }
+        if (n === 1000) return "mil";
+        const milhar = Math.floor(n / 1000);
+        const resto = n % 1000;
+        return converterInteiroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterInteiroParaExtenso(resto) : "");
     }
-    if (numero < 1000) {
-        const centena = Math.floor(numero / 100);
-        const resto = numero % 100;
-        return (centenas[centena] + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "")).trim();
+
+    // Função para tratar centavos
+    function converterCentavos(centavos) {
+        if (centavos === 0) return "";  // Não adiciona "centavos" se for zero
+        return `${converterInteiroParaExtenso(centavos)} centavos`;
     }
-    if (numero === 1000) return "mil";
-    const milhar = Math.floor(numero / 1000);
-    const resto = numero % 1000;
-    return converterNumeroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+
+    // Se o número for inteiro
+    const parteInteira = Math.floor(numero);
+    const parteDecimal = Math.round((numero - parteInteira) * 100); // pegando os centavos
+
+    // Converte a parte inteira em extenso
+    let extenso = converterInteiroParaExtenso(parteInteira);
+
+    // Tratar a parte inteira e a palavra "reais"
+    if (extenso === "") extenso = "zero";  // Caso o número seja zero
+    extenso += (parteInteira === 1 ? " real" : " reais");  // Singular ou plural
+
+    // Se houver centavos, converte a parte decimal em extenso
+    const centavosPorExtenso = converterCentavos(parteDecimal);
+    if (centavosPorExtenso) {
+        extenso += " e " + centavosPorExtenso;
+    }
+
+    return extenso;
 }
 
 // Exemplo de uso
 const valorReceber = 100.00; // Exemplo de valor
-const resultado = converterParaTexto(valorReceber);
+const resultado = converterNumeroParaExtenso(valorReceber);
 console.log(resultado); // Saída esperada: "cem reais"
 
 
