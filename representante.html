@@ -834,7 +834,7 @@
                 { dia: '09/12/2024', visitas: 8, nota: '' },
                 { dia: '10/12/2024', visitas: 8, nota: '' },
                 { dia: '11/12/2024', visitas: 9, nota: '' },
-                { dia: '12/12/2024', visitas: 9, nota: '' },
+                { dia: '12/12/2024', visitas: '-', nota: 'REPRESENANTE SUBIU RAMO NÃO PRIORITARIO / TREINAMENTO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
                 { dia: '13/12/2024', visitas: 10, nota: '' },
                 { dia: '14/12/2024', visitas: 8, nota: '' },
                 { dia: '15/12/2024', visitas: 0, nota: '' },
@@ -1637,6 +1637,7 @@ function converterNumeroParaExtenso(numero) {
     // Função para converter números inteiros em por extenso
     function converterInteiroParaExtenso(n) {
         if (n === 0) return "";  // Zero não é necessário aqui, pois "reais" será tratado separadamente
+        if (n === 100) return "cem";  // Condição especial para 100
         if (n < 20) return unidades[n];
         if (n < 100) {
             const dezena = Math.floor(n / 10);
@@ -1684,6 +1685,7 @@ function converterNumeroParaExtenso(numero) {
 const valorReceber = 100.00; // Exemplo de valor
 const resultado = converterNumeroParaExtenso(valorReceber);
 console.log(resultado); // Saída esperada: "cem reais"
+
 
 
         // Botão reset
