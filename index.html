@@ -154,28 +154,6 @@
             margin: 0 auto;
         }
 
-         /* Efeito de neve */
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: #fff;
-            font-size: 24px;
-            opacity: 0.8;
-            user-select: none;
-            pointer-events: none;
-            z-index: 9999;
-            animation: snow-fall 10s linear infinite;
-        }
-
-        @keyframes snow-fall {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(100vh);
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -365,29 +343,6 @@
                  e.preventDefault();
     }
 };
-
-// Gerar neve
-function createSnowflakes() {
-        const snowflakeCount = 100; // Quantidade de flocos de neve
-        const snowflakesContainer = document.body; // Elemento onde a neve será gerada
-
-        for (let i = 0; i < snowflakeCount; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.innerText = '❄';  // Símbolo de floco de neve
-
-            // Definir posição e animação randomizadas
-            snowflake.style.left = `${Math.random() * 100}vw`;
-            snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`; // Tempo aleatório para cair
-            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Atraso aleatório no início
-
-            snowflakesContainer.appendChild(snowflake);
-        }
-    }
-
-    // Chamar a função para gerar a neve
-    createSnowflakes();
-    
 
 new Navigation();
 </script>
