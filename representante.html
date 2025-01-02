@@ -2804,7 +2804,7 @@ console.log(resultado); // Saída esperada: "cem reais"
                 const diasValidos = visitas.filter(v => v.visitas >= 8).length;
 
                 // Calculando o valor a ser recebido
-                const valorReceber = diasValidos * 86.95; // Lembrar de alterar o valor (2000 / dias uteis)
+                const valorReceber = diasValidos * 80; // Lembrar de alterar o valor (2000 / dias uteis)
 
                 // Adiciona a linha do representante, suas visitas, dias válidos e valor a receber
                 dadosExcel.push([representante, ...visitasPorDia, diasValidos, valorReceber]);
