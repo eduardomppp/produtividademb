@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GESTÃO E ANÁLISE DE PROSPECÇÕES COMERCIAIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            background-color: #002842;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .select-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-left: 10px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            font-size: 16px;
+            background: #ffffff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232a2a2a"><path d="M7 10l5 5 5-5H7z"/></svg>') no-repeat right 10px center;
+            background-size: 12px;
+        }
+        .botao {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #3498db;
+            margin-right: 10px;
+        }
+        .botao:hover {
+            color: #2980b9;
+        }
+        .calendario {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .dia {
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .verde {
+            background-color: #a8e6cf; /* Verde claro */
+        }
+        .vermelho {
+            background-color: #ff8b8b; /* Vermelho claro */
+        }
+        .cinza {
+            background-color: #d3d3d3; /* Cinza claro */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #002842;
+            color: white;
+        }
+        .dashboards {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .dashboard {
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            margin: 0 5px;
+            font-size: 0.9em;
+        }
+        .valor {
+            font-size: 1.5em;
+            color: #27ae60;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .observacao {
+            color: red; /* Vermelho para observações */
+        }
+        .indicadores {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .indicador {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .cor {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <h1>GESTÃO E ANÁLISE DE PROSPECÇÕES COMERCIAIS</h1>
+
+    <div class="select-container">
+        <label for="visao">Escolha a visão:</label>
+        <select id="visao" onchange="atualizarCalendario()">
+            <option value="mes">Mês Todo</option>
+            <option value="quinzena1">Primeira Quinzena</option>
+            <option value="quinzena2">Segunda Quinzena</option>
+        </select>
+    </div>
+
+    <div class="select-container">
+        <button class="botao" onclick="gerarPrimeiraQuinzena()">🖨️ (Primeira Quinzena)</button>
+        <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>
+        <button class="botao" onclick="gerarMinimoMensal()">🖨️ (Minimo Mensal)</button>
+        <button class="botao" onclick="bancoValidacao()">🔒</button>
+        <button class="botao" onclick="resetarSelecao()">🔄</button>
+        <label for="representantes">Selecione o Representante:</label>
+        <div class="select-wrapper">
+            <select id="representantes" onchange="atualizarCalendario()">
+                <option value="">-- Selecione --</option>
+                <option value="IND - MARCUS GAMBOGI">IND - MARCUS GAMBOGI</option>
+                <option value="GER - DIEGO - LUCIANO FRANCISCO DOS SANTOS">GER - DIEGO - LUCIANO FRANCISCO DOS SANTOS</option>
+                <option value="GER - FABRICIO - AMANDA AP DE LIMA Q. SABINO">GER - FABRICIO - AMANDA AP DE LIMA Q. SABINO</option>
+                <option value="GER - FABRICIO - ANA PAULA FERREIRA DOS SANTOS">GER - FABRICIO - ANA PAULA FERREIRA DOS SANTOS</option>
+                <option value="GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA">GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA</option>
+                <option value="GER - FABRICIO - LUIZ CARLOS REDMERSKI">GER - FABRICIO - LUIZ CARLOS REDMERSKI</option>
+                <option value="GER - MARCOS - DANIELLE VIEIRA DE FREITAS (ALEXANDRE )">GER - MARCOS - DANIELLE VIEIRA DE FREITAS (ALEXANDRE )</option>
+                <option value="GER - MARCOS - SALOMÃO GONÇALVES DA SILVA">GER - MARCOS - SALOMÃO GONÇALVES DA SILVA</option>
+                <option value="IND - ALEXANDRA SANTOS">IND - ALEXANDRA SANTOS</option>
+                <option value="IND - ANA CRISTINA FELINTO">IND - ANA CRISTINA FELINTO</option>
+                <option value="IND - CARLOS GLADSTON DE LIMA">IND - CARLOS GLADSTON DE LIMA</option>
+                <option value="IND - DENILSON APARECIDO HONORIO">IND - DENILSON APARECIDO HONORIO</option>
+                <option value="IND - EDER ACIOLI">IND - EDER ACIOLI</option>
+                <option value="IND - EVILOMAR O. DOS S.">IND - EVILOMAR O. DOS S.</option>
+                <option value="IND - LUCIANO XAVIER BORGES">IND - LUCIANO XAVIER BORGES</option>
+                <option value="GER - LUCAS - JOSIANE CAMPOS CORDEIRO">GER - LUCAS - JOSIANE CAMPOS CORDEIRO</option>
+                <option value="GER - MARCOS - JOSIELE MORATO">GER - MARCOS - JOSIELE MORATO</option>
+                <option value="GER - MARCOS - SILVANA RICOY">GER - MARCOS - SILVANA RICOY</option>
+                <option value="IND - MARIA MADALENA">IND - MARIA MADALENA</option>
+                <option value="GER - JULIEL - JAINE K S PEIXINHO">GER - JULIEL - JAINE K S PEIXINHO</option>
+                <option value="GER - JULIEL - MURYLLO MOURA">GER - JULIEL - MURYLLO MOURA</option>
+                <option value="GER - JULIEL - NAIANA TEIXEIRA SILVA">GER - JULIEL - NAIANA TEIXEIRA SILVA</option>
+                <option value="GER - JULIEL - TIAGO SILVA SANTOS">GER - JULIEL - TIAGO SILVA SANTOS</option>
+                <option value="GER - WALLISSON - EDUARDO R. DA SILVA">GER - WALLISSON - EDUARDO R. DA SILVA</option>
+                <option value="GER - WALLISSON - GLEISON MARTINS">GER - WALLISSON - GLEISON MARTINS</option>
+                <option value="GER - WALLISSON - MARCIO L P DA SILVA">GER - WALLISSON - MARCIO L P DA SILVA</option>
+                <option value="IND - LUIZ C. L. ARAÚJO">IND - LUIZ C. L. ARAÚJO</option>
+                <option value="IND - ALEXSANDRA PRISCILA S. D.">IND - ALEXSANDRA PRISCILA S. D.</option>
+                <option value="IND - RICARDO N RIBEIRO">IND - RICARDO N RIBEIRO</option>
+                <option value="GER - JULIEL - MATEUS SANTOS M.">GER - JULIEL - MATEUS SANTOS M.</option>
+                <option value="GER - JULIEL - GILMARIA DA SILVA S. MOREIRA">GER - JULIEL - GILMARIA DA SILVA S. MOREIRA</option>
+                <option value="IND - KESIA LOPES">IND - KESIA LOPES</option>
+                <option value="GER - DIEGO - GLEDES ASCANIO ROGERIO NETO">GER - DIEGO - GLEDES ASCANIO ROGERIO NETO</option>
+                <option value="IND - FELIPE SILVA SANTOS">IND - FELIPE SILVA SANTOS</option>
+                <option value="IND - VICTOR LUIZ VIEIRA COSTA">IND - VICTOR LUIZ VIEIRA COSTA</option>
+                <option value="GER - WALLISSON - MARIANA NASCIMENTO S.">GER - WALLISSON - MARIANA NASCIMENTO S.</option>
+                <option value="GER - WALLISSON - TALITA PEREIRA M. SANTOS">GER - WALLISSON - TALITA PEREIRA M. SANTOS</option>
+                <option value="IND - MARCIO FONSECA PALACIO">IND - MARCIO FONSECA PALACIO</option>
+                <option value="IND - FABIO ALEXANDRE GOES VIEIRA">IND - FABIO ALEXANDRE GOES VIEIRA</option>
+                <option value="IND - THAIS REGINA">IND - THAIS REGINA</option>
+                <option value="IND - FRANKLIN RODNEY PINHEIRO DUARTE">IND - FRANKLIN RODNEY PINHEIRO DUARTE</option>
+                <option value="GER - DIEGO - FELIPE CANHEDO SILVA - BOLT">GER - DIEGO - FELIPE CANHEDO SILVA - BOLT</option>
+                <option value="GER - WALLISSON - SAULO PIRES">GER - WALLISSON - SAULO PIRES</option>
+                <option value="GER - JULIEL - KARIA LUCIANA S SIMARLE">GER - JULIEL - KARIA LUCIANA S SIMARLE</option>
+                <option value="GER - JULIEL - JOSE RICARDO F DA SILVA">GER - JULIEL - JOSE RICARDO F DA SILVA</option>
+                <option value="GER - JULIEL - CRISTIANE BRASIL DA CONCEICAO">GER - JULIEL - CRISTIANE BRASIL DA CONCEICAO</option>
+                <option value="GER - JULIEL - KATIA LUCIANA S.">GER - JULIEL - KATIA LUCIANA S.</option>
+                <option value="IND - LUCIANO CASTRO DA SILVA">IND - LUCIANO CASTRO DA SILVA</option>
+                <option value="IND - NADSON DA SILVA">IND - NADSON DA SILVA</option>
+                <option value="IND - MARCUS VINICIUS SILVA">IND - MARCUS VINICIUS SILVA</option>
+                <option value="IND - MIRNA SUANE">IND - MIRNA SUANE</option>
+                <option value="IND - CRISLAINE DOS S F DA SILVA">IND - CRISLAINE DOS S F DA SILVA</option>
+                <option value="GER - LUCAS - RODRIGO ANTONIO">GER - LUCAS - RODRIGO ANTONIO</option>
+                <option value="GER - LUCAS - ALOYSIO HENRIQUE PARREIRA">GER - LUCAS - ALOYSIO HENRIQUE PARREIRA</option>
+                <option value="IND - WAGNER COUTINHO">IND - WAGNER COUTINHO</option>
+                <option value="GER - JULIEL - ROBSON DUARTE DA SILVA">GER - JULIEL - ROBSON DUARTE DA SILVA</option>
+                <option value="IND - ADEILDO CORREIA">IND - ADEILDO CORREIA</option>
+                <option value="GER - JULIEL - GLEICE OLIVEIRA B.">GER - JULIEL - GLEICE OLIVEIRA B.</option>
+                <option value="IND - RAMON FEITOSA">IND - RAMON FEITOSA</option>
+                <option value="IND - MAYCON RIBEIRO">IND - MAYCON RIBEIRO</option>
+                <option value="IND - WASHINGTON LUIZ">IND - WASHINGTON LUIZ</option>
+
+                <!-- Adicione outras opções de representantes conforme necessário -->
+            </select>
+        </div>
+    </div>
+
+    <div class="calendario" id="calendario">
+        <!-- Os dias do calendário serão gerados aqui -->
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dia</th>
+                <th>Motivo</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-motivos">
+            <!-- Os motivos de desconsideração serão gerados aqui -->
+        </tbody>
+    </table>
+
+    <div class="dashboards">
+        <div class="dashboard" id="dashboard-validos">
+            <h3>Dias Válidos</h3>
+            <div class="valor" id="valor-validos">0</div>
+        </div>
+        <div class="dashboard" id="dashboard-receber">
+            <h3>Total a Receber</h3>
+            <div class="valor" id="valor-receber">R$ 0,00</div>
+        </div>
+    </div>
+
+    <div class="indicadores">
+        <h3>Indicador de Cores</h3>
+        <div class="indicador">
+            <div class="cor verde"></div>
+            <span>Validado</span>
+        </div>
+        <div class="indicador">
+            <div class="cor vermelho"></div>
+            <span>Desconsiderado</span>
+        </div>
+        <div class="indicador">
+            <div class="cor cinza"></div>
+            <span>Não atingiu quantidade de prospecção</span>
+        </div>
+    </div>
+
+    <script>
+        const dadosRepresentantes = {
+            'IND - MARCUS GAMBOGI': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 3, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 9, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU A MESMA FOTO / VISITA' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+
+
+                
+                
+            ],
+            'GER - DIEGO - LUCIANO FRANCISCO DOS SANTOS': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 7, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+
+                
+                
+                
+            ],
+            'GER - FABRICIO - AMANDA AP DE LIMA Q. SABINO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 1, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - FABRICIO - ANA PAULA FERREIRA DOS SANTOS': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 9, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 10, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 9, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 12, nota: '' },
+                
+                
+                
+            ],  
+            'GER - FABRICIO - LUIZ CARLOS REDMERSKI': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 8, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 8, nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+            ],  
+            'GER - MARCOS - DANIELLE VIEIRA DE FREITAS (ALEXANDRE )': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+
+
+            ], 
+            'GER - MARCOS - SALOMÃO GONÇALVES DA SILVA': [
+                { dia: '01/10/2024', visitas: 10, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 14, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 7, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 11, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 10, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 11, nota: '' },
+                { dia: '26/10/2024', visitas: 11, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 10, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+            ],  
+            'IND - ALEXANDRA SANTOS': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 6, nota: '' },
+                { dia: '10/10/2024', visitas: 11, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 3, nota: '' },
+                { dia: '22/10/2024', visitas: 2, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],  
+            'IND - ANA CRISTINA FELINTO': [
+                { dia: '01/10/2024', visitas: 1, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 1, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 1, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],  
+            'IND - CARLOS GLADSTON DE LIMA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],  
+
+
+            'IND - DENILSON APARECIDO HONORIO': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 1, nota: '' },
+                { dia: '03/10/2024', visitas: 1, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 9, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],  
+            'IND - EDER ACIOLI': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 9, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 10, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 12, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 10, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 3, nota: '' },
+                { dia: '25/10/2024', visitas: 10, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],  
+            'IND - EVILOMAR O. DOS S.': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+                
+            ], 
+            'IND - LUCIANO XAVIER BORGES': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],  
+            'GER - LUCAS - JOSIANE CAMPOS CORDEIRO': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 9, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 9, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 9, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 9, nota: '' },
+                { dia: '10/10/2024', visitas: 9, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 9, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: '' },
+                { dia: '19/10/2024', visitas: 9, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 9, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 10, nota: '' },
+                
+                
+                
+            ],  
+            'GER - MARCOS - JOSIELE MORATO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 9, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],  
+            'GER - MARCOS - SILVANA RICOY': [
+                { dia: '01/10/2024', visitas: 9, nota: '' },
+                { dia: '02/10/2024', visitas: 9, nota: '' },
+                { dia: '03/10/2024', visitas: 9, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 9, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 9, nota: '' },
+                { dia: '08/10/2024', visitas: 9, nota: '' },
+                { dia: '09/10/2024', visitas: 9, nota: '' },
+                { dia: '10/10/2024', visitas: 9, nota: '' },
+                { dia: '11/10/2024', visitas: 10, nota: '' },
+                { dia: '12/10/2024', visitas: 10, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 11, nota: '' },
+                { dia: '18/10/2024', visitas: 11, nota: '' },
+                { dia: '19/10/2024', visitas: 10, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 10, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 9, nota: '' },
+                { dia: '29/10/2024', visitas: 10, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+            'IND - MARIA MADALENA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 11, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 13, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 4, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 1, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 10, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 11, nota: '' },
+                
+                
+                
+            ],
+
+            'GER - JULIEL - JAINE K S PEIXINHO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 1, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 9, nota: 'LOJISTA INFORMA QUE NUMERO NÃO É DA LOJA' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 8, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+                
+            ],
+            'GER - JULIEL - MURYLLO MOURA': [
+                { dia: '01/10/2024', visitas: 9, nota: '' },
+                { dia: '02/10/2024', visitas: 11, nota: '' },
+                { dia: '03/10/2024', visitas: 13, nota: '' },
+                { dia: '04/10/2024', visitas: 13, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 13, nota: '' },
+                { dia: '08/10/2024', visitas: 13, nota: '' },
+                { dia: '09/10/2024', visitas: 11, nota: '' },
+                { dia: '10/10/2024', visitas: 12, nota: '' },
+                { dia: '11/10/2024', visitas: 10, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 12, nota: '' },
+                { dia: '15/10/2024', visitas: 11, nota: '' },
+                { dia: '16/10/2024', visitas: 13, nota: '' },
+                { dia: '17/10/2024', visitas: 14, nota: '' },
+                { dia: '18/10/2024', visitas: 14, nota: '' },
+                { dia: '19/10/2024', visitas: 10, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 12, nota: '' },
+                { dia: '23/10/2024', visitas: 13, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 11, nota: '' },
+                { dia: '27/10/2024', visitas: 1, nota: '' },
+                { dia: '28/10/2024', visitas: 11, nota: '' },
+                { dia: '29/10/2024', visitas: 11, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                
+                
+            ],
+            'GER - JULIEL - NAIANA TEIXEIRA SILVA': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 8, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 6, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 2, nota: '' },
+                { dia: '22/10/2024', visitas: 5, nota: '' },
+                { dia: '23/10/2024', visitas: 12, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 1, nota: '' },
+                { dia: '31/10/2024', visitas: 10, nota: '' },
+                
+                
+                
+            ],
+            'GER - JULIEL - TIAGO SILVA SANTOS': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 3, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: '' },
+                { dia: '19/10/2024', visitas: 4, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+                
+            ],
+            'GER - WALLISSON - EDUARDO R. DA SILVA': [
+                { dia: '01/10/2024', visitas: 11, nota: '' },
+                { dia: '02/10/2024', visitas: 11, nota: '' },
+                { dia: '03/10/2024', visitas: 11, nota: '' },
+                { dia: '04/10/2024', visitas: 10, nota: '' },
+                { dia: '05/10/2024', visitas: 9, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 10, nota: '' },
+                { dia: '08/10/2024', visitas: 12, nota: '' },
+                { dia: '09/10/2024', visitas: 11, nota: '' },
+                { dia: '10/10/2024', visitas: 10, nota: '' },
+                { dia: '11/10/2024', visitas: 10, nota: '' },
+                { dia: '12/10/2024', visitas: 10, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 11, nota: '' },
+                { dia: '15/10/2024', visitas: 12, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 10, nota: '' },
+                { dia: '18/10/2024', visitas: 7, nota: '' },
+                { dia: '19/10/2024', visitas: 9, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 12, nota: '' },
+                { dia: '22/10/2024', visitas: 11, nota: '' },
+                { dia: '23/10/2024', visitas: 11, nota: '' },
+                { dia: '24/10/2024', visitas: 11, nota: '' },
+                { dia: '25/10/2024', visitas: 10, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 13, nota: '' },
+                { dia: '29/10/2024', visitas: 12, nota: '' },
+                { dia: '30/10/2024', visitas: 12, nota: '' },
+                { dia: '31/10/2024', visitas: 11, nota: '' },
+                
+                
+                
+            ],
+            'GER - WALLISSON - GLEISON MARTINS': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'GER - WALLISSON - MARCIO L P DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 10, nota: '' },
+                { dia: '03/10/2024', visitas: 10, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 10, nota: '' },
+                { dia: '08/10/2024', visitas: 9, nota: '' },
+                { dia: '09/10/2024', visitas: 10, nota: '' },
+                { dia: '10/10/2024', visitas: 10, nota: '' },
+                { dia: '11/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 10, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 10, nota: '' },
+                { dia: '18/10/2024', visitas: 10, nota: '' },
+                { dia: '19/10/2024', visitas: 10, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 11, nota: '' },
+                { dia: '22/10/2024', visitas: 10, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - LUIZ C. L. ARAÚJO': [
+                { dia: '01/10/2024', visitas: 10, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'IND - ALEXSANDRA PRISCILA S. D.': [
+                { dia: '01/10/2024', visitas: 1, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - RICARDO N RIBEIRO': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+
+            'GER - JULIEL - MATEUS SANTOS M.': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 1, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 1, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+
+            'GER - JULIEL - GILMARIA DA SILVA S. MOREIRA': [
+                { dia: '01/10/2024', visitas: 9, nota: '' },
+                { dia: '02/10/2024', visitas: 9, nota: '' },
+                { dia: '03/10/2024', visitas: 9, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 6, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 9, nota: '' },
+                { dia: '09/10/2024', visitas: 9, nota: '' },
+                { dia: '10/10/2024', visitas: 9, nota: '' },
+                { dia: '11/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 9, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: '' },
+                { dia: '19/10/2024', visitas: 9, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+
+            'IND - KESIA LOPES': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 1, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 1, nota: '' },
+                { dia: '22/10/2024', visitas: 7, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+
+            'GER - DIEGO - GLEDES ASCANIO ROGERIO NETO': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 2, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 2, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+
+            'IND - FELIPE SILVA SANTOS': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 9, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - VICTOR LUIZ VIEIRA COSTA': [
+                { dia: '01/10/2024', visitas: 10, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - WALLISSON - MARIANA NASCIMENTO S.': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 10, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 10, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 1, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - WALLISSON - TALITA PEREIRA M. SANTOS': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 9, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 9, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 10, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 10, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 11, nota: '' },
+                { dia: '22/10/2024', visitas: 11, nota: '' },
+                { dia: '23/10/2024', visitas: 10, nota: '' },
+                { dia: '24/10/2024', visitas: 12, nota: '' },
+                { dia: '25/10/2024', visitas: 10, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 11, nota: '' },
+                { dia: '29/10/2024', visitas: 11, nota: '' },
+                { dia: '30/10/2024', visitas: 11, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+            ],
+            'IND - MARCIO FONSECA PALACIO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 16, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 8, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 8, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO EXISTE A PESSOA QUE FOI INSERIDA NO CONTATO .' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - FABIO ALEXANDRE GOES VIEIRA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - THAIS REGINA': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 8, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO EXISTE A PESSOA QUE FOI INSERIDA NO CONTATO / LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '15/10/2024', visitas: 7, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '18/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '19/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '22/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '23/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '24/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '25/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '26/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '29/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '30/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+
+
+            'IND - FRANKLIN RODNEY PINHEIRO DUARTE': [
+                { dia: '01/10/2024', visitas: 8, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 2, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 8, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 9, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+            'GER - DIEGO - FELIPE CANHEDO SILVA - BOLT': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 11, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 9, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 10, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - WALLISSON - SAULO PIRES': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 9, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 12, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 10, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
+                { dia: '22/10/2024', visitas: 12, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 10, nota: '' },
+                { dia: '25/10/2024', visitas: 12, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 10, nota: '' },
+                
+                
+                
+            ],
+            'GER - JULIEL - KARIA LUCIANA S SIMARLE': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 10, nota: '' },
+                { dia: '09/10/2024', visitas: 11, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'GER - JULIEL - JOSE RICARDO F DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 1, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 8, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 9, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 5, nota: '' },
+                { dia: '17/10/2024', visitas: 11, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 9, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'GER - JULIEL - CRISTIANE BRASIL DA CONCEICAO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 11, nota: '' },
+                { dia: '18/10/2024', visitas: 11, nota: '' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 11, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '26/10/2024', visitas: 8, nota: 'A VISITA FOI REALIZADA EM OUTRA DATA, SUBIU A MESMA VISITA.' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 10, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 9, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+            ],
+            
+            'GER - JULIEL - KATIA LUCIANA S.': [
+                { dia: '01/10/2024', visitas: 15, nota: '' },
+                { dia: '02/10/2024', visitas: 11, nota: '' },
+                { dia: '03/10/2024', visitas: 9, nota: '' },
+                { dia: '04/10/2024', visitas: 9, nota: '' },
+                { dia: '05/10/2024', visitas: 10, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 8, nota: '' },
+                { dia: '08/10/2024', visitas: 10, nota: '' },
+                { dia: '09/10/2024', visitas: 11, nota: '' },
+                { dia: '10/10/2024', visitas: 12, nota: '' },
+                { dia: '11/10/2024', visitas: 10, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 11, nota: '' },
+                { dia: '15/10/2024', visitas: 11, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 10, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '19/10/2024', visitas: 9, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 10, nota: '' },
+                { dia: '24/10/2024', visitas: 9, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'IND - LUCIANO CASTRO DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 8, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+            'IND - NADSON DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 10, nota: '' },
+                { dia: '09/10/2024', visitas: 9, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 8, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 8, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+
+            'IND - MARCUS VINICIUS SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 8, nota: '' },
+                { dia: '11/10/2024', visitas: 8, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 8, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 10, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 9, nota: '' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '26/10/2024', visitas: 8, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+                
+            ],
+            'IND - MIRNA SUANE': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 9, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 9, nota: '' },
+                { dia: '18/10/2024', visitas: 9, nota: 'SEM CONTATO, NUMERO NÃO EXISTE e NÃO CONSEGUIU CONTATAR NÚMERO DO GOOGLE.' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 9, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 9, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 10, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - CRISLAINE DOS S F DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 8, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 8, nota: 'SEM CONTATO, NUMERO NÃO EXISTE e NÃO CONSEGUIU CONTATAR NÚMERO DO GOOGLE.' },
+                { dia: '18/10/2024', visitas: 8, nota: 'SEM CONTATO, NUMERO NÃO EXISTE e NÃO CONSEGUIU CONTATAR NÚMERO DO GOOGLE.' },
+                { dia: '19/10/2024', visitas: 8, nota: 'SEM CONTATO, NUMERO NÃO EXISTE e NÃO CONSEGUIU CONTATAR NÚMERO DO GOOGLE.' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 8, nota: 'SEM CONTATO, NUMERO NÃO EXISTE e NÃO CONSEGUIU CONTATAR NÚMERO DO GOOGLE.' },
+                { dia: '22/10/2024', visitas: 9, nota: '' },
+                { dia: '23/10/2024', visitas: 8, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - LUCAS - RODRIGO ANTONIO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 9, nota: '' },
+                { dia: '16/10/2024', visitas: 8, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 5, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 13, nota: '' },
+                { dia: '24/10/2024', visitas: 3, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - LUCAS - ALOYSIO HENRIQUE PARREIRA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 9, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 8, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - WAGNER COUTINHO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 6, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 1, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 1, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'GER - JULIEL - ROBSON DUARTE DA SILVA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '23/10/2024', visitas: 12, nota: '' },
+                { dia: '24/10/2024', visitas: 8, nota: '' },
+                { dia: '25/10/2024', visitas: 11, nota: '' },
+                { dia: '26/10/2024', visitas: 9, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 11, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: '' },
+                { dia: '30/10/2024', visitas: 11, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+            'IND - ADEILDO CORREIA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 5, nota: '' },
+                { dia: '24/10/2024', visitas: 1, nota: '' },
+                { dia: '25/10/2024', visitas: 8, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 7, nota: '' },
+                { dia: '30/10/2024', visitas: 8, nota: 'LOJISTA INFORMA QUE NÃO HOUVE VISITA.' },
+                { dia: '31/10/2024', visitas: 8, nota: '' },
+                
+                
+            ],
+            'GER - JULIEL - GLEICE OLIVEIRA B.': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: '' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+            ],
+            'IND - RAMON FEITOSA': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '29/10/2024', visitas: 8, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 6, nota: '' },
+                
+                
+                
+            ],
+            'IND - MAYCON RIBEIRO': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 0, nota: '' },
+                { dia: '29/10/2024', visitas: 9, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '30/10/2024', visitas: 0, nota: '' },
+                { dia: '31/10/2024', visitas: 0, nota: '' },
+                
+                
+                
+            ],
+            'IND - WASHINGTON LUIZ': [
+                { dia: '01/10/2024', visitas: 0, nota: '' },
+                { dia: '02/10/2024', visitas: 0, nota: '' },
+                { dia: '03/10/2024', visitas: 0, nota: '' },
+                { dia: '04/10/2024', visitas: 0, nota: '' },
+                { dia: '05/10/2024', visitas: 0, nota: '' },
+                { dia: '06/10/2024', visitas: 0, nota: '' },
+                { dia: '07/10/2024', visitas: 0, nota: '' },
+                { dia: '08/10/2024', visitas: 0, nota: '' },
+                { dia: '09/10/2024', visitas: 0, nota: '' },
+                { dia: '10/10/2024', visitas: 0, nota: '' },
+                { dia: '11/10/2024', visitas: 0, nota: '' },
+                { dia: '12/10/2024', visitas: 0, nota: '' },
+                { dia: '13/10/2024', visitas: 0, nota: '' },
+                { dia: '14/10/2024', visitas: 0, nota: '' },
+                { dia: '15/10/2024', visitas: 0, nota: '' },
+                { dia: '16/10/2024', visitas: 0, nota: '' },
+                { dia: '17/10/2024', visitas: 0, nota: '' },
+                { dia: '18/10/2024', visitas: 0, nota: '' },
+                { dia: '19/10/2024', visitas: 0, nota: '' },
+                { dia: '20/10/2024', visitas: 0, nota: '' },
+                { dia: '21/10/2024', visitas: 0, nota: '' },
+                { dia: '22/10/2024', visitas: 0, nota: '' },
+                { dia: '23/10/2024', visitas: 0, nota: '' },
+                { dia: '24/10/2024', visitas: 0, nota: '' },
+                { dia: '25/10/2024', visitas: 0, nota: '' },
+                { dia: '26/10/2024', visitas: 0, nota: '' },
+                { dia: '27/10/2024', visitas: 0, nota: '' },
+                { dia: '28/10/2024', visitas: 8, nota: '' },
+                { dia: '29/10/2024', visitas: 0, nota: 'REPRESENTANTE SUBIU RAMO NÃO PRIORITARIO / NÃO ATINGIU QUANTIDADE MINIMA NECESSARIA' },
+                { dia: '30/10/2024', visitas: 8, nota: '' },
+                { dia: '31/10/2024', visitas: 9, nota: '' },
+                
+                
+                
+            ],
+
+
+
+
+
+
+
+
+
+
+        };
+
+        function atualizarCalendario() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+            const visaoSelecionada = document.getElementById('visao').value;
+            const calendarioDiv = document.getElementById('calendario');
+            const tabelaMotivos = document.getElementById('tabela-motivos');
+            const valorValidos = document.getElementById('valor-validos');
+            const valorReceber = document.getElementById('valor-receber');
+
+            calendarioDiv.innerHTML = '';
+            tabelaMotivos.innerHTML = '';
+            valorValidos.textContent = '0';
+            valorReceber.textContent = 'R$ 0,00';
+
+            if (representanteSelecionado && dadosRepresentantes[representanteSelecionado]) {
+                const dados = dadosRepresentantes[representanteSelecionado];
+                let dadosVisao;
+
+                switch (visaoSelecionada) {
+                    case 'quinzena1':
+                        dadosVisao = dados.slice(0, 15);
+                        break;
+                    case 'quinzena2':
+                        dadosVisao = dados.slice(15, dados.length);
+                        break;
+                    default:
+                        dadosVisao = dados; // Para "mês todo"
+                }
+
+                dadosVisao.forEach(dia => {
+                    const diaDiv = document.createElement('div');
+                    diaDiv.className = 'dia';
+                    diaDiv.textContent = dia.dia;
+
+                    if (dia.nota) {
+                        diaDiv.classList.add('vermelho'); // Dia com observação fica vermelho
+                    } else if (dia.visitas >= 8) {
+                        diaDiv.classList.add('verde');
+                    } else {
+                        diaDiv.classList.add('cinza');
+                    }
+
+                    const visitasDiv = document.createElement('div');
+                    visitasDiv.textContent = `${dia.visitas} visita${dia.visitas !== 1 ? 's' : ''}`;
+                    diaDiv.appendChild(visitasDiv); // Adiciona o número de visitas abaixo da data
+
+                    calendarioDiv.appendChild(diaDiv);
+
+                    if (dia.nota) {
+                        const motivoTr = document.createElement('tr');
+                        motivoTr.innerHTML = `<td>${dia.dia}</td><td class="observacao">${dia.nota}</td>`;
+                        tabelaMotivos.appendChild(motivoTr);
+                    }
+                });
+
+                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 8 && !dia.nota).length;
+                valorValidos.textContent = diasValidos;
+
+                const VALOR_POR_DIA = 50; // R$ 50 por dia válido
+                const valorReceberCalculado = diasValidos * VALOR_POR_DIA; 
+                valorReceber.textContent = `R$ ${valorReceberCalculado.toFixed(2)}`;
+            }
+        }
+
+         // Botão gerar termo primeira quinzena 
+        function gerarPrimeiraQuinzena() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+
+            // Filtra os dados do dia 1 ao 15
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(0, 15) // Filtra do dia 1 ao 15
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+
+            const valorReceber = diasValidos * 50; // R$ 50 por dia válido
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const titulo = "TERMO PARA PAGAMENTO DE BÔNUS";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "PERFORMANCE";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
+            doc.setFont("normal");
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de ajuda de Incentivo inicial da Primeira quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                y += 70; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 12`, 20, y); // Ajustado para 13 dias na primeira quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 210; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                '___________________________________',
+                '         JOSÉ JUNIOR',
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
+            doc.save('termo_pagamento_bonus_primeira_quinzena.pdf');
+        }
+
+        // Botão gerar termo segunda quinzena    
+        function gerarSegundaQuinzena() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+
+            // Filtra os dados do dia 16 ao 31
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(15, 31) // Filtra do dia 16 ao 31
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+
+            const valorReceber = diasValidos * 50; // R$ 50 por dia válido
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const titulo = "TERMO PARA PAGAMENTO DE BÔNUS";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "PERFORMANCE";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
+            doc.setFont("normal");
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de ajuda de Incentivo inicial da Segunda quinzena ao representante ${representanteSelecionado.replace(/_/g, ' ').toUpperCase()}.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                y += 70; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 14`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 210; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                '___________________________________',
+                '         JOSÉ JUNIOR',
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
+            doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
+}
+
+         // Botão gerar termo Minimo mensal  
+         function gerarMinimoMensal() {
+            const representanteSelecionado = document.getElementById('representantes').value;
+
+            // Filtra os dados do dia 16 ao 31
+            const diasValidos = dadosRepresentantes[representanteSelecionado]
+                .slice(0, 31) // Filtra do dia 16 ao 31
+                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+
+            const valorReceber = diasValidos * 76.92; // Calc = 2000 / Dias uteis (Mês)
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'pt', 'a4');
+
+            let y = 40; // Inicializa a posição vertical
+
+            // Título em destaque
+            y += 20; // Pula para a próxima linha
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const titulo = "TERMO PARA PAGAMENTO DA AJUDA DE";
+            const tituloX = (doc.internal.pageSize.width - doc.getTextWidth(titulo)) / 2; // Centraliza o título
+            doc.text(titulo, tituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do título
+            doc.setLineWidth(1);
+            doc.line(tituloX, y, tituloX + doc.getTextWidth(titulo), y); // Linha horizontal que sublinha o título
+            y += 20; // Pula para a próxima linha
+
+            // Subtítulo
+            doc.setFontSize(25);
+            doc.setFont("bold");
+            const subtitulo = "INCENTIVO MÍNIMO MENSAL";
+            const subtituloX = (doc.internal.pageSize.width - doc.getTextWidth(subtitulo)) / 2; // Centraliza o subtítulo
+            doc.text(subtitulo, subtituloX, y);
+            y += 10; // Pula para a próxima linha
+
+            // Linha abaixo do subtítulo
+            doc.setLineWidth(1);
+            doc.line(subtituloX, y, subtituloX + doc.getTextWidth(subtitulo), y); // Linha horizontal que sublinha o subtítulo
+            y += 20; // Pula para a próxima linha
+
+            // Informações
+            doc.setFontSize(15.5);
+            doc.setFont("normal");
+            y += 50; // Pula para a próxima linha
+
+            // Verifica se as variáveis têm valores válidos
+            if (representanteSelecionado && valorReceber > 0 && diasValidos > 0) {
+                const texto = `Venho por meio deste solicitar autorização de pagamento da ajuda de incentivo mínimo mensal de representante entrante a partir de (Data), por até 6 meses, para o representante  ${representanteSelecionado.replace(/_/g, '').toUpperCase()} pois o representante não teve comissionamento de produção de carteira.`;
+                const linhas = doc.splitTextToSize(texto, 500); // 500 é a largura máxima do texto
+                doc.text(linhas, 20, y); // Adiciona as linhas quebradas
+                y += linhas.length * 10; // Atualiza a posição vertical com base na quantidade de linhas
+
+                
+                
+                y += 50; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor do incentivo por dia de visita é R$ 76,92`, 20, y); 
+                y += 20; // Pula para a próxima linha
+                doc.text(`Total de visitas realizadas: ${diasValidos}`, 20, y); 
+
+
+                y += 50; // Pula para a próxima linha
+                doc.setFont("bold");
+                doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterParaTexto(valorReceber)})`, 20, y);
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias Úteis: 26`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                y += 20; // Pula para a próxima linha
+                doc.text(`Dias de Visita: ${diasValidos} dias`, 20, y);
+                doc.setFont("normal");
+            } else {
+                doc.text("Não há dados válidos para gerar o termo.", 20, y);
+            }
+
+            y += 190; // Pula para a próxima linha
+            doc.text(`Monte Belo, ${new Date().toLocaleDateString('pt-BR')}`, 20, y);
+
+            // Pula para a assinatura (6 linhas)
+            y += 50; // Ajuste conforme necessário para pular mais linhas
+
+            // Centraliza a assinatura
+            const assinaturaY = y; // Posição inicial para as assinaturas
+            const espacoAssinatura = 40; // Espaço entre as assinaturas
+
+            const assinaturas = [
+                
+                '___________________________________',
+                '          EDUARDO PRADO',
+                '___________________________________',
+                '          DIEGO TEXEIRA',
+            ];
+
+            assinaturas.forEach((assinatura, index) => {
+                const textWidth = doc.getTextWidth(assinatura);
+                const x = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centraliza
+                doc.text(assinatura, x, assinaturaY + espacoAssinatura * index);
+            });
+
+            // Salva o documento
+            doc.save('termo_pagamento_bonus_segunda_quinzena.pdf');
+}
+
+        // Nova função - converter números em letras
+        function converterParaTexto(valor) {
+            const parteInteira = Math.floor(valor);
+            const centavos = Math.round((valor - parteInteira) * 100);
+
+            let extensoReais = converterNumeroParaExtenso(parteInteira);
+            
+            // Corrige "cento" para "cem" no caso de 100
+            if (parteInteira === 100) {
+                extensoReais = "cem";
+            }
+            
+            extensoReais += (parteInteira === 1 ? " real" : " reais");
+
+            if (centavos > 0) {
+                const extensoCentavos = converterNumeroParaExtenso(centavos) + (centavos === 1 ? " centavo" : " centavos");
+                return `${extensoReais} e ${extensoCentavos}`;
+            } else {
+                return extensoReais;
+            }
+}
+
+function converterNumeroParaExtenso(numero) {
+    const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+    const dezenas = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+    const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+
+    if (numero === 0) return "zero";
+    if (numero < 20) return unidades[numero];
+    if (numero < 100) {
+        const dezena = Math.floor(numero / 10);
+        const unidade = numero % 10;
+        return dezenas[dezena] + (unidade > 0 ? ` e ${unidades[unidade]}` : "");
+    }
+    if (numero < 1000) {
+        const centena = Math.floor(numero / 100);
+        const resto = numero % 100;
+        return (centenas[centena] + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "")).trim();
+    }
+    if (numero === 1000) return "mil";
+    const milhar = Math.floor(numero / 1000);
+    const resto = numero % 1000;
+    return converterNumeroParaExtenso(milhar) + " mil" + (resto > 0 ? " e " + converterNumeroParaExtenso(resto) : "");
+}
+
+// Exemplo de uso
+const valorReceber = 100.00; // Exemplo de valor
+const resultado = converterParaTexto(valorReceber);
+console.log(resultado); // Saída esperada: "cem reais"
+
+
+        // Botão reset
+        function resetarSelecao() {
+            document.getElementById('representantes').selectedIndex = 0;
+            document.getElementById('visao').selectedIndex = 0;
+            atualizarCalendario();
+        }
+
+        // Acessar Auditoria de Qualidade
+        function bancoValidacao() {
+            // Substitua o URL abaixo pelo link desejado
+            const url = 'https://docs.google.com/spreadsheets/d/1WR-qd_Gv0jjSWrZBIKq2BInfyww7lbZyDfo1a83HkPk/edit?gid=1829143938#gid=1829143938';
+            window.location.href = url; // Redireciona para o URL especificado
+        }
+
+        // Desabilitar o menu de contexto do botão direito do mouse.
+        document.addEventListener('contextmenu', function(e) {
+             e.preventDefault();
+});
+        // Desabilitar alguns atalhos de teclado, como F12 (para abrir o inspetor) e Ctrl+Shift+I.
+      document.onkeydown = function(e) {
+         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+             e.preventDefault();
+    }
+};
+        
+    </script>
+</body>
+</html>
