@@ -750,7 +750,7 @@
                 doc.setFont("bold");
                 doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterNumeroParaExtenso(valorReceber)})`, 20, y);
                 y += 20; // Pula para a próxima linha
-                doc.text(`Dias Úteis: 13`, 20, y); // Ajustado para 14 dias na segunda quinzena
+                doc.text(`Dias Úteis: 14`, 20, y); // Ajustado para 14 dias na segunda quinzena
                 y += 20; // Pula para a próxima linha
                 // Ajuste a pluralização do texto com base no valor de diasValidos
                 const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
@@ -846,10 +846,10 @@ function gerarTermoComData() {
 
     // Filtra os dados do dia 1 ao 31
     const diasValidos = dadosRepresentantes[representanteSelecionado]
-        .slice(0, 31) // Filtra do dia 16 ao 31 (index 15 a 30)
+        .slice(0, 31) // Filtra do dia 01 ao 31 (index 15 a 30)
         .filter(dia => dia.visitas >= 8 && !dia.nota).length;
 
-    const valorReceber = diasValidos * 80;
+    const valorReceber = diasValidos * 76.9230769230;
 
     if (diasValidos === 0) {
         alert("Nenhuma visita válida foi registrada.");
@@ -899,7 +899,7 @@ function gerarTermoComData() {
 
     y += 50;
     doc.setFont("bold");
-    doc.text(`Valor do incentivo por dia de visita é R$ 80,00`, 20, y);
+    doc.text(`Valor do incentivo por dia de visita é R$ 76,92`, 20, y);
     y += 20;
     doc.text(`Total de visitas realizadas: ${diasValidos}`, 20, y);
 
@@ -907,7 +907,7 @@ function gerarTermoComData() {
     doc.setFont("bold");
     doc.text(`Valor: R$ ${valorReceber.toFixed(2)} (${converterNumeroParaExtenso(valorReceber)})`, 20, y);
     y += 20;
-    doc.text(`Dias Úteis: 25`, 20, y);
+    doc.text(`Dias Úteis: 26`, 20, y);
     y += 20;
 
     const diasTexto = diasValidos === 1 ? 'dia' : 'dias';
@@ -1061,7 +1061,7 @@ console.log(resultado); // Saída esperada: "cem reais"
                 const diasValidos = visitas.filter(v => v.visitas >= 8).length;
 
                 // Calculando o valor a ser recebido
-                const valorReceber = diasValidos * 80; // Lembrar de alterar o valor (2000 / dias uteis)
+                const valorReceber = diasValidos * 76.9230769230; // Lembrar de alterar o valor (2000 / dias uteis)
 
                 // Adiciona a linha do representante, suas visitas, dias válidos e valor a receber
                 dadosExcel.push([representante, ...visitasPorDia, diasValidos, valorReceber]);
