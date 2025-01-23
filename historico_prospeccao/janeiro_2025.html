@@ -159,24 +159,30 @@
     </div>
 
     <div class="select-container">
-        <button class="botao" onclick="gerarPrimeiraQuinzena()">🖨️ (Primeira Quinzena)</button>
-        <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>-->
+        <!-- <button class="botao" onclick="gerarPrimeiraQuinzena()">🖨️ (Primeira Quinzena)</button>-->
+        <!-- <button class="botao" onclick="gerarSegundaQuinzena()">🖨️ (Segunda Quinzena)</button>-->
         
       <!-- Botão para gerar termo -->
-        <button class="botao" onclick="mostrarCampoData()">🖨️ (Minimo Mensal)</button>
+        <!-- <button class="botao" onclick="mostrarCampoData()">🖨️ (Minimo Mensal)</button>-->
 
-        <!-- Campo de data que será exibido quando o botão for clicado -->
-        <input type="date" id="dataInput" style="display: none;">
+        <!-- Acesso a Validação-->
+        <button class="botao" onclick="bancoValidacao()">🔒 (Acessar Validação)</button>
+
+        <!-- Botão para gerar o Relatório -->
+        <button class="botao" onclick="gerarRelatorio()">📊 (Gerar Relatório)</button>
+
+        <!--Campo de data que será exibido quando o botão for clicado-->
+        <!-- <input type="date" id="dataInput" style="display: none;">-->
 
         <!-- Botão para confirmar a data e gerar o termo -->
-        <button class="botao" id="confirmarData" style="display: none;" onclick="gerarTermoComData()">✅</button>
+        <!-- <button class="botao" id="confirmarData" style="display: none;" onclick="gerarTermoComData()">✅</button>-->
 
         <!-- Mensagem de erro -->
-        <p id="mensagemErro" style="color: red; display: none;">⚠️ A data não pode ser superior a 6 meses.</p>
+        <!-- <p id="mensagemErro" style="color: red; display: none;">⚠️ A data não pode ser superior a 6 meses.</p>-->
 
     
-        <button class="botao" onclick="bancoValidacao()">🔒</button>
-        <button class="botao" onclick="gerarRelatorio()">📊</button>
+        <!--<button class="botao" onclick="bancoValidacao()">🔒</button>-->
+        <!-- <button class="botao" onclick="gerarRelatorio()">📊</button>-->
         <button class="botao" onclick="resetarSelecao()">🔄</button>
     
         <label for="representantes">Selecione o Representante:</label>
@@ -184,6 +190,8 @@
             <select id="representantes" onchange="atualizarCalendario()">
                 <option value="">-- Selecione --</option>
                 <option value="IND - MARCUS GAMBOGI">IND - MARCUS GAMBOGI</option>
+                <option value="GER - DIEGO - WANDERLEY MAX GARCIA DOS SANTOS">GER - DIEGO - WANDERLEY MAX GARCIA DOS SANTOS</option>
+                <option value="GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA">GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA</option>
                 <option value="GER - FABRICIO - LUIZ CARLOS REDMERSKI">GER - FABRICIO - LUIZ CARLOS REDMERSKI</option>
                 <option value="GER - MARCOS - SALOMÃO GONÇALVES DA SILVA">GER - MARCOS - SALOMÃO GONÇALVES DA SILVA</option>
                 <option value="IND - CARLOS GLADSTON DE LIMA">IND - CARLOS GLADSTON DE LIMA</option>
@@ -195,6 +203,7 @@
                 <option value="IND - MARCIO FONSECA PALACIO">IND - MARCIO FONSECA PALACIO</option>
                 <option value="GER - JULIEL - JOSE RICARDO F DA SILVA">GER - JULIEL - JOSE RICARDO F DA SILVA</option>
                 <option value="IND - LUCIANO CASTRO DA SILVA">IND - LUCIANO CASTRO DA SILVA</option>
+                <option value="GER - LUCAS - ALOYSIO HENRIQUE PARREIRA">GER - LUCAS - ALOYSIO HENRIQUE PARREIRA</option>
                 <option value="GER - JULIEL - ROBSON DUARTE DA SILVA">GER - JULIEL - ROBSON DUARTE DA SILVA</option>
                 <option value="IND - LIVIO DE SOUZA NEIVA">IND - LIVIO DE SOUZA NEIVA</option>
                 <option value="GER - FABRICIO - ROBSON LEANDRO DE BRITO">GER - FABRICIO - ROBSON LEANDRO DE BRITO</option>
@@ -215,7 +224,6 @@
                 <option value="IND - MONIQUE MONTEIRO DE CASTRO SOUZA">IND - MONIQUE MONTEIRO DE CASTRO SOUZA</option>
                 <option value="GER - WALISSON - ILTON FRANCISCO S D ALMAS">GER - WALISSON - ILTON FRANCISCO S D ALMAS</option>
                 <option value="GER - GABRIEL - VANESSA RAMOS DE OLIVEIRA MACHADO">GER - GABRIEL - VANESSA RAMOS DE OLIVEIRA MACHADO</option>
-                <option value="IND - AURORA PONTES DE SANTANA">IND - AURORA PONTES DE SANTANA</option>
                 <option value="IND - EDNEY CARLOS G CHAVIER">IND - EDNEY CARLOS G CHAVIER</option>
                 <option value="IND - AURORA PONTES DE SANTANA ( ANDRE)">IND - AURORA PONTES DE SANTANA ( ANDRE)</option>
                 <option value="IND - DENISE ESTEVES">IND - DENISE ESTEVES</option>
@@ -299,6 +307,62 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
+              
+                
+                             
+            ],
+            'GER - DIEGO - WANDERLEY MAX GARCIA DOS SANTOS': [
+                { dia: '01/01/2025', visitas: 0, nota: '' },
+                { dia: '02/01/2025', visitas: 0, nota: '' },
+                { dia: '03/01/2025', visitas: 0, nota: '' },
+                { dia: '04/01/2025', visitas: 0, nota: '' },
+                { dia: '05/01/2025', visitas: 0, nota: '' },
+                { dia: '06/01/2025', visitas: 0, nota: '' },
+                { dia: '07/01/2025', visitas: 0, nota: '' },
+                { dia: '08/01/2025', visitas: 0, nota: '' },
+                { dia: '09/01/2025', visitas: 0, nota: '' },
+                { dia: '10/01/2025', visitas: 0, nota: '' },
+                { dia: '11/01/2025', visitas: 0, nota: '' },
+                { dia: '12/01/2025', visitas: 0, nota: '' },
+                { dia: '13/01/2025', visitas: 0, nota: '' },
+                { dia: '14/01/2025', visitas: 0, nota: '' },
+                { dia: '15/01/2025', visitas: 0, nota: '' },
+                { dia: '16/01/2025', visitas: 0, nota: '' },
+                { dia: '17/01/2025', visitas: 0, nota: '' },
+                { dia: '18/01/2025', visitas: 0, nota: '' },
+                { dia: '19/01/2025', visitas: 0, nota: '' },
+                { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 8, nota: '' },
+              
+                
+                             
+            ],
+            'GER - FABRICIO - ELISANGELA COSTA DE OLIVEIRA': [
+                { dia: '01/01/2025', visitas: 0, nota: '' },
+                { dia: '02/01/2025', visitas: 0, nota: '' },
+                { dia: '03/01/2025', visitas: 0, nota: '' },
+                { dia: '04/01/2025', visitas: 0, nota: '' },
+                { dia: '05/01/2025', visitas: 0, nota: '' },
+                { dia: '06/01/2025', visitas: 0, nota: '' },
+                { dia: '07/01/2025', visitas: 0, nota: '' },
+                { dia: '08/01/2025', visitas: 0, nota: '' },
+                { dia: '09/01/2025', visitas: 0, nota: '' },
+                { dia: '10/01/2025', visitas: 0, nota: '' },
+                { dia: '11/01/2025', visitas: 0, nota: '' },
+                { dia: '12/01/2025', visitas: 0, nota: '' },
+                { dia: '13/01/2025', visitas: 0, nota: '' },
+                { dia: '14/01/2025', visitas: 0, nota: '' },
+                { dia: '15/01/2025', visitas: 0, nota: '' },
+                { dia: '16/01/2025', visitas: 0, nota: '' },
+                { dia: '17/01/2025', visitas: 0, nota: '' },
+                { dia: '18/01/2025', visitas: 0, nota: '' },
+                { dia: '19/01/2025', visitas: 0, nota: '' },
+                { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
                 
                              
@@ -324,6 +388,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -349,6 +415,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 2, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -374,6 +442,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -399,6 +469,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 8, nota: '' },
+                { dia: '22/01/2025', visitas: 6, nota: '' },
               
                 
                              
@@ -424,6 +496,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 8, nota: '' },
               
                 
                              
@@ -449,6 +523,9 @@
                 { dia: '18/01/2025', visitas: 9, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 9, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 6, nota: '' },
+                
               
                 
                              
@@ -474,6 +551,8 @@
                 { dia: '18/01/2025', visitas: 9, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 9, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 6, nota: '' },
               
                 
                              
@@ -499,6 +578,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 15, nota: '' },
+                { dia: '21/01/2025', visitas: 8, nota: '' },
+                { dia: '22/01/2025', visitas: 6, nota: '' },
               
                 
                              
@@ -524,6 +605,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -549,6 +632,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -574,6 +659,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -599,6 +686,35 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
+              
+                
+                             
+            ],
+            'GER - LUCAS - ALOYSIO HENRIQUE PARREIRA': [
+                { dia: '01/01/2025', visitas: 0, nota: '' },
+                { dia: '02/01/2025', visitas: 0, nota: '' },
+                { dia: '03/01/2025', visitas: 0, nota: '' },
+                { dia: '04/01/2025', visitas: 0, nota: '' },
+                { dia: '05/01/2025', visitas: 0, nota: '' },
+                { dia: '06/01/2025', visitas: 0, nota: '' },
+                { dia: '07/01/2025', visitas: 0, nota: '' },
+                { dia: '08/01/2025', visitas: 0, nota: '' },
+                { dia: '09/01/2025', visitas: 0, nota: '' },
+                { dia: '10/01/2025', visitas: 0, nota: '' },
+                { dia: '11/01/2025', visitas: 0, nota: '' },
+                { dia: '12/01/2025', visitas: 0, nota: '' },
+                { dia: '13/01/2025', visitas: 0, nota: '' },
+                { dia: '14/01/2025', visitas: 0, nota: '' },
+                { dia: '15/01/2025', visitas: 0, nota: '' },
+                { dia: '16/01/2025', visitas: 0, nota: '' },
+                { dia: '17/01/2025', visitas: 0, nota: '' },
+                { dia: '18/01/2025', visitas: 0, nota: '' },
+                { dia: '19/01/2025', visitas: 0, nota: '' },
+                { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 8, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
                 
                              
@@ -624,6 +740,8 @@
                 { dia: '18/01/2025', visitas: 9, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 10, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -649,6 +767,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -674,6 +794,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 10, nota: '' },
+                { dia: '21/01/2025', visitas: 8, nota: '' },
+                { dia: '22/01/2025', visitas: 1, nota: '' },
               
                 
                              
@@ -699,6 +821,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -724,6 +848,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -749,6 +875,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -774,6 +902,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -799,6 +929,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -824,6 +956,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -849,6 +983,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -874,6 +1010,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
                 
                              
@@ -899,6 +1037,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 1, nota: '' },
               
                 
                              
@@ -924,6 +1064,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
                 
                              
@@ -949,6 +1091,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -975,6 +1119,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1001,6 +1147,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1027,6 +1175,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1053,6 +1203,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 8, nota: '' },
               
               
                 
@@ -1079,6 +1231,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 9, nota: '' },
+                { dia: '21/01/2025', visitas: 6, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
               
                 
@@ -1105,32 +1259,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
-              
-              
-                
-                             
-            ],
-            'IND - AURORA PONTES DE SANTANA ( ANDRE)': [
-                { dia: '01/01/2025', visitas: 0, nota: '' },
-                { dia: '02/01/2025', visitas: 10, nota: '' },
-                { dia: '03/01/2025', visitas: 0, nota: '' },
-                { dia: '04/01/2025', visitas: 0, nota: '' },
-                { dia: '05/01/2025', visitas: 0, nota: '' },
-                { dia: '06/01/2025', visitas: 0, nota: '' },
-                { dia: '07/01/2025', visitas: 8, nota: '' },
-                { dia: '08/01/2025', visitas: 0, nota: '' },
-                { dia: '09/01/2025', visitas: 0, nota: '' },
-                { dia: '10/01/2025', visitas: 0, nota: '' },
-                { dia: '11/01/2025', visitas: 0, nota: '' },
-                { dia: '12/01/2025', visitas: 0, nota: '' },
-                { dia: '13/01/2025', visitas: 0, nota: '' },
-                { dia: '14/01/2025', visitas: 0, nota: '' },
-                { dia: '15/01/2025', visitas: 0, nota: '' },
-                { dia: '16/01/2025', visitas: 0, nota: '' },
-                { dia: '17/01/2025', visitas: 0, nota: '' },
-                { dia: '18/01/2025', visitas: 0, nota: '' },
-                { dia: '19/01/2025', visitas: 0, nota: '' },
-                { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1157,6 +1287,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1183,6 +1315,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 5, nota: '' },
+                { dia: '21/01/2025', visitas: 5, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
               
                 
@@ -1209,6 +1343,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1235,6 +1371,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 2, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
               
                 
@@ -1261,6 +1399,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1287,6 +1427,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 8, nota: '' },
               
               
                 
@@ -1313,6 +1455,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 8, nota: '' },
+                { dia: '22/01/2025', visitas: 5, nota: '' },
               
               
                 
@@ -1339,6 +1483,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1365,6 +1511,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 12, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1391,6 +1539,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 0, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1417,6 +1567,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 10, nota: '' },
+                { dia: '21/01/2025', visitas: 9, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1443,6 +1595,8 @@
                 { dia: '18/01/2025', visitas: 0, nota: '' },
                 { dia: '19/01/2025', visitas: 0, nota: '' },
                 { dia: '20/01/2025', visitas: 9, nota: '' },
+                { dia: '21/01/2025', visitas: 0, nota: '' },
+                { dia: '22/01/2025', visitas: 0, nota: '' },
               
               
                 
@@ -1450,7 +1604,6 @@
             ],
             
             
-
         };
 
         function atualizarCalendario() {
@@ -1488,7 +1641,7 @@
 
                     if (dia.nota) {
                         diaDiv.classList.add('vermelho'); // Dia com observação fica vermelho
-                    } else if (dia.visitas >= 8) {
+                    } else if (dia.visitas >= 5) {
                         diaDiv.classList.add('verde');
                     } else {
                         diaDiv.classList.add('cinza');
@@ -1507,7 +1660,7 @@
                     }
                 });
 
-                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 8 && !dia.nota).length;
+                const diasValidos = dadosVisao.filter(dia => dia.visitas >= 5 && !dia.nota).length;
                 valorValidos.textContent = diasValidos;
 
                 const VALOR_POR_DIA = 50; // R$ 50 por dia válido
@@ -1523,7 +1676,7 @@
             // Filtra os dados do dia 1 ao 15
             const diasValidos = dadosRepresentantes[representanteSelecionado]
                 .slice(0, 15) // Filtra do dia 1 ao 15
-                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+                .filter(dia => dia.visitas >= 5 && !dia.nota).length;
 
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
@@ -1624,7 +1777,7 @@
             // Filtra os dados do dia 16 ao 31
             const diasValidos = dadosRepresentantes[representanteSelecionado]
                 .slice(15, 31) // Filtra do dia 16 ao 31
-                .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+                .filter(dia => dia.visitas >= 5 && !dia.nota).length;
 
             const valorReceber = diasValidos * 50; // R$ 50 por dia válido
 
@@ -1773,7 +1926,7 @@ function gerarTermoComData() {
     // Filtra os dados do dia 1 ao 31
     const diasValidos = dadosRepresentantes[representanteSelecionado]
         .slice(0, 31) // Filtra do dia 01 ao 31 (index 15 a 30)
-        .filter(dia => dia.visitas >= 8 && !dia.nota).length;
+        .filter(dia => dia.visitas >= 5 && !dia.nota).length;
 
     const valorReceber = diasValidos * 76.9230769230;
 
@@ -1984,7 +2137,7 @@ console.log(resultado); // Saída esperada: "cem reais"
                 });
 
                 // Calculando os dias válidos (>=8)
-                const diasValidos = visitas.filter(v => v.visitas >= 8).length;
+                const diasValidos = visitas.filter(v => v.visitas >= 5).length;
 
                 // Calculando o valor a ser recebido
                 const valorReceber = diasValidos * 76.9230769230; // Lembrar de alterar o valor (2000 / dias uteis)
